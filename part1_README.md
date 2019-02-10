@@ -1,4 +1,4 @@
-# Part 1
+# Platformer - Part 1
 
 (Note: Part 1 is quite large! Get started early! Part 2 will mostly be polish and AI. Part 3 will be the final game)
 
