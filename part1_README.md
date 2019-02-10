@@ -133,10 +133,34 @@ Beyond those requirements, you may get as creative as you like.
 Tips:
 * Start early and stay on track for each milestone!
 
-## Rubric (5% of overall grade)
+## Rubric (8% of overall grade)
 
-* (50%) The Game requirements should be met above.
-* (50%) The game and editors should feel polished and work.
+<table>
+  <tbody>
+    <tr>
+      <th>Points</th>
+      <th align="center">Description</th>
+    </tr>
+    <tr>
+      <td>20% (Core Requirements)</td>
+      <td align="left">Core - Your code <b>must</b> compile using 'python build.py' and work on the first try. Try putting it on a clean machine before submitting to see if this works on your development operating system.</td>
+    </tr>    
+    <tr>
+      <td>20% (Core Requirements)</td>
+      <td align="left">Core Is their good programming style(classes, OOP), was their only 1 commit right before the deadline? Did everyone make at least one commit in the project. Did you organize your project in the appropriate folders.</td>
+    </tr>
+    <tr>
+      <td>30% (Game Requirements)</td>
+      <td align="left">The Game requirements should be met above.</td>
+    </tr>
+    <tr>
+      <td>30% (Polish)</td>
+      <td align="left">The game and editors should feel polished and work.</td>
+    </tr>
+  </tbody>
+</table>
+
+**Note: Everyone on your team earns the same grade for all parts of the project.**
 
 ## More Resources and Assets
 
