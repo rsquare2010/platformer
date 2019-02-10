@@ -46,25 +46,6 @@ Miyamoto prefers these tools because SDL is an industry standard, cross platform
 
 Nintendo however likes to do things there own way. Perhaps there will be some surprises in the future! Program your project accordingly.
 
-## Project Hieararchy
-
-In the future, other engineers may take on our project, so we'll have to keep it organized given the following requirements below.
-Forming some good habits now will help us later on when our project grows.
-
-### Game
-
-- Docs -- Source Code Documentation
-- Assets -- Art assets (With the Sub directories music, sound, images, and anything else)
-- src -- source code(.cpp files) The make file or any build scripts that automate the building of your project should reside here.
-- include -- header files(.h files)
-- lib -- libraries (.so, .dll, .a, .dylib files). Note this is a good place to put SDL
-- temp -- This is the directory where your built executable(.exe for windows, .app for Mac, or a.out for Linux) and any additional generated files are put after each build.
-- Game -- Your final deliverable. One should be able to copy and paste this directory, and only this directory onto another machine and be able to run the game.
-- ThirdParty - Code that you have not written if any.
-- Tools -- Any tools that you develop can be in this folder (and follow a similar hierarchy)
-
-Note that src should only contain ".cpp" or ".h" files. Why? It makes it very fast to do a backup of your src directory as one example. Secondly, binary files that are generated often clutter up directories. I should not see any binaries in your repository until the final release. 
-
 ## Game Requirements
 
 The platform game you are building in part 1 has the following requirements.
