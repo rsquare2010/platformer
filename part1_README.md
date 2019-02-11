@@ -11,11 +11,9 @@ This time however, you have caught the attention of another game designer: Shige
 ## Shigeru Miyamoto
 <img align="left" width="100px" src="./media/miyamoto.JPG" style="float:left;">
 
-Shigeru Miyamoto is the legendary game designer of Donkey Kong, Mario and several other Nintendo franchises. Miyamoto does not care about fancy graphics, he only wants to make sure the game is fun. 
+[Shigeru Miyamoto](https://en.wikipedia.org/wiki/Shigeru_Miyamoto) is the legendary game designer of Donkey Kong, Mario and several other Nintendo franchises. Miyamoto was impressed with your previous project, and agreeds that fun games are not all about fancy graphics, but are rather all about fun! 
 
-Read more about Shigeru Miyamoto here: https://en.wikipedia.org/wiki/Shigeru_Miyamoto
-
-For inspiration during this project, it may be worthwhile to discuss with your team you favorite Nintendo game. :)
+For inspiration during this project, it may be worthwhile to discuss with your team you favorite Nintendo game when meeting with your team. :)
 
 ## Platformer Games
 <img align="right" width="250px" src="./media/mario.png" style="float:right;">
