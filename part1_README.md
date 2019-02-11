@@ -131,7 +131,7 @@ Tips:
       <td align="left">Core Is their good programming style(classes, OOP), was their only 1 commit right before the deadline? Did everyone make at least one commit in the project. Did you organize your project in the appropriate folders.</td>
     </tr>
     <tr>
-      <td>30% (Game Requirements)</td>
+      <td>40% (Game Requirements)</td>
       <td align="left">The Game requirements should be met above.</td>
     </tr>
     <tr>
