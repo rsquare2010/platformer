@@ -135,11 +135,11 @@ Tips:
       <td align="left">The Game requirements should be met above.</td>
     </tr>
     <tr>
-      <td>10% (Sprite Editor)</td>
+      <td>15% (Sprite Editor)</td>
       <td align="left">Is their a sprite editor that previews sprite animations?</td>
     </tr>
     <tr>
-      <td>10% (Tilemap Editor)</td>
+      <td>15% (Tilemap Editor)</td>
       <td align="left">Is their a Tile Map editor to help build levels?</td>
     </tr>    
     <tr>      
