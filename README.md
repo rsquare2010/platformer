@@ -23,7 +23,7 @@ Update your Team member Names here (Up to 4) You will work with this same team t
 2. [Part 2 README will be released shortly after](./part2_README.md)
 3. [Part 3 README will be released after part 2](./part3_README.md)
 
-The assignment (part 1, part 2, and part 3) are all due together when Assignment 2 is released.
+The assignment (part 1, part 2, and part 3) are all due together when Assignment 3 is released.
 
 Think of each part as a project milestone for a final deliverable. Stay on track!
 
