@@ -23,26 +23,26 @@ For this series of assignments, we are going to build a 2D platformer game. Plat
   - If you are unfamaliar with Mario or platformer games, you can play a version here:
   - http://supermarioemulator.com/mario.php
 - Step 2 - Form a team!
-  - https://docs.google.com/spreadsheets/d/1bglePE3sfvoe5yCSCp8BKBt8lg0e9SQcGptQPyVkkTU/edit?usp=sharing
+  - https://docs.google.com/spreadsheets/d/1IjfozgB3hL3Ry3Zfsl3yQoY_taXySCmfaRyMO3XK6y0/edit?usp=sharing
   - Make sure you form a team! (If you are reading this, make sure your teammates join your same repository)
-- Step 3 - Game Design
-  - Miyamoto focuses on fun and on developing franchisable characters (think about how many Mario games there have been!). What makes a game fun or memorable is a difficult question and often involves much trial and error! For us however, we only have a few weeks to complete the contract for this game.
+- Step 3 - Game Engine
+  - Miyamoto focuses on fun and on developing franchisable characters (think about how many Mario games there have been!). What makes a game fun or memorable is a difficult question and often involves much trial and error! For us however, we only have a few weeks to complete the contract for this game--we will focus on the game engine!
 
 For that reason we are going to focus on:
 
 * Building tools that can be reused (A sprite editor and tilemap editor) to speed up the develpment of our game.
-* Implementing 1 special technique/powerup/gameplay feature that makes our game unique
+* Implementing 1 special technique/powerup/gameplay feature that makes our game unique.
 
 ## Our technology stack
 
-Shigeru has decided that you will be using the following technology stack:
+Shigeru Miyamoto has decided that you will be using the following technology stack:
 
 * Modern C++ (11/14/17)
 * SDL library
 
 Miyamoto prefers these tools because SDL is an industry standard, cross platform, and using C++ will give us some additional speed. 
 
-Nintendo however likes to do things there own way. Perhaps there will be some surprises in the future! Program your project accordingly.
+Nintendo however likes to do things their own way. Perhaps there will be some surprises in the future! Program your project accordingly.
 
 ## Game Requirements
 
@@ -56,6 +56,7 @@ The platform game you are building in part 1 has the following requirements.
 - There should have some 'background' image (i.e. clouds in the sky, mountains, a blue gradient, etc) in your world.
 - You should think about 'enemy characters' (This will be implemented in part 2)
 - You should think about a 'special feature' or gameplay mechanic that makes your game unique.
+- You should have a Resource Manager
 - There should be a tile editor (see next section)
 - You should include a sprite editor (see next section)
 
@@ -81,7 +82,7 @@ A simplistic tile editor may be think of a tile map is a collection of values st
 
 If I click within some x and y coordinates, that increments or decrements the value and changes the tile. This is considered an acceptable version of a tile editor for this assignment.
 
-You may use any language (Python, C++, C#, etc.) to implement your tile editor. It need not have a fancy GUI, but that is encouraged as time permits
+You may use any language (Python, C++, C#, C, Rust, etc.) to implement your tile editor. It need not have a fancy GUI, but that is encouraged as time permits.
 
 Here is some inspiration for building a tile editor
 
