@@ -4,16 +4,16 @@
 
 ## The Business
 
-The gaming business is a volatile business. It is volatile because it changes and moves forward, innovates, and then the cycle repeats. The good news is that your team has made millions from the success of breakout. You have successfully completed your contract with your old boss and your companies getting positive publicity.
+The gaming business is a volatile business. It is volatile because it changes and moves forward, innovates, and then the cycle repeats. The good news is that your team has made millions from the success of breakout. You have successfully completed your contract with your old boss and your companies getting positive publicity. Your studio has also decided to take on a new project.
 
-This time however, you have caught the attention of another game designer: Shigeru Miyamoto
+This time however, you have caught the attention of another game designer: Shigeru Miyamoto.
 
 ## Shigeru Miyamoto
 <img align="left" width="100px" src="./media/miyamoto.JPG" style="float:left;">
 
-[Shigeru Miyamoto](https://en.wikipedia.org/wiki/Shigeru_Miyamoto) is the legendary game designer of Donkey Kong, Mario and several other Nintendo franchises. Miyamoto was impressed with your previous project, and agreeds that fun games are not all about fancy graphics, but are rather all about fun! 
+[Shigeru Miyamoto](https://en.wikipedia.org/wiki/Shigeru_Miyamoto) is the legendary game designer of Donkey Kong, Mario and several other Nintendo franchises.  Miyamoto focuses on fun and on developing franchisable characters (think about how many Mario games there have been!). What makes a game fun or memorable is a difficult question and often involves much trial and error! Miyamoto was very impressed with your previous project and engineering skills. He understands building games requires having solid tools to help iterate, and thinks your game engine design skills will be useful for his next big project.
 
-For inspiration during this project, it may be worthwhile to discuss with your team you favorite Nintendo game when meeting with your team. :)
+**Note:** For inspiration during this project, it may be worthwhile to discuss with your team you favorite Nintendo game when meeting with your team. :)
 
 ## Platformer Games
 <img align="right" width="250px" src="./media/mario.png" style="float:right;">
@@ -24,11 +24,11 @@ For this series of assignments, we are going to build a 2D platformer game. Plat
   - http://supermarioemulator.com/mario.php
 - Step 2 - Form a team!
   - https://docs.google.com/spreadsheets/d/1IjfozgB3hL3Ry3Zfsl3yQoY_taXySCmfaRyMO3XK6y0/edit?usp=sharing
-  - Make sure you form a team! (If you are reading this, make sure your teammates join your same repository)
-- Step 3 - Game Engine
-  - Miyamoto focuses on fun and on developing franchisable characters (think about how many Mario games there have been!). What makes a game fun or memorable is a difficult question and often involves much trial and error! For us however, we only have a few weeks to complete the contract for this game--we will focus on the game engine!
+  - Make sure you form a team! (If you are reading this, make sure your teammates join your same repository and add their names to the [README.md](./../README.md) on the frontpage)
+- Step 3 - Build the game engine and supporting tools
+  - We only have a few weeks to complete the contract for this game--we will focus on the game engine and supporting tools!
 
-For that reason we are going to focus on:
+We are going to focus on:
 
 * Building tools that can be reused (A sprite editor and tilemap editor) to speed up the develpment of our game.
 * Implementing 1 special technique/powerup/gameplay feature that makes our game unique.
@@ -54,11 +54,12 @@ The platform game you are building in part 1 has the following requirements.
 - There should be tiles that a character can run on and jump over
   - That means you should think about a 2D collision system
 - There should have some 'background' image (i.e. clouds in the sky, mountains, a blue gradient, etc) in your world.
-- You should think about 'enemy characters' (This will be implemented in part 2)
-- You should think about a 'special feature' or gameplay mechanic that makes your game unique.
 - You should have a Resource Manager
 - There should be a tile editor (see next section)
 - You should include a sprite editor (see next section)
+- You should think about 'enemy characters' (This will be implemented in part 2)
+- You should think about a 'special feature' or gameplay mechanic that makes your game unique (This will be implemented in part 2).
+
 
 ### Tile Editor
 A tile editor is a simple tool that allows you to place, select, and draw tiles to preview your level.
@@ -122,11 +123,11 @@ Tips:
       <th align="center">Description</th>
     </tr>
     <tr>
-      <td>20% (Core Requirements)</td>
-      <td align="left">Core - Your code <b>must</b> compile using 'python build.py' and work on the first try. Try putting it on a clean machine before submitting to see if this works on your development operating system.</td>
+      <td>10% (Core Requirements)</td>
+      <td align="left">Core - Your code <b>must</b> compile using 'python build.py' and work on the first try. Try putting it on a clean machine before submitting to see if this works on your development operating system. Any supporting tools you build should similiarly compile easily (e.g. build_tile_editor.py or build_sprite_editor.py)</td>
     </tr>    
     <tr>
-      <td>20% (Core Requirements)</td>
+      <td>10% (Core Requirements)</td>
       <td align="left">Core Is their good programming style(classes, OOP), was their only 1 commit right before the deadline? Did everyone make at least one commit in the project. Did you organize your project in the appropriate folders.</td>
     </tr>
     <tr>
@@ -134,7 +135,15 @@ Tips:
       <td align="left">The Game requirements should be met above.</td>
     </tr>
     <tr>
-      <td>30% (Polish)</td>
+      <td>10% (Sprite Editor)</td>
+      <td align="left">Is their a sprite editor that previews sprite animations?</td>
+    </tr>
+    <tr>
+      <td>10% (Tilemap Editor)</td>
+      <td align="left">Is their a Tile Map editor to help build levels?</td>
+    </tr>    
+    <tr>      
+      <td>10% (Polish)</td>
       <td align="left">The game and editors should feel polished and work.</td>
     </tr>
   </tbody>
