@@ -69,7 +69,7 @@ A tile editor is a simple tool that allows you to place, select, and draw tiles 
 - Your tile editor should support loading previously created maps
 - Your tile editor should support saving previously created maps
 
-A simplistic tile editor may be think of a tile map is a collection of values stored in an array
+A simplistic tile editor is to have values stored in a 2D-array which represent a map. An example is below:
 
 ```
 0 0 0 0 0 0 0 0 
@@ -81,11 +81,11 @@ A simplistic tile editor may be think of a tile map is a collection of values st
 1 = some enemy character
 2 = some tile
 
-If I click within some x and y coordinates, that increments or decrements the value and changes the tile. This is considered an acceptable version of a tile editor for this assignment.
+The above is the data representation. An editor could be built on top of this by simply having 'bounds' around each of the numbers. That is, if I click within some x and y coordinates, that increments or decrements the value and changes the tile. This is considered an acceptable version of a tile editor for this assignment.
 
-You may use any language (Python, C++, C#, C, Rust, etc.) to implement your tile editor. It need not have a fancy GUI, but that is encouraged as time permits.
+You may use any language (Python, C++, C#, C, DLang, Rust, etc.) to implement your tile editor. It need not have a fancy GUI, but that is encouraged as time permits.
 
-Here is some inspiration for building a tile editor
+Here is some inspiration for building a tile editor.
 
 * V-Play editor https://www.youtube.com/watch?v=65SQoW2Jd94 
 * Dev blog showing an editor https://www.youtube.com/watch?v=nnm2ARAcSJ0
@@ -99,13 +99,13 @@ Your sprite editor needs the following functionality.
 - Specify dimensions of how big each tile is.
 - Be able to preview an arbitrary number of frames
 
-A simplisitic sprite editor may be a terminal based tool that loads an image, asks you the dimensions of a sprite, and then which frames to play.  This is considered an acceptable version of a tile editor for this assignment.
+A simplisitic sprite editor may be a terminal based tool that loads an image, asks you the dimensions of a sprite, and then which frames to play.  This is considered an acceptable version of a tile editor for this assignment. You may for example assume each frame within a spritesheet is the same size (This is an acceptable assumption).
 
 Here is some inspiration for building a (fancy) sprite editor:
 
 * https://www.youtube.com/watch?v=8bKCdmgJnPM
 
-You may use any language (Python, C++, C#, etc.) to implement your tile editor. It need not have a fancy GUI, but that is encouraged as time permits.
+You may use any language (Python, C++, C#, C, DLang, Rust, etc.) to implement your tile editor. It need not have a fancy GUI, but that is encouraged as time permits.
 
 ### Game
 
