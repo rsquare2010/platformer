@@ -53,6 +53,8 @@ We do not want to forget about topics we have previously learned about!
 1. Implement frame capping on your platformer to ensure a smooth experience! 
 	- You must print out the frame rate somewhere on your game (the console or otherwise the screen) so we can validate it is working. 
 	- You may document a way to toggle the display of the framerate if you like.
+2. You must have a resource manager
+	- This time we are potentially working with more textures, and likely multiple copies of them. You must have a resource manager (even if you only load one spritesheet--remember you are building an engine that can scale in the future!).
 
 ## Rubric (8% of overall grade)
 
@@ -64,7 +66,7 @@ We do not want to forget about topics we have previously learned about!
     </tr>
     <tr>
       <td>20% Core Requirements Feature</td>
-      <td align="left">Is your game frame capped? Can we see or toggle the framerate?</td>
+      <td align="left">Is your game frame capped and can we see or toggle the framerate? (10%) Did you implement a Resource Manager? (10%)</td>
     </tr>    	  
     <tr>
       <td>40% Special Feature (X-Factor)</td>
