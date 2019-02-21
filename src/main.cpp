@@ -25,7 +25,7 @@ const int SCR_CEN_X = SCR_WDT/2;
 const int SCR_CEN_Y = SCR_HGT/2;
 #define FPS 30
 
-void mousePress(SDL_MouseButtonEvent& b);
+
 
 /**tou
  * This this the main function fo the game. This is function implements the game loop.
@@ -81,7 +81,6 @@ int main(int argc, char **argv) {
 
 
   Uint32 startTick;
-  SDL_Event occur;
 
   int mouseX, mouseY;
   int mouseGrid;
@@ -95,15 +94,16 @@ int main(int argc, char **argv) {
 
 
   GridLayover* gl = new GridLayover(renderer,SCR_WDT,SCR_HGT);
-  vector<Coordinates *> placements;
+
+
 
   while (run) {
 
 
 
     startTick = SDL_GetTicks();
-    SDL_PollEvent(&occur);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+    //SDL_PollEvent(&occur);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
     gl->draw();
 
@@ -112,37 +112,23 @@ int main(int argc, char **argv) {
 
 
 
-    if (occur.type==SDL_QUIT) {
-      run = false;
-    }
 
-    if (occur.type==SDL_KEYDOWN) {
-      switch (occur.key.keysym.sym) {
 
-        case SDLK_a:
-        case (SDLK_RIGHT):
+    SDL_GetMouseState(&mouseX, &mouseY);
 
+    mouseGrid = ((SCR_WDT/50)*(mouseY/50))+(mouseX/50);
+
+
+    SDL_Event e;
+    while(SDL_PollEvent(&e)){
+      switch(e.type){
+        case SDL_QUIT:
+          run = false;
           break;
-        case SDLK_d:
-        case (SDLK_LEFT):
-
+        case SDL_MOUSEBUTTONDOWN:
+          cout<<"hello \n";
+          grid[mouseY/50][mouseX/50] = 1;
           break;
-        case SDLK_p:
-
-          break;
-
-        case SDLK_r:
-
-          break;
-
-        case SDLK_m:
-
-          break;
-
-        case SDLK_q:run = false;
-          break;
-
-
 
       }
     }
@@ -150,9 +136,6 @@ int main(int argc, char **argv) {
 
 
 
-    SDL_GetMouseState(&mouseX, &mouseY);
-
-    mouseGrid = ((SCR_WDT/50)*(mouseY/50))+(mouseX/50);
 
     //cout<<"mouseX: "<<mouseX/50<<"mouseY: "<<mouseY/50<<endl;
 
@@ -160,41 +143,6 @@ int main(int argc, char **argv) {
     selection->updateColor(255,255,255,255);
     selection->updateRectangle(gl->getCoordinate(mouseGrid)->getX(), gl->getCoordinate(mouseGrid)->getY(),50,50);
     selection->draw();
-
-
-
-
-      if(occur.type == SDL_MOUSEBUTTONDOWN) {
-        cout<<"mouse is pressed!!"<<endl;
-        grid[mouseY/50][mouseX/50] = 1;
-
-        ismousePressed = true;
-
-
-
-      }
-//
-      if(occur.type == SDL_MOUSEBUTTONUP ) {
-        cout<<"mouse up!!"<<endl;
-        ismousePressed = false;
-      }
-
-
-
-
-
-
-
-//
-//      if(ismousePressed && occur.type == SDL_MOUSEMOTION ) {
-//        cout<<"mouse in motion!!"<<endl;
-//        grid[mouseY/50][mouseX/50] = 1;
-//
-//
-//      }
-
-
-
 
 
 
@@ -219,39 +167,6 @@ int main(int argc, char **argv) {
     }
 
     cout<<"**********************************************\n";
-
-
-
-
-    for(Coordinates* c: placements){
-      Rectangle* placement = new Rectangle(renderer,c->getX(), c->getY(),50,50);
-      placement->updateColor(255,0,0,255);
-      placement->draw();
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -282,6 +197,7 @@ int main(int argc, char **argv) {
   return 0;
 
 }
+
 
 
 
