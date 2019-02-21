@@ -4,9 +4,7 @@
 
 Team Name: Sundays are fundays.
 
-*TODO*:
-Update your Team member Names here (Up to 4) You will work with this same team through parts 1, 2, and 3.
-
+Team Members:
 1. Daniel Nachum
 2. Soumyadeep Sinha
 3. Rahul Ravindran
