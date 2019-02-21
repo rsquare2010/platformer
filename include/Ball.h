@@ -7,8 +7,8 @@
 #include "SDL.h"
 #include "Coordinates.h"
 #include <iostream>
-#define SCR_WDT  800
-#define SCR_HGT  500
+#define SCR_WDT  1800
+#define SCR_HGT  100
 #define BNR_HGT  65
 
 using namespace std;

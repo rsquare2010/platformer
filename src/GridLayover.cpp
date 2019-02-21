@@ -8,13 +8,14 @@ void GridLayover::draw(){
 
 
 int hightTracker = 0;
-for(int i=0;i<scH;i = i+50) {
+for(int i=0;i<scH;i = i+grid) {
 
 
-  for (int j = 0; j < scW; j = j + 50) {
+  for (int j = 0; j < scW; j = j + grid) {
 
     hightTracker++;
-    Rectangle *a = new Rectangle(this->ren, j, i, 49, 49);
+    Rectangle *a = new Rectangle(this->ren, j, i, grid-1, grid-1);
+    a->updateColor(159, 193, 249,255);
     a->draw();
 
   }

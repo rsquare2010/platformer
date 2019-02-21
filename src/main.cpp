@@ -19,11 +19,13 @@
 using namespace std;
 using namespace Json;
 
-#define SCR_WDT  800
-#define SCR_HGT  500
+#define SCR_WDT  1200
+#define SCR_HGT  200
 const int SCR_CEN_X = SCR_WDT/2;
 const int SCR_CEN_Y = SCR_HGT/2;
 #define FPS 30
+#define grid 20
+
 
 
 
@@ -84,8 +86,8 @@ int main(int argc, char **argv) {
 
   int mouseX, mouseY;
   int mouseGrid;
-  Rectangle* selection = new Rectangle(renderer,0, 0,50,50);
-  int grid[500/50][800/50] = {};
+  Rectangle* selection = new Rectangle(renderer,0, 0,grid,grid);
+  int gridArray[SCR_HGT/grid][SCR_WDT/grid] = {};
   bool ismousePressed = false;
 
 
@@ -95,7 +97,8 @@ int main(int argc, char **argv) {
 
   GridLayover* gl = new GridLayover(renderer,SCR_WDT,SCR_HGT);
 
-
+  bool drag = false;
+  int value = 0;
 
   while (run) {
 
@@ -116,7 +119,8 @@ int main(int argc, char **argv) {
 
     SDL_GetMouseState(&mouseX, &mouseY);
 
-    mouseGrid = ((SCR_WDT/50)*(mouseY/50))+(mouseX/50);
+    mouseGrid = ((SCR_WDT/grid)*(mouseY/grid))+(mouseX/grid);
+
 
 
     SDL_Event e;
@@ -126,12 +130,34 @@ int main(int argc, char **argv) {
           run = false;
           break;
         case SDL_MOUSEBUTTONDOWN:
-          cout<<"hello \n";
-          grid[mouseY/50][mouseX/50] = 1;
+          //cout<<"hello \n";
+
+          if(gridArray[mouseY/grid][mouseX/grid] == 3){
+            gridArray[mouseY/grid][mouseX/grid] = -1;
+          }
+          gridArray[mouseY/grid][mouseX/grid] = gridArray[mouseY/grid][mouseX/grid]+1;
+          value = gridArray[mouseY/grid][mouseX/grid];
+          drag = true;
+        case SDL_MOUSEMOTION:
+          if(drag){
+            //cout<<"mouse in motion";
+            gridArray[mouseY/grid][mouseX/grid] = value;
+          }
           break;
+        case SDL_MOUSEBUTTONUP:
+          //cout<<"mouse up\n";
+          drag = false;
+          value =0;
+          break;
+
+
+
 
       }
     }
+
+
+
 
 
 
@@ -141,23 +167,33 @@ int main(int argc, char **argv) {
 
 
     selection->updateColor(255,255,255,255);
-    selection->updateRectangle(gl->getCoordinate(mouseGrid)->getX(), gl->getCoordinate(mouseGrid)->getY(),50,50);
+    selection->updateRectangle(gl->getCoordinate(mouseGrid)->getX(), gl->getCoordinate(mouseGrid)->getY(),grid,grid);
     selection->draw();
 
 
 
-    for(int i=0;i<SCR_HGT/50;i++) {
+    for(int i=0;i<SCR_HGT/grid;i++) {
 
 
-      for (int j = 0; j < SCR_WDT/50; j++) {
+      for (int j = 0; j < SCR_WDT/grid; j++) {
 
-        cout<<grid[i][j]<<", ";
+        cout<<gridArray[i][j]<<", ";
 
-        if(grid[i][j] == 1){
-          int rectGrid = ((SCR_WDT/50)*(i))+(j);
+        if(gridArray[i][j] != 0){
+          int rectGrid = ((SCR_WDT/grid)*(i))+(j);
          // cout<<"the value "<<i<<"and j is "<<j<<"of grid is: "<<rectGrid<<endl;
-          Rectangle* a = new Rectangle(renderer,gl->getCoordinate(rectGrid)->getX(),gl->getCoordinate(rectGrid)->getY(),50,50);
-          a->updateColor(255,0,0,255);
+          Rectangle* a = new Rectangle(renderer,gl->getCoordinate(rectGrid)->getX(),gl->getCoordinate(rectGrid)->getY(),grid,grid);
+
+          if(gridArray[i][j] == 1){
+            a->updateColor(255,0,0,255);
+          }
+          else if(gridArray[i][j] == 2){
+            a->updateColor(255,255,255,255);
+
+          } else if(gridArray[i][j] == 3){
+            a->updateColor(0,255,0,255);
+          }
+
           a->draw();
 
         }

@@ -9,6 +9,7 @@
 using namespace std;
 #include "Rectangle.h"
 #include "Coordinates.h"
+#define grid 20
 
 class GridLayover {
 
@@ -18,8 +19,8 @@ class GridLayover {
     this->ren = render;
     this->scW = screenW;
     this->scH = screenH;
-    for(int i=0;i<scH;i = i+50) {
-      for (int j = 0; j < scW; j = j + 50) {
+    for(int i=0;i<scH;i = i+grid) {
+      for (int j = 0; j < scW; j = j + grid) {
 
         gridLayout.push_back(new Coordinates(j,i));
 
