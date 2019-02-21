@@ -2,15 +2,12 @@
 
 ## Team
 
-Team Name: * Edit this to something cool here *
+Team Name: Sundays are fundays.
 
-*TODO*:
-Update your Team member Names here (Up to 4) You will work with this same team through parts 1, 2, and 3.
-
-1. *my name is...*
-2. *my name is...*
-3. *my name is...*
-4. *my name is...*
+Team Members:
+1. Daniel Nachum
+2. Soumyadeep Sinha
+3. Rahul Ravindran
 
 ## Logistics
 
