@@ -16,6 +16,7 @@
 #include "json/json.h"
 #include "../include/GridLayover.h"
 
+
 using namespace std;
 using namespace Json;
 
@@ -25,6 +26,8 @@ const int SCR_CEN_X = SCR_WDT/2;
 const int SCR_CEN_Y = SCR_HGT/2;
 #define FPS 30
 #define grid 20
+
+SDL_Surface* loadSurface( std::string path );
 
 
 
@@ -79,6 +82,9 @@ int main(int argc, char **argv) {
   }
 
 
+
+
+
 // Clear the window and make it all red
 
 
@@ -89,6 +95,8 @@ int main(int argc, char **argv) {
   Rectangle* selection = new Rectangle(renderer,0, 0,grid,grid);
   int gridArray[SCR_HGT/grid][SCR_WDT/grid] = {};
   bool ismousePressed = false;
+
+
 
 
 
@@ -188,13 +196,20 @@ int main(int argc, char **argv) {
             a->updateColor(255,0,0,255);
           }
           else if(gridArray[i][j] == 2){
-            a->updateColor(255,255,255,255);
+
+            SDL_Surface* image = SDL_LoadBMP("./media/sprite.bmp");
+
+            SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, image);
+            SDL_Rect dstrect = { gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(),grid,grid};
+            SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+
+            //a->updateColor(255,255,255,255);
 
           } else if(gridArray[i][j] == 3){
             a->updateColor(0,255,0,255);
           }
 
-          a->draw();
+          //a->draw();
 
         }
 
@@ -233,6 +248,7 @@ int main(int argc, char **argv) {
   return 0;
 
 }
+
 
 
 

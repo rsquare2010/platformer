@@ -8,7 +8,7 @@
 #include "Coordinates.h"
 #include <iostream>
 #define SCR_WDT  1800
-#define SCR_HGT  100
+#define SCR_HGT  200
 #define BNR_HGT  65
 
 using namespace std;
