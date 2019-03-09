@@ -41,7 +41,8 @@ SDL_Surface* loadSurface( std::string path );
 int main(int argc, char **argv) {
 
 
-
+  ResourceManager* rm = ResourceManager::getInstance();
+  rm->startUp();
   SDL_Window *window;
   SDL_Renderer *renderer;
   bool run = true;
@@ -185,6 +186,10 @@ int main(int argc, char **argv) {
 
       for (int j = 0; j < SCR_WDT/grid; j++) {
 
+        SDL_Rect dstrect;
+        SDL_Texture * texture;
+        SDL_Surface* image;
+
         cout<<gridArray[i][j]<<", ";
 
         if(gridArray[i][j] != 0){
@@ -197,11 +202,11 @@ int main(int argc, char **argv) {
           }
           else if(gridArray[i][j] == 2){
 
-            SDL_Surface* image = SDL_LoadBMP("./media/sprite.bmp");
+            image = (SDL_Surface*) rm->getValue("Ground");
 
-            SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, image);
-            SDL_Rect dstrect = { gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(),grid,grid};
-            SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+            texture = SDL_CreateTextureFromSurface(renderer, image);
+            dstrect = { gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(),grid,grid};
+
 
             //a->updateColor(255,255,255,255);
 
@@ -209,6 +214,7 @@ int main(int argc, char **argv) {
             a->updateColor(0,255,0,255);
           }
 
+          SDL_RenderCopy(renderer, texture, NULL, &dstrect);
           //a->draw();
 
         }

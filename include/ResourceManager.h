@@ -60,17 +60,17 @@ class ResourceManager {
    */
   ResourceManager() {
 
-    Json::Value config;
-    std::ifstream config_file("Media/configuration.json", std::ifstream::binary);
-    config_file >> config;
-
-    gameConfig = config;
-
-    Json::Value language;
-    std::ifstream language_file("Media/language.json", std::ifstream::binary);
-    language_file >> language;
-
-    this->language = language;
+//    Json::Value config;
+//    std::ifstream config_file("Media/configuration.json", std::ifstream::binary);
+//    config_file >> config;
+//
+//    gameConfig = config;
+//
+//    Json::Value language;
+//    std::ifstream language_file("Media/language.json", std::ifstream::binary);
+//    language_file >> language;
+//
+//    this->language = language;
 
   };
 
