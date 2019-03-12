@@ -23,12 +23,20 @@ const int SCR_CEN_X = SCR_WDT/2;
 const int SCR_CEN_Y = SCR_HGT/2;
 #define FPS 30
 void detectCollisionWithWallY1(Character *b, World* wall);
+void detectSideCollisionWithWallY1(Character *b, World* wall);
 bool checkCollision1(Coordinates *obj1,
                     int obj1Height,
                     int obj1Width,
                     Coordinates *obj2,
                     int obj2Height,
                     int obj2Width);
+
+bool checkSideCollision1(Coordinates *obj1,
+                         int obj1Height,
+                         int obj1Width,
+                         Coordinates *obj2,
+                         int obj2Height,
+                         int obj2Width);
 bool sideCollision;
 
 /**
@@ -110,6 +118,9 @@ int main(int argc, char **argv) {
             case (SDLK_LEFT)://cout << "Going left\n";
 
               break;
+            case (SDLK_UP)://cout << "Going Up\n";
+                mario->jump();
+              break;
 
             case SDLK_q:run = false;
               break;
@@ -119,19 +130,9 @@ int main(int argc, char **argv) {
       }
     }
 
-
-
-
-
-
-    //world->drawWorld();
-
-
-
     detectCollisionWithWallY1(mario, world);
+
     mario->gravity();
-
-
     mario->draw();
 
     for (int i = 0; i < groundA.size(); i++) {
@@ -161,19 +162,25 @@ int main(int argc, char **argv) {
 
 void detectCollisionWithWallY1(Character *b, World* wall) {
 
-  //cout<<"checking wall Y\n";
   Coordinates *coorBall = b->getCoordinates();
 
   vector < GroundTile* > test = wall->returnGround();
 
 
   bool didCollide = false;
+  bool didSideCollide = false;
 
   for (int i = 0; i < test.size(); i++) {
 
-    if (checkCollision1(coorBall, 40, 5, test[i]->getCoordinates(), 40, 40)) {
+    if (checkCollision1(coorBall, 40, 40, test[i]->getCoordinates(), 40, 40)) {
 
       didCollide = true;
+
+      if (checkSideCollision1(coorBall, 40, 40, test[i]->getCoordinates(), 40, 40)) {
+
+        didSideCollide = true;
+
+      }
       break;
 
     }
@@ -181,16 +188,36 @@ void detectCollisionWithWallY1(Character *b, World* wall) {
 
   }
 
+  if(didSideCollide){
+
+    b->stopMovingInXDir();
+  }else{
+
+    b->startMovingInXDirection();
+
+
+  }
+
+
   if(didCollide){
-    //cout<<"i am colliding***********************************************\n";
+
     b->stopFalling();
+
   } else{
-    //cout<<"i am not colliding\n";
+
     b->startFalling();
   }
 
 
+
+
 }
+
+
+
+
+
+
 
 bool checkCollision1(Coordinates *obj1,
                                int obj1Height,
@@ -212,19 +239,37 @@ bool checkCollision1(Coordinates *obj1,
     return false;
   }
 
+
+  return true;
+}
+
+bool checkSideCollision1(Coordinates *obj1,
+                     int obj1Height,
+                     int obj1Width,
+                     Coordinates *obj2,
+                     int obj2Height,
+                     int obj2Width) {
+
+  sideCollision = false;
+
+
   if (obj1->getX() + obj1Width - obj2->getX() < obj2->getX() + obj2Width - obj1->getX()
       && obj1->getX() + obj1Width - obj2->getX() < obj1->getY() + obj1Height - obj2->getY()
       && obj1->getX() + obj1Width - obj2->getX() < obj2->getY() + obj2Height - obj1->getY()) {
+
     sideCollision = true;
   }
 
   if (obj2->getX() + obj2Width - obj1->getX() < obj1->getX() + obj1Width - obj2->getX()
       && obj2->getX() + obj2Width - obj1->getX() < obj1->getY() + obj1Height - obj2->getY()
       && obj2->getX() + obj2Width - obj1->getX() < obj2->getY() + obj2Height - obj1->getY()) {
+
     sideCollision = true;
   }
 
-  return true;
+  return  sideCollision;
 }
+
+
 
 

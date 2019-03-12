@@ -41,6 +41,14 @@ class Character {
 
   void startFalling();
 
+  void stopMovingInXDir();
+
+  void startMovingInXDirection();
+
+  void jump();
+
+
+
 
  private:
   SDL_Renderer *render;

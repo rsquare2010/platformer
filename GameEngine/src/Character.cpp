@@ -7,7 +7,7 @@
 Character::Character(SDL_Renderer *rend, int xc, int yc) {
   render = rend;
   coords = new Coordinates(xc, yc);
-  xVelocity = 0;
+  xVelocity = 3;
   yVelocity = 3;
 
 }
@@ -25,7 +25,7 @@ void Character::gravity(){
   int x = coords->getX();
   int y = coords->getY();
 
-  x = x + xVelocity;
+
   y = y + yVelocity;
 
   updateCoordinates(x, y);
@@ -34,7 +34,7 @@ void Character::gravity(){
 void Character::moveInXDirection() {
   int x = coords->getX();
   int y = coords->getY();
-  x = x + 5;
+  x = x + xVelocity;
   updateCoordinates(x, y);
 
 
@@ -46,8 +46,28 @@ void Character::stopFalling() {
 
 }
 void Character::startFalling() {
-  yVelocity = 5;
+  yVelocity = 2;
 }
+
+void Character::stopMovingInXDir(){
+  xVelocity = 0;
+}
+
+void Character::startMovingInXDirection(){
+  xVelocity = 5;
+}
+
+void Character::jump(){
+  int x = coords->getX();
+  int y = coords->getY();
+  y = y - 5;
+  updateCoordinates(x, y);
+}
+
+
+
+
+
 
 void Character::updateCoordinates(int xc, int yc) {
 
