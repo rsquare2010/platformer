@@ -1,0 +1,36 @@
+{
+  "English" : {
+    "Lives_0": "Lives: ",
+    "Lives_1": "Lives: #",
+    "Lives_2": "Lives: ##",
+    "Lives_3": "Lives: ###",
+    "Lives_Error": "Lives: Error",
+    "Score": "Score: ",
+    "Win": "You Win!",
+    "Lose": "You Lose!",
+    "Level-1": "Level 1",
+    "Level-2": "Level 2",
+    "Level-3": "Level 3",
+    "Reset-Lose": "'R': Reset Level",
+    "Reset-Win": "'R': Restart Game",
+    "Resume": "'P': Resume",
+    "Pause": "'P': Pause"
+  },
+  "French" : {
+    "Lives_0": "Vies: ",
+    "Lives_1": "Vies: #",
+    "Lives_2": "Vies: ##",
+    "Lives_3": "Vies: ###",
+    "Lives_Error": "Vies: Erreur",
+    "Score": "Marquer: ",
+    "Win": "Vous Gagnez!",
+    "Lose": "Vous Perdez!",
+    "Level-1": "Niveau 1",
+    "Level-2": "Niveau 2",
+    "Level-3": "Niveau 3",
+    "Reset-Lose": "'R': Reinitialiser",
+    "Reset-Win": "'R': Redemarrer",
+    "Resume": "'P': Reprendre",
+    "Pause": "'P': Mettre en Pause"
+  }
+}
