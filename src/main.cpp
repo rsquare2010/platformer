@@ -21,7 +21,7 @@
 using namespace std;
 using namespace Json;
 
-#define SCR_WDT  1200
+#define SCR_WDT  800
 #define SCR_HGT  200
 const int SCR_CEN_X = SCR_WDT/2;
 const int SCR_CEN_Y = SCR_HGT/2;
