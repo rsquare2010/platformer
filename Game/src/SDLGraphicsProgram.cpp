@@ -357,7 +357,7 @@ void detectEnemyCollisionWithWallY1(Enemy *b, World* wall) {
 
   } else{
 
-    b->startFalling();
+   // b->startFalling();
   }
 
 

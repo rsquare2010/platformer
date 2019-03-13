@@ -9,12 +9,12 @@ class Enemy {
  public:
 
   static const int WIDTH = 21;
-  static const int HEIGHT = 33;
+  static const int HEIGHT = 40;
 
   Enemy(SDL_Renderer* ren, int startPosX, int startPosY ) {
     this->mPosX = startPosX;
-    this->mPosY = startPosY;
-    spriteSheet = SDL_LoadBMP("./run.bmp");
+    this->mPosY = startPosY-10;
+    spriteSheet = SDL_LoadBMP("./enemy.bmp");
     if(spriteSheet==NULL) {
       SDL_Log("Failed to allocate surface");
     } else {
@@ -128,7 +128,7 @@ class Enemy {
     Src.x = currentFrame*21;
     Src.y = 0;
     Src.w = 21;
-    Src.h = 33;
+    Src.h = 40;
 
     move();
   }
