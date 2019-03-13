@@ -18,7 +18,7 @@ using namespace Json;
 #define grid 20
 
 #define SCR_WDT  800
-#define SCR_HGT  500
+#define SCR_HGT  400
 const int SCR_CEN_X = SCR_WDT/2;
 const int SCR_CEN_Y = SCR_HGT/2;
 #define FPS 30

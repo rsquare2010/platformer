@@ -61,6 +61,7 @@ void Character::jump(){
   int x = coords->getX();
   int y = coords->getY();
   y = y - 5;
+  x = x + 5;
   updateCoordinates(x, y);
 }
 
