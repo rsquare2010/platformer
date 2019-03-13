@@ -14,6 +14,7 @@
 #include <SDL_mixer.h>
 #include <vector>
 #include "json/json.h"
+#include <fstream>
 #include "../include/GridLayover.h"
 
 
@@ -27,8 +28,13 @@ const int SCR_CEN_Y = SCR_HGT/2;
 #define FPS 30
 #define grid 20
 
-SDL_Surface* loadSurface( std::string path );
+bool isColorCoded = true;
 
+
+
+
+SDL_Surface* loadSurface( std::string path );
+void saveFile(int gridArray[][SCR_WDT/grid]);
 
 
 
@@ -114,7 +120,6 @@ int main(int argc, char **argv) {
 
 
     startTick = SDL_GetTicks();
-    //SDL_PollEvent(&occur);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
     gl->draw();
@@ -136,6 +141,7 @@ int main(int argc, char **argv) {
     while(SDL_PollEvent(&e)){
       switch(e.type){
         case SDL_QUIT:
+          saveFile(gridArray);
           run = false;
           break;
         case SDL_MOUSEBUTTONDOWN:
@@ -190,7 +196,7 @@ int main(int argc, char **argv) {
         SDL_Texture * texture;
         SDL_Surface* image;
 
-        cout<<gridArray[i][j]<<", ";
+        //cout<<gridArray[i][j]<<", ";
 
         if(gridArray[i][j] != 0){
           int rectGrid = ((SCR_WDT/grid)*(i))+(j);
@@ -198,32 +204,62 @@ int main(int argc, char **argv) {
           Rectangle* a = new Rectangle(renderer,gl->getCoordinate(rectGrid)->getX(),gl->getCoordinate(rectGrid)->getY(),grid,grid);
 
           if(gridArray[i][j] == 1){
-            a->updateColor(255,0,0,255);
+
+            if(isColorCoded) {
+               a->updateColor(255,0,0,255);
+            }else {
+              image = (SDL_Surface *) rm->getValue("Character");
+              texture = SDL_CreateTextureFromSurface(renderer, image);
+              dstrect = {gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(), grid, grid};
+            }
           }
           else if(gridArray[i][j] == 2){
 
-            image = (SDL_Surface*) rm->getValue("Ground");
+            if(isColorCoded) {
+              a->updateColor(255,255,255,255);
+            }
+            else{
+              image = (SDL_Surface*) rm->getValue("Ground");
 
-            texture = SDL_CreateTextureFromSurface(renderer, image);
-            dstrect = { gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(),grid,grid};
+              texture = SDL_CreateTextureFromSurface(renderer, image);
+              dstrect = { gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(),grid,grid};
 
 
-            //a->updateColor(255,255,255,255);
+            }
+
+
 
           } else if(gridArray[i][j] == 3){
-            a->updateColor(0,255,0,255);
+            if(isColorCoded) {
+              a->updateColor(0, 255, 0, 255);
+            }
+            else{
+
+            }
+
           }
 
-          SDL_RenderCopy(renderer, texture, NULL, &dstrect);
-          //a->draw();
+          if(isColorCoded) {
+            a->draw();
+          }else{
+            SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+          }
+
+
 
         }
 
       }
-      cout<<"\n";
+      //cout<<"\n";
     }
 
-    cout<<"**********************************************\n";
+    //cout<<"**********************************************\n";
+
+
+
+
+
+
 
 
 
@@ -252,6 +288,25 @@ int main(int argc, char **argv) {
 
 
   return 0;
+
+}
+
+
+void saveFile(int gridArray[SCR_HGT/grid][SCR_WDT/grid]){
+
+  ofstream myfile ("./media/example.txt");
+  if (myfile.is_open())
+  {
+    for(int i=0;i<SCR_HGT/grid;i++) {
+
+      for (int j = 0; j < SCR_WDT/grid; j++) {
+        myfile << gridArray[i][j]<< ", ";
+      }
+
+    }
+    myfile.close();
+  }
+  else cout << "Unable to open file";
 
 }
 

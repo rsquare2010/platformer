@@ -29,7 +29,8 @@ void *ResourceManager::getValue(string key) {
  */
 int ResourceManager::startUp() {
 
-  SDL_Surface* ground = SDL_LoadBMP("./media/sprite.bmp");
+  SDL_Surface* character = SDL_LoadBMP("./media/char.bmp");
+  SDL_Surface* ground = SDL_LoadBMP("./media/Tiles.bmp");
 
   //cout<<"called multiple times";
 //  m_Resources.emplace(pair<string, void *>("Music", Mix_LoadMUS("Media/FigLeafTimesTwo.mp3")));
@@ -38,6 +39,7 @@ int ResourceManager::startUp() {
 //  m_Resources.emplace(pair<string, void *>("Wall SFX", Mix_LoadWAV("Media/Paddle.wav")));
 //  m_Resources.emplace(pair<string, void *>("Font", TTF_OpenFont("Media/BEBAS.ttf", 20)));
   m_Resources.emplace(pair<string, void *>("Ground", ground ));
+  m_Resources.emplace(pair<string, void *>("Character", character ));
 
   return 0;
 }
