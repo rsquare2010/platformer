@@ -32,12 +32,6 @@ int ResourceManager::startUp() {
   SDL_Surface* character = SDL_LoadBMP("./media/char.bmp");
   SDL_Surface* ground = SDL_LoadBMP("./media/Tiles.bmp");
 
-  //cout<<"called multiple times";
-//  m_Resources.emplace(pair<string, void *>("Music", Mix_LoadMUS("Media/FigLeafTimesTwo.mp3")));
-//  m_Resources.emplace(pair<string, void *>("Paddle SFX", Mix_LoadWAV("Media/Paddle.wav")));
-//  m_Resources.emplace(pair<string, void *>("Brick SFX", Mix_LoadWAV("Media/Brick.wav")));
-//  m_Resources.emplace(pair<string, void *>("Wall SFX", Mix_LoadWAV("Media/Paddle.wav")));
-//  m_Resources.emplace(pair<string, void *>("Font", TTF_OpenFont("Media/BEBAS.ttf", 20)));
   m_Resources.emplace(pair<string, void *>("Ground", ground ));
   m_Resources.emplace(pair<string, void *>("Character", character ));
 
@@ -52,18 +46,3 @@ int ResourceManager::shutDown() {
   return 0;
 }
 
-/**
- * This method is used to get the game configuration.
- * @return the game configuration.
- */
-Json::Value ResourceManager::getConfig() {
-  return gameConfig;
-}
-
-/**
- * This method is used to get the language configuration.
- * @return the language configuration.
- */
-Json::Value ResourceManager::getLanguage() {
-  return language;
-}

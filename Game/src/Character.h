@@ -4,6 +4,8 @@
 
 #ifndef LAB5_PLATFORMER_CHARACTER_H
 #define LAB5_PLATFORMER_CHARACTER_H
+#include "SDL.h"
+
 class Character {
 public:
 
@@ -35,46 +37,91 @@ public:
 
     void handleEvent(SDL_Event& e) {
         //If a key was pressed
-        if( e.type == SDL_KEYDOWN)
-        {
-            //Adjust the velocity
-            switch( e.key.keysym.sym )
-            {
-                case SDLK_LEFT: mPosX -= XVELOCITY; break;
-                case SDLK_RIGHT: mPosX += XVELOCITY; break;
-                case SDLK_UP: mPosY -= 20; break;
-            }
-        }
-            //If a key was released
-//        else if( e.type == SDL_KEYUP && e.key.repeat == 0 )
+//        if( e.type == SDL_KEYDOWN)
 //        {
 //            //Adjust the velocity
 //            switch( e.key.keysym.sym )
 //            {
-//                case SDLK_UP: mVelY += DOT_VEL; break;
-//                case SDLK_DOWN: mVelY -= DOT_VEL; break;
-//                case SDLK_LEFT: mVelX += DOT_VEL; break;
-//                case SDLK_RIGHT: mVelX -= DOT_VEL; break;
+//                case SDLK_LEFT: moveLeft(); break;
+//                case SDLK_RIGHT:
+//                    moveRight();
+//                    break;
+//
+//
+//                //case SDLK_UP:  jump(); break;
 //            }
 //        }
+
+
+        const Uint8 * keystates =  SDL_GetKeyboardState( NULL );
+        if( keystates[ SDL_SCANCODE_UP ] && keystates[ SDL_SCANCODE_RIGHT ])
+        {
+           jump();
+           moveRight();
+        }
+        else if( keystates[ SDL_SCANCODE_UP ] && keystates[ SDL_SCANCODE_LEFT ])
+        {
+            jump();
+            moveLeft();
+        }
+
+        else if(keystates[ SDL_SCANCODE_RIGHT ]){
+            moveRight();
+        } else if(keystates[ SDL_SCANCODE_LEFT ]) {
+            moveLeft();
+        } else if(keystates[ SDL_SCANCODE_UP ]){
+            jump();
+        }
+
+
+
+
     }
 
-    void move() {
-        if ( mPosX + WIDTH > 2560 )
-        {
-            //Move back
-            mPosX -= XVELOCITY;
-        }
-        if ( mPosX < 0) {
+    void moveRight() {
+
+
             mPosX +=XVELOCITY;
-        }
 
 
-//        mPosY += YVELOCITY; //gravity
+    }
+
+
+  void moveLeft() {
+
+          mPosX -= XVELOCITY;
+
+
+  }
+
+  void move(){
+      if ( mPosX < 0) {
+          mPosX +=XVELOCITY;
+      }
+      if ( mPosX + WIDTH > 2560 )
+      {
+          //Move back
+          mPosX -= XVELOCITY;
+      }
+
     }
 
     void startFalling() {
         mPosY += YVELOCITY;
+    }
+
+
+  void stopMovingInXDir(){
+      XVELOCITY = 0;
+  }
+
+  void startMovingInXDir(){
+      XVELOCITY = 25;
+  }
+
+
+  void jump(){
+      mPosY -= 33;
     }
 
 
@@ -114,7 +161,7 @@ private:
     SDL_Rect Src;
     int mPosX = 10;
     int mPosY = 100;
-    static const int XVELOCITY = 25;
-    static const int YVELOCITY = 10;
+    int XVELOCITY = 25;
+    int YVELOCITY = 20;
 };
 #endif //LAB5_PLATFORMER_CHARACTER_H
