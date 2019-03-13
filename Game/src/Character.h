@@ -80,8 +80,9 @@ public:
 
     void moveRight() {
 
-
-            mPosX +=XVELOCITY;
+      if ( mPosX > 0 && mPosX <2560) {
+        mPosX +=XVELOCITY;
+      }
 
 
     }
@@ -89,7 +90,11 @@ public:
 
   void moveLeft() {
 
-          mPosX -= XVELOCITY;
+    if ( mPosX > 0 && mPosX <2560)
+    {
+      //Move back
+      mPosX -= XVELOCITY;
+    }
 
 
   }

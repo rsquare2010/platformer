@@ -107,7 +107,7 @@ class Enemy {
 
 
   void stopMovingInXDir(){
-    XVELOCITY = 0;
+    XVELOCITY = -XVELOCITY;
   }
 
   void startMovingInXDir(){

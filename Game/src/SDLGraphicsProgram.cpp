@@ -342,10 +342,10 @@ void detectEnemyCollisionWithWallY1(Enemy *b, World* wall) {
 
   if(didSideCollide){
     //  cout<<"hey there inside side collision\n";
-    // b->stopMovingInXDir();
+     b->stopMovingInXDir();
   }else{
 
-    //b->startMovingInXDir();
+    b->startMovingInXDir();
 
 
   }
