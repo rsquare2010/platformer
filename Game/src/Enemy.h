@@ -14,7 +14,7 @@ class Enemy {
   Enemy(SDL_Renderer* ren, int startPosX, int startPosY ) {
     this->mPosX = startPosX;
     this->mPosY = startPosY;
-    spriteSheet = SDL_LoadBMP("./Tiles.bmp");
+    spriteSheet = SDL_LoadBMP("./enemy.bmp");
     if(spriteSheet==NULL) {
       SDL_Log("Failed to allocate surface");
     } else {
