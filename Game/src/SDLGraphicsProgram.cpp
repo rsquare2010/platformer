@@ -383,19 +383,6 @@ bool checkCollision1(Coordinates *obj1,
                      int obj2Height,
                      int obj2Width) {
 
-//    if (obj1->getY() + obj1Height < obj2->getY()) {
-//
-//        return false;
-//    } else if (obj1->getY() > obj2->getY() + obj2Height) {
-//
-//        return false;
-//    } else if (obj1->getX() + obj1Width < obj2->getX()) {
-//        return false;
-//    } else if (obj1->getX() > obj2->getX() + obj2Width) {
-//        return false;
-//    }
-
-
 if(obj1->getX()+obj1Width >= obj2->getX()&&
 obj2->getX()+obj2Width >= obj1->getX()&&
 obj1->getY()+obj1Height>=obj2->getY()&&
