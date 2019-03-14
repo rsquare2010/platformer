@@ -19,7 +19,7 @@ const int SCR_CEN_Y = SCR_HGT/2;
 #define FPS 30
 #define grid 20
 
-bool isColorCoded = true;
+bool isColorCoded = false;
 
 
 
@@ -202,6 +202,7 @@ int main(int argc, char **argv) {
               image = (SDL_Surface *) rm->getValue("Character");
               texture = SDL_CreateTextureFromSurface(renderer, image);
               dstrect = {gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(), grid, grid};
+              SDL_RenderCopy(renderer, texture, NULL, &dstrect);
             }
           }
           else if(gridArray[i][j] == 2){
@@ -214,7 +215,12 @@ int main(int argc, char **argv) {
 
               texture = SDL_CreateTextureFromSurface(renderer, image);
               dstrect = { gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(),grid,grid};
-
+              SDL_Rect Src;
+              Src.x = 64;
+              Src.y = 0;
+              Src.w = 64;
+              Src.h = 64;
+              SDL_RenderCopy(renderer, texture, &Src, &dstrect);
 
             }
 
@@ -225,6 +231,16 @@ int main(int argc, char **argv) {
               a->updateColor(0, 255, 0, 255);
             }
             else{
+              image = (SDL_Surface*) rm->getValue("Ground");
+
+              texture = SDL_CreateTextureFromSurface(renderer, image);
+              dstrect = { gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(),grid,grid};
+              SDL_Rect Src;
+              Src.x = 0;
+              Src.y = 0;
+              Src.w = 64;
+              Src.h = 64;
+              SDL_RenderCopy(renderer, texture, &Src, &dstrect);
 
             }
 
@@ -233,7 +249,7 @@ int main(int argc, char **argv) {
           if(isColorCoded) {
             a->draw();
           }else{
-            SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+//            SDL_RenderCopy(renderer, texture, NULL, &dstrect);
           }
 
 
