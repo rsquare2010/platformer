@@ -10,7 +10,7 @@
 #include <memory>
 #include <iterator>
 #include "World.h"
-#define FPS 6
+#define FPS 5
 
 
 
@@ -31,7 +31,7 @@ Uint32 startTick;
 
 
 int cWidth = 1200;
-int cHeight = 640;
+int cHeight = 400;
 
 
 void detectEnemyCollisionWithWallY1(Enemy *b, World* wall);
