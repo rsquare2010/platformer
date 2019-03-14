@@ -3,6 +3,7 @@
 #include "Background1.h"
 #include "Character.h"
 #include "GroundTile.h"
+#include "Rectangle.h"
 #include <map>
 #include <string>
 #include <memory>
@@ -18,18 +19,24 @@
 Background1 background;
 //Character character;
 World* world;
-Character character;
-//vector<GroundTile* > groundA;
+Character* character;
+vector<Enemy *> enemyArray;
 GroundTile groundTile;
 // Create a TileMap
 TileMap* myTileMap;
-
-int cWidth = 1280;
-int cHeight = 720;
-#define FPS 60
+Rectangle *banner;
+Uint32 startTick;
 
 
+//int cWidth = 1280;
+//int cHeight = 720;
+#define FPS 5
 
+int cWidth = 1200;
+int cHeight = 640;
+
+
+void detectEnemyCollisionWithWallY1(Enemy *b, World* wall);
 void detectCollisionWithWallY1(Character *b, World* wall);
 void detectSideCollisionWithWallY1(Character *b, World* wall);
 bool checkCollision1(Coordinates *obj1,
@@ -76,7 +83,7 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight
 	}
 	else{
 		//Create window
-		gWindow = SDL_CreateWindow( "Lab", 100, 100, cWidth, cHeight, SDL_WINDOW_SHOWN );
+		gWindow = SDL_CreateWindow( "Jungle Explorer", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, cWidth, cHeight, SDL_WINDOW_SHOWN );
 
 		// Check if Window did not create.
 		if( gWindow == NULL ){
@@ -100,14 +107,18 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight
 
     SDL_Texture* charTexture = (SDL_Texture *) rmObj->getValue("Character");
 	background.init(0,0, getSDLRenderer());
-	if(charTexture == NULL) {
-	    std::cout<<"char texture is null";
-	}
-	character.init(charTexture);
+
+//	if(charTexture == NULL) {
+//	    std::cout<<"char texture is null";
+//	}
+//	character.init(charTexture);
+
+	//character.init(getSDLRenderer());
+
 	groundTile.init(getSDLRenderer());
 
     // Setup our TileMap
-    myTileMap = new TileMap("./Tiles.bmp",8,8,64,64,12,10,getSDLRenderer());
+   // myTileMap = new TileMap("./Tiles.bmp",8,8,40,40,12,10,getSDLRenderer());
 
 
   // If initialization did not work, then print out a list of errors in the constructor.
@@ -152,7 +163,7 @@ void SDLGraphicsProgram::input(bool *quit){
         if(e.type == SDL_QUIT){
           *quit = true;
         }
-        character.handleEvent(e);
+        character->handleEvent(e);
       }
 }
 
@@ -164,7 +175,12 @@ void SDLGraphicsProgram::update()
     frame++;
     if(frame>6){frame=0;}
 
-    character.update(frame);
+    character->update(frame);
+  for (int i = 0; i < enemyArray.size(); i++) {
+
+    enemyArray[i]->update(frame);
+  }
+
     background.update();
 }
 
@@ -175,19 +191,33 @@ void SDLGraphicsProgram::render(int x, int y){
 
 
 //    SDL_SetRenderDrawColor(gRenderer, 110, 130,170,0xFF);
-    detectCollisionWithWallY1(&character, world);
+  banner->updateColor(29, 119, 116, 0);
+
+  for (int i = 0; i < enemyArray.size(); i++) {
+
+    detectEnemyCollisionWithWallY1(enemyArray[i], world);
+  }
+
+    detectCollisionWithWallY1(character, world);
     SDL_RenderClear(gRenderer);
     background.render(x, y, getSDLRenderer());
 
-    character.render(x, y, getSDLRenderer());
+    character->render(x, y, getSDLRenderer());
 //    myTileMap->render(getSDLRenderer());
-//    for (int i = 0; i < groundA.size(); i++) {
-//
-//        groundA[i]->draw();
-//    }
+    for (int i = 0; i < enemyArray.size(); i++) {
+
+      enemyArray[i]->render(x, y, getSDLRenderer());
+    }
 
     groundTile.render(x, getSDLRenderer());
-    SDL_RenderPresent(gRenderer);
+  banner->draw();
+
+
+
+
+
+
+  SDL_RenderPresent(gRenderer);
 }
 
 
@@ -202,10 +232,10 @@ void SDLGraphicsProgram::loop(){
     world = new World(getSDLRenderer());
     world->loadArtifacts(&groundTile);
 
-//    character = new Character(getSDLRenderer(), 100,250);
+    enemyArray = world->returnEnemies();
+    character = world->returnCharacter();
 
-    world->printWorld();
-//    groundA = world->returnGround();
+  banner = new Rectangle(getSDLRenderer(), 0, 0, cWidth, 90);
     SDL_Rect camera = { 0, 0, cWidth, cHeight };
     // While application is running
     while(!quit){
@@ -215,7 +245,7 @@ void SDLGraphicsProgram::loop(){
       startTick = SDL_GetTicks();
 
 //      std::cout<<"posX"<<character->getCoordinates()->getX()<<"Width/2"<<40 / 2<<"xWidth/2"<< cWidth/2<<std::endl;
-      camera.x = (character.getPosX() + 40 / 2) - cWidth / 2;
+      camera.x = (character->getPosX() + 40 / 2) - cWidth / 2;
 
       if( camera.x < 0 ) {
           camera.x = 0;
@@ -234,6 +264,12 @@ void SDLGraphicsProgram::loop(){
       update();
       // Render using OpenGL
       render(camera.x, camera.y);
+
+      //frame capping.
+      if ((1000/FPS) > (SDL_GetTicks() - startTick)) {
+       // cout<<"frame capping\n";
+        SDL_Delay((1000/FPS - (SDL_GetTicks() - startTick)));
+      }
       //Update screen of our specified window
     }
     //Disable text input
@@ -262,11 +298,11 @@ void detectCollisionWithWallY1(Character *b, World* wall) {
 
     for (int i = 0; i < coordinates.size(); i++) {
 
-        if (checkCollision1(coorBall, 33, 21, coordinates[i], 64, 64)) {
+        if (checkCollision1(coorBall, 40, 22, coordinates[i], 40, 40)) {
 
             didCollide = true;
 
-            if (checkSideCollision1(coorBall, 33, 21, coordinates[i], 64, 64)) {
+            if (checkSideCollision1(coorBall, 40, 22, coordinates[i], 40, 40)) {
 
                 didSideCollide = true;
 
@@ -279,11 +315,11 @@ void detectCollisionWithWallY1(Character *b, World* wall) {
     }
 
     if(didSideCollide){
-        cout<<"hey there inside side collision\n";
-//        b->stopMovingInXDir();
+      //  cout<<"hey there inside side collision\n";
+      b->stopMovingInXDir();
     }else{
 
-//        b->startMovingInXDirection();
+      b->startMovingInXDir();
 
 
     }
@@ -291,12 +327,69 @@ void detectCollisionWithWallY1(Character *b, World* wall) {
 
     if(didCollide){
 
-//        b->stopFalling();
+        //b->stopFalling();
+        b->canJump();
 
     } else{
 
+      b->cantJump();
+
         b->startFalling();
+
     }
+
+
+
+
+}
+
+void detectEnemyCollisionWithWallY1(Enemy *b, World* wall) {
+
+  Coordinates *coorBall = new Coordinates(b->getPosX(), b->getPosY());
+
+//    vector < GroundTile* > test = wall->returnGround();
+  std::vector<Coordinates *> coordinates = groundTile.getCoordinates();
+
+  bool didCollide = false;
+  bool didSideCollide = false;
+
+  for (int i = 0; i < coordinates.size(); i++) {
+
+    if (checkCollision1(coorBall, 40, 40, coordinates[i], 40, 40)) {
+
+      didCollide = true;
+
+      if (checkSideCollision1(coorBall, 40, 40, coordinates[i], 40, 40)) {
+
+        didSideCollide = true;
+
+      }
+      break;
+
+    }
+
+
+  }
+
+  if(didSideCollide){
+    //  cout<<"hey there inside side collision\n";
+     b->stopMovingInXDir();
+  }else{
+
+    //b->startMovingInXDir();
+
+
+  }
+
+
+  if(didCollide){
+
+    //b->stopFalling();
+
+  } else{
+
+    b->startFalling();
+  }
 
 
 
@@ -316,20 +409,18 @@ bool checkCollision1(Coordinates *obj1,
                      int obj2Height,
                      int obj2Width) {
 
-    if (obj1->getY() + obj1Height < obj2->getY()) {
-
-        return false;
-    } else if (obj1->getY() > obj2->getY() + obj2Height) {
-
-        return false;
-    } else if (obj1->getX() + obj1Width < obj2->getX()) {
-        return false;
-    } else if (obj1->getX() > obj2->getX() + obj2Width) {
-        return false;
-    }
+if(obj1->getX()+obj1Width >= obj2->getX()&&
+obj2->getX()+obj2Width >= obj1->getX()&&
+obj1->getY()+obj1Height>=obj2->getY()&&
+obj2->getY()+obj2Height>=obj1->getY()){
+  return  true;
+}
 
 
-    return true;
+
+
+
+    return false;
 }
 
 bool checkSideCollision1(Coordinates *obj1,
@@ -345,14 +436,14 @@ bool checkSideCollision1(Coordinates *obj1,
     if (obj1->getX() + obj1Width - obj2->getX() < obj2->getX() + obj2Width - obj1->getX()
         && obj1->getX() + obj1Width - obj2->getX() < obj1->getY() + obj1Height - obj2->getY()
         && obj1->getX() + obj1Width - obj2->getX() < obj2->getY() + obj2Height - obj1->getY()) {
-            //cout<<"side colliding 1\n";
+            cout<<"side colliding 1\n";
         sideCollision = true;
     }
 
     if (obj2->getX() + obj2Width - obj1->getX() < obj1->getX() + obj1Width - obj2->getX()
         && obj2->getX() + obj2Width - obj1->getX() < obj1->getY() + obj1Height - obj2->getY()
         && obj2->getX() + obj2Width - obj1->getX() < obj2->getY() + obj2Height - obj1->getY()) {
-        //cout<<"side colliding 2\n";
+        cout<<"side colliding 2\n";
         sideCollision = true;
     }
 

@@ -1,25 +1,16 @@
 #include <iostream>
 #include "SDL.h"
-#include "Wall.h"
-#include "Ball.h"
-#include "Fonts.h"
-#include "Mixer.h"
-#include "Paddle.h"
+
 #include "Rectangle.h"
-#include "State.h"
-#include "Collision.h"
 #include "ResourceManager.h"
 #include <stdio.h>
-#include <SDL_ttf.h>
-#include <SDL_mixer.h>
 #include <vector>
-#include "json/json.h"
 #include <fstream>
 #include "../include/GridLayover.h"
 
 
 using namespace std;
-using namespace Json;
+//using namespace Json;
 
 #define SCR_WDT  800
 #define SCR_HGT  200

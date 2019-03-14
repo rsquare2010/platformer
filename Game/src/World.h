@@ -9,6 +9,8 @@
 #include <iostream>
 #include <fstream>
 #include "GroundTile.h"
+#include "Enemy.h"
+#include "Character.h"
 #include <vector>
 
 
@@ -23,7 +25,7 @@ class World {
 
 
     string line;
-    ifstream myfile ("./media/example.txt");
+    ifstream myfile ("../TileEditor/media/example.txt");
     if (myfile.is_open())
     {
       getline (myfile,line);
@@ -60,14 +62,20 @@ class World {
 
               rectGrid = (40 * (i)) + (j);
 
-              x = j * 64;
-              y = i * 64;
+              x = j * 40;
+              y = i * 40;
 
-              dstrect = {x, y, 64, 64};
+              dstrect = {x, y, 40, 40};
 
-              if (worldArray[rectGrid] == 1) {
+              if (worldArray[rectGrid] == 2) {
 
-              } else if (worldArray[rectGrid] == 3) {
+                enemyArray.push_back(new Enemy(renderer, x, y));
+
+              }
+              if(worldArray[rectGrid] == 1){
+                character = new Character(renderer,x,y);
+              }
+              else if (worldArray[rectGrid] == 3) {
                     groundTile->add(x, y);
 
               }
@@ -77,11 +85,25 @@ class World {
   }
 
 
+  vector<Enemy *> returnEnemies() {
+
+    return this->enemyArray;
+
+  }
+
+  Character*  returnCharacter(){
+    return  this->character;
+  }
+
+
  private:
   SDL_Renderer *renderer;
   int worldArray[600] = {};
   int x, y;
   int rectGrid;
+
+  vector<Enemy *> enemyArray;
+  Character* character;
 
 
 };
