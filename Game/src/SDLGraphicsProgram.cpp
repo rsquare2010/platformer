@@ -3,12 +3,12 @@
 #include "Background1.h"
 #include "Character.h"
 #include "GroundTile.h"
-// I recommend a map for filling in the resource manager
 #include <map>
 #include <string>
 #include <memory>
 #include <iterator>
 #include "World.h"
+#include "ResourceManager.h"
 
 
 
@@ -26,6 +26,7 @@ TileMap* myTileMap;
 
 int cWidth = 1280;
 int cHeight = 720;
+#define FPS 60
 
 
 
@@ -55,6 +56,10 @@ bool checkSideCollision1(Coordinates *obj1,
 SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight(h){
   	// Initialize random number generation.
    	srand(time(NULL));
+
+    ResourceManager *rmObj = ResourceManager::getInstance();
+
+
 
 	 // Initialization flag
 	 bool success = true;
@@ -87,12 +92,18 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight
 			success = false;
 		}
 	}
+    rmObj->startUp(getSDLRenderer());
 
     // Move object
 //    characters[0].init(128,448,getSDLRenderer());
 
+
+    SDL_Texture* charTexture = (SDL_Texture *) rmObj->getValue("Character");
 	background.init(0,0, getSDLRenderer());
-	character.init(getSDLRenderer());
+	if(charTexture == NULL) {
+	    std::cout<<"char texture is null";
+	}
+	character.init(charTexture);
 	groundTile.init(getSDLRenderer());
 
     // Setup our TileMap
@@ -148,7 +159,8 @@ void SDLGraphicsProgram::input(bool *quit){
 // Update SDL
 void SDLGraphicsProgram::update()
 {
-    static int frame =0 ;
+    static int frame = 0;
+
     frame++;
     if(frame>6){frame=0;}
 
@@ -185,6 +197,7 @@ void SDLGraphicsProgram::loop(){
     // Main loop flag
     // If this is quit = 'true' then the program terminates.
     bool quit = false;
+    Uint32 startTick;
 
     world = new World(getSDLRenderer());
     world->loadArtifacts(&groundTile);
@@ -199,6 +212,7 @@ void SDLGraphicsProgram::loop(){
       // Get user input
       input(&quit);
 
+      startTick = SDL_GetTicks();
 
 //      std::cout<<"posX"<<character->getCoordinates()->getX()<<"Width/2"<<40 / 2<<"xWidth/2"<< cWidth/2<<std::endl;
       camera.x = (character.getPosX() + 40 / 2) - cWidth / 2;
@@ -212,7 +226,10 @@ void SDLGraphicsProgram::loop(){
       }
       // If you have time, implement your frame capping code here
       // Otherwise, this is a cheap hack for this lab.
-      SDL_Delay(250);
+      if ((1000/FPS) > (SDL_GetTicks() - startTick)) {
+          SDL_Delay((1000/FPS - (SDL_GetTicks() - startTick)));
+
+      }
       // Update our scene
       update();
       // Render using OpenGL

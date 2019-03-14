@@ -20,16 +20,19 @@ public:
         SDL_DestroyTexture(texture);
     }
 
-    void init(SDL_Renderer* ren) {
-        spriteSheet = SDL_LoadBMP("./run.bmp");
-        if(spriteSheet==NULL) {
-            SDL_Log("Failed to allocate surface");
-        } else {
-            SDL_Log("Allocated a bunch of memory to create identical game character");
-            // Create a texture from our surface
-            // Textures run faster and take advantage of hardware acceleration
-            texture = SDL_CreateTextureFromSurface(ren, spriteSheet);
+    void init(SDL_Texture* charTexture) {
+//        spriteSheet = SDL_LoadBMP("./run.bmp");
+//        if(spriteSheet==NULL) {
+//            SDL_Log("Failed to allocate surface");
+//        } else {
+//            SDL_Log("Allocated a bunch of memory to create identical game character");
+//            // Create a texture from our surface
+//            // Textures run faster and take advantage of hardware acceleration
+        if(charTexture != NULL) {
+            std::cout<<"CharTexture is not null";
         }
+            texture = charTexture;//SDL_CreateTextureFromSurface(ren, surface);
+//        }
     }
 
 
@@ -114,7 +117,7 @@ private:
     SDL_Rect Src;
     int mPosX = 10;
     int mPosY = 100;
-    static const int XVELOCITY = 25;
-    static const int YVELOCITY = 10;
+    static const int XVELOCITY = 5;
+    static const int YVELOCITY = 2;
 };
 #endif //LAB5_PLATFORMER_CHARACTER_H
