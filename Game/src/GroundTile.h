@@ -27,8 +27,8 @@ class GroundTile {
       }
       Src.x = 0;
       Src.y = 0;
-      Src.w = 64;
-      Src.h = 64;
+      Src.w = 40;
+      Src.h = 40;
   }
 
   void add(int x, int y) {
@@ -41,8 +41,8 @@ class GroundTile {
       for (int i = 0; i < coordinates.size(); i++) {
           Dest.x = coordinates[i]->getX() - camX;
           Dest.y = coordinates[i]->getY();
-          Dest.w = 64;
-          Dest.h = 64;
+          Dest.w = 40;
+          Dest.h = 40;
           SDL_RenderCopy(ren, m_Texture, &Src, &Dest);
       }
   }

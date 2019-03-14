@@ -9,11 +9,22 @@
 class Character {
 public:
 
-    static const int WIDTH = 21;
-    static const int HEIGHT = 33;
+    static const int WIDTH = 22;
+    static const int HEIGHT = 40;
 
-    Character() {
+    Character(SDL_Renderer* ren, int startPosX, int startPosY ) {
+    this->mPosX = startPosX;
+    this->mPosY = startPosY;
+    spriteSheet = SDL_LoadBMP("./Run.bmp");
+    if(spriteSheet==NULL) {
+      SDL_Log("Failed to allocate surface");
+    } else {
+      SDL_Log("Allocated a bunch of memory to create identical game character");
+      // Create a texture from our surface
+      // Textures run faster and take advantage of hardware acceleration
+      texture = SDL_CreateTextureFromSurface(ren, spriteSheet);
     }
+  }
 
 
     ~Character() {
@@ -23,15 +34,7 @@ public:
     }
 
     void init(SDL_Renderer* ren) {
-        spriteSheet = SDL_LoadBMP("./run.bmp");
-        if(spriteSheet==NULL) {
-            SDL_Log("Failed to allocate surface");
-        } else {
-            SDL_Log("Allocated a bunch of memory to create identical game character");
-            // Create a texture from our surface
-            // Textures run faster and take advantage of hardware acceleration
-            texture = SDL_CreateTextureFromSurface(ren, spriteSheet);
-        }
+
     }
 
 
@@ -126,7 +129,7 @@ public:
 
 
   void jump(){
-      mPosY -= 33;
+      mPosY -= 40;
     }
 
 
@@ -137,8 +140,8 @@ public:
         }
         Src.x = currentFrame*21;
         Src.y = 0;
-        Src.w = 21;
-        Src.h = 33;
+        Src.w = 22;
+        Src.h = 40;
 
         move();
     }
@@ -166,7 +169,7 @@ private:
     SDL_Rect Src;
     int mPosX = 10;
     int mPosY = 100;
-    int XVELOCITY = 25;
-    int YVELOCITY = 20;
+    int XVELOCITY = 40;
+    int YVELOCITY = 40;
 };
 #endif //LAB5_PLATFORMER_CHARACTER_H
