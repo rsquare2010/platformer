@@ -10,6 +10,7 @@
 #include <memory>
 #include <iterator>
 #include "World.h"
+#define FPS 6
 
 
 
@@ -25,6 +26,7 @@ GroundTile groundTile;
 // Create a TileMap
 TileMap* myTileMap;
 Rectangle *banner;
+Uint32 startTick;
 
 
 
@@ -192,7 +194,13 @@ void SDLGraphicsProgram::render(int x, int y){
 
     groundTile.render(x, getSDLRenderer());
   banner->draw();
-    SDL_RenderPresent(gRenderer);
+
+
+
+
+
+
+  SDL_RenderPresent(gRenderer);
 }
 
 
@@ -209,18 +217,6 @@ void SDLGraphicsProgram::loop(){
     enemyArray = world->returnEnemies();
     character = world->returnCharacter();
 
-
-
-    //cout<<enemyArray.size()<<"\n";
-
-
-
-
-
-//    character = new Character(getSDLRenderer(), 100,250);
-
-   // world->printWorld();
-//    groundA = world->returnGround();
   banner = new Rectangle(getSDLRenderer(), 0, 0, cWidth, 90);
     SDL_Rect camera = { 0, 0, cWidth, cHeight };
     // While application is running
@@ -241,11 +237,17 @@ void SDLGraphicsProgram::loop(){
       }
       // If you have time, implement your frame capping code here
       // Otherwise, this is a cheap hack for this lab.
-      SDL_Delay(250);
+      startTick = SDL_GetTicks();
       // Update our scene
       update();
       // Render using OpenGL
       render(camera.x, camera.y);
+
+      //frame capping.
+      if ((1000/FPS) > (SDL_GetTicks() - startTick)) {
+       // cout<<"frame capping\n";
+        SDL_Delay((1000/FPS - (SDL_GetTicks() - startTick)));
+      }
       //Update screen of our specified window
     }
     //Disable text input
@@ -421,14 +423,14 @@ bool checkSideCollision1(Coordinates *obj1,
     if (obj1->getX() + obj1Width - obj2->getX() < obj2->getX() + obj2Width - obj1->getX()
         && obj1->getX() + obj1Width - obj2->getX() < obj1->getY() + obj1Height - obj2->getY()
         && obj1->getX() + obj1Width - obj2->getX() < obj2->getY() + obj2Height - obj1->getY()) {
-            //cout<<"side colliding 1\n";
+            cout<<"side colliding 1\n";
         sideCollision = true;
     }
 
     if (obj2->getX() + obj2Width - obj1->getX() < obj1->getX() + obj1Width - obj2->getX()
         && obj2->getX() + obj2Width - obj1->getX() < obj1->getY() + obj1Height - obj2->getY()
         && obj2->getX() + obj2Width - obj1->getX() < obj2->getY() + obj2Height - obj1->getY()) {
-       // cout<<"side colliding 2\n";
+        cout<<"side colliding 2\n";
         sideCollision = true;
     }
 

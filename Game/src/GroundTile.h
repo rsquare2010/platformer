@@ -43,7 +43,7 @@ class GroundTile {
           Dest.y = coordinates[i]->getY();
           Dest.w = 40;
           Dest.h = 40;
-          SDL_RenderCopy(ren, m_Texture, &Src, &Dest);
+          SDL_RenderCopy(ren, m_Texture, NULL, &Dest);
       }
   }
 
