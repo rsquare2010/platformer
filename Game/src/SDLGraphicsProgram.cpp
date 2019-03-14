@@ -306,10 +306,14 @@ void detectCollisionWithWallY1(Character *b, World* wall) {
     if(didCollide){
 
         //b->stopFalling();
+        b->canJump();
 
     } else{
 
+      b->cantJump();
+
         b->startFalling();
+
     }
 
 

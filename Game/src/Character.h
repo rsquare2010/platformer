@@ -83,7 +83,9 @@ public:
 
     void moveRight() {
 
-      if ( mPosX > 0 && mPosX <2560) {
+      if ( mPosX > 0 && mPosX <2560 && mPosY < 640) {
+
+
         mPosX +=XVELOCITY;
       }
 
@@ -93,7 +95,7 @@ public:
 
   void moveLeft() {
 
-    if ( mPosX > 0 && mPosX <2560)
+    if ( mPosX > 0 && mPosX <2560 && mPosY < 640)
     {
       //Move back
       mPosX -= XVELOCITY;
@@ -124,12 +126,28 @@ public:
   }
 
   void startMovingInXDir(){
-      XVELOCITY = 25;
+      XVELOCITY = 40;
   }
 
 
   void jump(){
-      mPosY -= 40;
+      if(this->canJumpFlag){
+
+
+
+        mPosY -= JUMP_VELOCITY;
+
+      }
+
+    }
+
+
+    void cantJump(){
+      canJumpFlag = false;
+    }
+
+    void canJump(){
+      canJumpFlag = true;
     }
 
 
@@ -171,5 +189,8 @@ private:
     int mPosY = 100;
     int XVELOCITY = 40;
     int YVELOCITY = 40;
+    bool canJumpFlag = true;
+    bool currentlyJumping = false;
+    int JUMP_VELOCITY = 40*2;
 };
 #endif //LAB5_PLATFORMER_CHARACTER_H
