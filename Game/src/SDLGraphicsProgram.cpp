@@ -30,9 +30,12 @@ Mixer* m;
 int cWidth = 1000;
 int cHeight = 600;
 
-// Initialization function
-// Returns a true or false value based on successful completion of setup.
-// Takes in dimensions of window.
+/**
+ * Initialization function Returns a true or false value based on successful completion of setup.
+ * Takes in dimensions of window.
+ * @param w the width.
+ * @param h the height.
+ */
 SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight(h){
   	// Initialize random number generation.
    	srand(time(NULL));
@@ -96,8 +99,9 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight
 
 
 
-
-// Proper shutdown and destroy initialized objects
+/**
+ * Proper shutdown and destroy initialized objects
+ */
 SDLGraphicsProgram::~SDLGraphicsProgram(){
     // Destroy Renderer
     SDL_DestroyRenderer(gRenderer);
@@ -114,7 +118,10 @@ SDLGraphicsProgram::~SDLGraphicsProgram(){
     SDL_Quit();
 }
 
-// Return Input
+/**
+ * This method is used to take feed the input.
+ * @param quit the quite boolean.
+ */
 void SDLGraphicsProgram::input(bool *quit){
     // Event handler that handles various events in SDL
     // that are related to input and output
@@ -132,7 +139,9 @@ void SDLGraphicsProgram::input(bool *quit){
       }
 }
 
-// Update SDL
+/**
+ *  Update OpenGL.
+ */
 void SDLGraphicsProgram::update()
 {
     static int frame = 0;
@@ -151,8 +160,9 @@ void SDLGraphicsProgram::update()
 }
 
 
-// Render
-// The render function gets called once per loop
+/**
+ * Render The render function gets called once per loop.
+ */
 void SDLGraphicsProgram::render(int x, int y){
 
     SDL_RenderClear(gRenderer);
@@ -171,8 +181,9 @@ void SDLGraphicsProgram::render(int x, int y){
 }
 
 
-
-//Loops forever!
+/**
+ * Loops forever!
+ */
 void SDLGraphicsProgram::loop(){
     // Main loop flag
     // If this is quit = 'true' then the program terminates.
@@ -225,12 +236,19 @@ void SDLGraphicsProgram::loop(){
     SDL_StopTextInput();
 }
 
-// Get Pointer to Window
+/**
+ * Get Pointer to Window
+ * @return  the sdl window.
+ */
 SDL_Window* SDLGraphicsProgram::getSDLWindow(){
   return gWindow;
 }
 
-// Get Pointer to Renderer
+
+/**
+ * Get Pointer to Renderer
+ * @return  the renderer.
+ */
 SDL_Renderer* SDLGraphicsProgram::getSDLRenderer(){
   return gRenderer;
 }

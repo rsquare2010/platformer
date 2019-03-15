@@ -47,11 +47,7 @@ int ResourceManager::startUp(SDL_Renderer *ren) {
   if(charTexture == NULL) {
     std::cout<<"CharTexture is not even getting created";
   }
-  //cout<<"called multiple times";
-//  m_Resources.emplace(pair<string, void *>("Paddle SFX", Mix_LoadWAV("Media/Paddle.wav")));
-//  m_Resources.emplace(pair<string, void *>("Brick SFX", Mix_LoadWAV("Media/Brick.wav")));
-//  m_Resources.emplace(pair<string, void *>("Wall SFX", Mix_LoadWAV("Media/Paddle.wav")));
-//  m_Resources.emplace(pair<string, void *>("Font", TTF_OpenFont("Media/BEBAS.ttf", 20)));
+
   m_Resources.emplace(pair<string, void *>("Ground", groundTexture ));
   m_Resources.emplace(pair<string, void *>("Character", charTexture ));
 
@@ -72,18 +68,3 @@ int ResourceManager::shutDown() {
   return 0;
 }
 
-///**
-// * This method is used to get the game configuration.
-// * @return the game configuration.
-// */
-//Json::Value ResourceManager::getConfig() {
-//  return gameConfig;
-//}
-//
-///**
-// * This method is used to get the language configuration.
-// * @return the language configuration.
-// */
-//Json::Value ResourceManager::getLanguage() {
-//  return language;
-//}

@@ -11,8 +11,8 @@
 /**
  * Initialization function Returns a true or false value based on successful completion of setup.
  * Takes in dimensions of window.
- * @param w
- * @param h
+ * @param w the width.
+ * @param h the height.
  */
 SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight(h){
     // Initialize random number generation.

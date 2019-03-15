@@ -7,6 +7,13 @@
 
 #include "SDLGraphicsProgram.h"
 
+/**
+ * This is the starting point of the game engine.
+ * @param argc the argc.
+ * @param argv the argv.
+ * @return if the code terminates properly.
+ */
+
 int main(int argc, char** argv){
 	// Create an instance of an object for a SDLGraphicsProgram
 	SDLGraphicsProgram mySDLGraphicsProgram(1280,720);

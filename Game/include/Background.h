@@ -7,60 +7,57 @@
 /**
  * This Class is used to create the background for the game.
  */
-class Background{
-public:
+class Background {
+ public:
 
   /**
    * This is the contructor for the Background.
    */
-    Background();
-    /**
-     * This is the destructor for the game.
-     */
-    ~Background();
+  Background();
+  /**
+   * This is the destructor for the game.
+   */
+  ~Background();
 
-    /**
-     * This is used to initialize the background.
-     * @param x the x coordinate.
-     * @param y the y coordinate.
-     * @param ren the renderer.
-     */
-    void init(int x, int y, SDL_Renderer* ren);
+  /**
+   * This is used to initialize the background.
+   * @param x the x coordinate.
+   * @param y the y coordinate.
+   * @param ren the renderer.
+   */
+  void init(int x, int y, SDL_Renderer *ren);
 
-    /**
-     * This method is used to update the frame.
-     */
-    void update();
+  /**
+   * This method is used to update the frame.
+   */
+  void update();
 
-    /**
-     * This is used to render the frame.
-     * @param x the x coordinate.
-     * @param y the y coordinate.
-     * @param ren the renderer.
-     */
-    void render(int x, int y, SDL_Renderer* ren);
+  /**
+   * This is used to render the frame.
+   * @param x the x coordinate.
+   * @param y the y coordinate.
+   * @param ren the renderer.
+   */
+  void render(int x, int y, SDL_Renderer *ren);
 
+ private:
+  int xPos, yPos;
+  int width, height;
+  int scrollingOffset = 0;
 
-private:
-    int xPos, yPos;
-    int width, height;
-    int scrollingOffset = 0;
-//    unsigned int currentFrame{0};
-//    unsigned int LastFrame{7};
-    // An SDL Surface contains pixel data to draw an image
-    SDL_Surface *spriteSheet;
-    SDL_Surface *spriteSheet2;
-    SDL_Surface *spriteSheet3;
-    SDL_Surface *spriteSheet4;
+  // An SDL Surface contains pixel data to draw an image
+  SDL_Surface *spriteSheet;
+  SDL_Surface *spriteSheet2;
+  SDL_Surface *spriteSheet3;
+  SDL_Surface *spriteSheet4;
 
-
-    SDL_Texture *texture;
-    SDL_Texture *texture2;
-    SDL_Texture *texture3;
-    SDL_Texture *texture4;
+  SDL_Texture *texture;
+  SDL_Texture *texture2;
+  SDL_Texture *texture3;
+  SDL_Texture *texture4;
 
 //    SDL_Rect Src;
-    SDL_Rect Dest;
+  SDL_Rect Dest;
 };
 
 #endif //LAB5_PLATFORMER_BACKGROUND1_H

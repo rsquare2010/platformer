@@ -44,38 +44,15 @@ public:
      * @return  0 if everything is executed perfectly.
      */
     int shutDown();
-    /**
-     * This method is used to get the game configuration.
-     * @return the game configuration.
-     */
-//  Json::Value getConfig();
-    /**
-     * This method is used to get the language configuration.
-     * @return the language configuration.
-     */
-//  Json::Value getLanguage();
+
 
 private:
-//  Json::Value gameConfig;
-
-//  Json::Value language;
 
     /**
      * This is the private constructor.
      */
     ResourceManager() {
 
-//    Json::Value config;
-//    std::ifstream config_file("Media/configuration.json", std::ifstream::binary);
-//    config_file >> config;
-//
-//    gameConfig = config;
-//
-//    Json::Value language;
-//    std::ifstream language_file("Media/language.json", std::ifstream::binary);
-//    language_file >> language;
-//
-//    this->language = language;
 
     };
 
