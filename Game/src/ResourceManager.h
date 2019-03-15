@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <map>
-//#include "Mixer.h"
+#include "Mixer.h"
 //#include "Fonts.h"
 //#include "json/json.h"
 #include <fstream>
@@ -18,48 +18,52 @@ using namespace std;
  */
 class ResourceManager {
 
- public:
-  /**
-   * This method is used to get the instance of the Resource manager class.
-   * @return The instance of teh resource manager class.
-   */
-  static ResourceManager *getInstance();
-  /**
-   * This method is used to get the value of the resource map.
-   * @param key the key to the map
-   * @return the value to the key of the map.
-   */
-  void *getValue(string key);
-  /**
-   * This basically acts as a substitute of the constructor.
-   * @return  0 if everything is executed perfectly.
-   */
-  int startUp(SDL_Renderer *ren);
-  /**
-   * This is used to deallocate the Resource Manager.
-   * @return  0 if everything is executed perfectly.
-   */
-  int shutDown();
-  /**
-   * This method is used to get the game configuration.
-   * @return the game configuration.
-   */
+public:
+    /**
+     * This method is used to get the instance of the Resource manager class.
+     * @return The instance of teh resource manager class.
+     */
+    static ResourceManager *getInstance();
+
+    /**
+     * This method is used to get the value of the resource map.
+     * @param key the key to the map
+     * @return the value to the key of the map.
+     */
+    void *getValue(string key);
+
+    /**
+     * This basically acts as a substitute of the constructor.
+     * @return  0 if everything is executed perfectly.
+     */
+    int startUp(SDL_Renderer *ren);
+
+    int musStartUp();
+    /**
+     * This is used to deallocate the Resource Manager.
+     * @return  0 if everything is executed perfectly.
+     */
+    int shutDown();
+    /**
+     * This method is used to get the game configuration.
+     * @return the game configuration.
+     */
 //  Json::Value getConfig();
-  /**
-   * This method is used to get the language configuration.
-   * @return the language configuration.
-   */
+    /**
+     * This method is used to get the language configuration.
+     * @return the language configuration.
+     */
 //  Json::Value getLanguage();
 
- private:
+private:
 //  Json::Value gameConfig;
 
 //  Json::Value language;
 
-  /**
-   * This is the private constructor.
-   */
-  ResourceManager() {
+    /**
+     * This is the private constructor.
+     */
+    ResourceManager() {
 
 //    Json::Value config;
 //    std::ifstream config_file("Media/configuration.json", std::ifstream::binary);
@@ -73,13 +77,13 @@ class ResourceManager {
 //
 //    this->language = language;
 
-  };
+    };
 
-  ResourceManager(ResourceManager const &);
+    ResourceManager(ResourceManager const &);
 
-  void operator=(ResourceManager const &);
+    void operator=(ResourceManager const &);
 
-  map<string, void *> m_Resources;
+    map<string, void *> m_Resources;
 };
 
 #endif //BREAKOUT_BREAKOUTSQUAD_RESOURCEMANAGER_H
