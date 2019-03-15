@@ -47,6 +47,7 @@ private:
     // The window we'll be rendering to
     SDL_Window* gWindow ;
     // SDL Renderer
+    int animationStartTick = 0;
     SDL_Renderer* gRenderer = NULL;
     Sprite* sprite;
 };

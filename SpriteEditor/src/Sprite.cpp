@@ -30,16 +30,13 @@ void Sprite::init(SDL_Renderer* ren) {
 }
 
 void Sprite::update(int frame) {
-    if(currentFrame > count ) {
-        currentFrame = 0;
-    }
+    currentFrame = frame % count;
 
     Src.x = xPos + (currentFrame * width);
     Src.y = yPos;
     Src.w = width;
     Src.h = height;
 
-    currentFrame++;
 
     Dest.x = 0;
     Dest.y = 0;

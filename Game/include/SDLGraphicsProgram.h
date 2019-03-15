@@ -51,6 +51,7 @@ private:
     // Screen dimension constants
     int screenHeight;
     int screenWidth;
+    int animationStartTick = 0;
     // The window we'll be rendering to
     SDL_Window* gWindow ;
     // SDL Renderer

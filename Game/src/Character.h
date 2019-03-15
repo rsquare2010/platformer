@@ -198,10 +198,7 @@ public:
 
 
     void update(int frame){
-        int currentFrame = frame;
-        if(currentFrame>7){
-            currentFrame=0;
-        }
+        int currentFrame = frame%7;
         Src.x = currentFrame*21;
         Src.y = 0;
         Src.w = 22;

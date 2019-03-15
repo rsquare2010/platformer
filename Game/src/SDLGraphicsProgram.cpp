@@ -36,7 +36,8 @@ Mixer* m;
 
 //int cWidth = 1280;
 //int cHeight = 720;
-#define FPS 15
+#define FPS 60
+#define ANIMATIONRATE 5
 
 int cWidth = 1000;
 int cHeight = 600;
@@ -193,9 +194,10 @@ void SDLGraphicsProgram::input(bool *quit){
 void SDLGraphicsProgram::update()
 {
     static int frame = 0;
-
-    frame++;
-    if(frame>6){frame=0;}
+    if((SDL_GetTicks() - animationStartTick) > 1000/ANIMATIONRATE) {
+        animationStartTick = SDL_GetTicks();
+        frame++;
+    }
 
     character->update(frame);
   for (int i = 0; i < enemyArray.size(); i++) {

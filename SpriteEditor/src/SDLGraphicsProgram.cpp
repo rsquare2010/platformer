@@ -4,7 +4,8 @@
 
 #include "../include/SDLGraphicsProgram.h"
 
-
+#define FPS 60
+#define ANIMATIONRATE 5
 
 // Initialization function
 // Returns a true or false value based on successful completion of setup.
@@ -81,14 +82,12 @@ SDLGraphicsProgram::~SDLGraphicsProgram(){
 // Update OpenGL
 void SDLGraphicsProgram::update()
 {
-    static int frame =0 ;
-    frame++;
-//    if(frame>6){frame=0;}
-    // Nothing yet!
+    static int frame = 0;
+    if((SDL_GetTicks() - animationStartTick) > 1000/ANIMATIONRATE) {
+        animationStartTick = SDL_GetTicks();
+        frame++;
+    }
     sprite->update(frame);
-//    for(int i =0; i < CHARACTERS; i++){
-//        characters[0].update(20,20, frame);
-//    }
 }
 
 
@@ -113,7 +112,7 @@ void SDLGraphicsProgram::loop(){
     SDL_Event e;
     // Enable text input
     SDL_StartTextInput();
-
+    Uint32 startTick;
     bool quit = false;
 
     ResourceManager *rmConfig = ResourceManager::getInstance();
@@ -136,6 +135,7 @@ void SDLGraphicsProgram::loop(){
     sprite->init(gRenderer);
     // While application is running
     while(!quit){
+        startTick = SDL_GetTicks();
         while(SDL_PollEvent( &e ) != 0){
             // User posts an event to quit
             if(e.type == SDL_QUIT){
@@ -143,7 +143,11 @@ void SDLGraphicsProgram::loop(){
             }
         }
 
-        SDL_Delay(250);
+        //frame capping.
+        if ((1000/FPS) > (SDL_GetTicks() - startTick)) {
+            // cout<<"frame capping\n";
+            SDL_Delay((1000/FPS - (SDL_GetTicks() - startTick)));
+        }
 
         // Update our scene
         update();
