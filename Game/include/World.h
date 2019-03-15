@@ -39,7 +39,7 @@ class World {
   int rectGrid;
 
   vector<Enemy *> enemyArray;
-  Char* character;
+  Character* character;
 
 
 };
