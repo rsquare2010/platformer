@@ -89,6 +89,9 @@ class World {
 
           }
       }
+
+      enemyArray.push_back(new Enemy(renderer, 200, 300));
+      enemyArray.push_back(new Enemy(renderer, 400, 300));
   }
 
 

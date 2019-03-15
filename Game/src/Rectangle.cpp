@@ -9,9 +9,9 @@ using namespace std;
 /**
  * This method is used to draw a rectangle on the screen.
  */
-void Rectangle::draw() {
-
-  SDL_RenderFillRect(ren, &r);
+void Rectangle::draw(SDL_Renderer *render) {
+  this->ren = render;
+  SDL_RenderFillRect(this->ren, &r);
 }
 
 /**

@@ -9,18 +9,17 @@
 #include <memory>
 #include <iterator>
 #include "../include/World.h"
-
+#include "Char.h"
 #include "../include/ResourceManager.h"
-
-
 
 
 
 Background background;
 World* world;
 Character* character;
+Char* charac;
 vector<Enemy *> enemyArray;
-GroundTile groundTile;
+GroundTile* groundTile;
 Rectangle *banner;
 Uint32 startTick;
 Mixer* m;
@@ -128,7 +127,8 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight
 
 	//character.init(getSDLRenderer());
 
-	groundTile.init(getSDLRenderer());
+	groundTile = new GroundTile();
+	groundTile->init(getSDLRenderer());
 
     // Setup our TileMap
    // myTileMap = new TileMap("./Tiles.bmp",8,8,40,40,12,10,getSDLRenderer());
@@ -175,7 +175,7 @@ void SDLGraphicsProgram::input(bool *quit){
         if(e.type == SDL_QUIT){
           *quit = true;
         }
-        character->handleEvent(e);
+        charac->handleEvent(e);
       }
 }
 
@@ -188,7 +188,8 @@ void SDLGraphicsProgram::update()
         frame++;
     }
 
-    character->update(frame);
+    charac->update(frame);
+//    character->update(frame);
   for (int i = 0; i < enemyArray.size(); i++) {
 
     enemyArray[i]->update(frame);
@@ -204,32 +205,27 @@ void SDLGraphicsProgram::render(int x, int y){
 
 
 //    SDL_SetRenderDrawColor(gRenderer, 110, 130,170,0xFF);
-  banner->updateColor(29, 119, 116, 0);
 
-  for (int i = 0; i < enemyArray.size(); i++) {
 
-    detectEnemyCollisionWithWallY1(enemyArray[i], world);
-  }
+//  for (int i = 0; i < enemyArray.size(); i++) {
+//
+//    detectEnemyCollisionWithWallY1(enemyArray[i], world);
+//  }
 
-    detectCollisionWithWallY1(character, world);
+//    detectCollisionWithWallY1(character, world);
     SDL_RenderClear(gRenderer);
     background.render(x, y, getSDLRenderer());
 
-    character->render(x, y, getSDLRenderer());
-//    myTileMap->render(getSDLRenderer());
-    for (int i = 0; i < enemyArray.size(); i++) {
+//    character->render(x, y, getSDLRenderer());
+    charac->render(x, y, getSDLRenderer(), groundTile, enemyArray);
 
-      enemyArray[i]->render(x, y, getSDLRenderer());
+    for (int i = 0; i < enemyArray.size(); i++) {
+      enemyArray[i]->render(x, y, getSDLRenderer(), groundTile);
     }
 
-    groundTile.render(x, getSDLRenderer());
-  banner->draw();
-
-
-
-
-
-
+    groundTile->render(x, getSDLRenderer());
+  banner->draw(getSDLRenderer());
+  banner->updateColor(29, 119, 116, 0);
   SDL_RenderPresent(gRenderer);
 }
 
@@ -243,12 +239,12 @@ void SDLGraphicsProgram::loop(){
     Uint32 startTick;
 
     world = new World(getSDLRenderer());
-    world->loadArtifacts(&groundTile);
+    world->loadArtifacts(groundTile);
 
     enemyArray = world->returnEnemies();
-    character = world->returnCharacter();
-
-  banner = new Rectangle(getSDLRenderer(), 0, 0, cWidth, 90);
+//    character = world->returnCharacter();
+    charac = new Char(getSDLRenderer(), 100, 300);
+  banner = new Rectangle( 0, 0, cWidth, 90);
     SDL_Rect camera = { 0, 0, cWidth, cHeight };
     // While application is running
     while(!quit){
@@ -258,7 +254,8 @@ void SDLGraphicsProgram::loop(){
       startTick = SDL_GetTicks();
 
 //      std::cout<<"posX"<<character->getCoordinates()->getX()<<"Width/2"<<40 / 2<<"xWidth/2"<< cWidth/2<<std::endl;
-      camera.x = (character->getPosX() + 40 / 2) - cWidth / 2;
+//      camera.x = (character->getPosX() + 40 / 2) - cWidth / 2;
+        camera.x = (charac->getPosX() + 40 / 2) - cWidth / 2;
 
       if( camera.x < 0 ) {
           camera.x = 0;
@@ -299,212 +296,212 @@ SDL_Renderer* SDLGraphicsProgram::getSDLRenderer(){
   return gRenderer;
 }
 
-void detectCollisionWithWallY1(Character *b, World* wall) {
-
-    Coordinates *coorBall = new Coordinates(b->getPosX(), b->getPosY());
-
-//    vector < GroundTile* > test = wall->returnGround();
-    std::vector<Coordinates *> coordinates = groundTile.getCoordinates();
-
-    bool didCollide = false;
-    bool didSideCollide = false;
-
-    for (int i = 0; i < coordinates.size(); i++) {
-
-        if (checkCollision1(coorBall, 40, 22, coordinates[i], 40, 40)) {
-
-            didCollide = true;
-
-            if (checkLeftSideCollision1(coorBall, 40, 22, coordinates[i], 40, 40) || checkRightSideCollision1(coorBall, 40, 22, coordinates[i], 40, 40)) {
-
-                didSideCollide = true;
-
-            }
-            break;
-
-        }
-
-
-    }
-
-    if(didSideCollide){
-      //  cout<<"hey there inside side collision\n";
-      b->stopMovingInXDir();
-    }else{
-
-      b->startMovingInXDir();
-
-
-    }
-
-
-    if(didCollide){
-
-        //b->stopFalling();
-        b->canJump();
-
-    } else{
-
-      b->cantJump();
-
-        b->startFalling();
-
-    }
-
-
-
-
-}
-
-void detectEnemyCollisionWithWallY1(Enemy *b, World* wall) {
-
-  Coordinates *coorBall = new Coordinates(b->getPosX(), b->getPosY());
-
-//    vector < GroundTile* > test = wall->returnGround();
-  std::vector<Coordinates *> coordinates = groundTile.getCoordinates();
-
-  bool didCollide = false;
-  bool didSideCollide = false;
-
-  for (int i = 0; i < coordinates.size(); i++) {
-
-    if (checkCollision1(coorBall, 40, 40, coordinates[i], 40, 40)) {
-
-      didCollide = true;
-
-      if (checkSideCollision1(coorBall, 40, 40, coordinates[i], 40, 40)) {
-
-        didSideCollide = true;
-
-      }
-      break;
-
-    }
-
-
-  }
-
-  if(didSideCollide){
-    //  cout<<"hey there inside side collision\n";
-     b->stopMovingInXDir();
-  }else{
-
-    //b->startMovingInXDir();
-
-
-  }
-
-
-  if(didCollide){
-
-    //b->stopFalling();
-
-  } else{
-
-    b->startFalling();
-  }
-
-
-
-
-}
-
-
-
-
-
-
-
-bool checkCollision1(Coordinates *obj1,
-                     int obj1Height,
-                     int obj1Width,
-                     Coordinates *obj2,
-                     int obj2Height,
-                     int obj2Width) {
-
-if(obj1->getX()+obj1Width >= obj2->getX()&&
-obj2->getX()+obj2Width >= obj1->getX()&&
-obj1->getY()+obj1Height>=obj2->getY()&&
-obj2->getY()+obj2Height>=obj1->getY()){
-  return  true;
-}
-
-
-
-
-
-    return false;
-}
-
-bool checkSideCollision1(Coordinates *obj1,
-                         int obj1Height,
-                         int obj1Width,
-                         Coordinates *obj2,
-                         int obj2Height,
-                         int obj2Width) {
-
-    bool sideCollision = false;
-
-
-    if (obj1->getX() + obj1Width - obj2->getX() < obj2->getX() + obj2Width - obj1->getX()
-        && obj1->getX() + obj1Width - obj2->getX() < obj1->getY() + obj1Height - obj2->getY()
-        && obj1->getX() + obj1Width - obj2->getX() < obj2->getY() + obj2Height - obj1->getY()) {
-            //cout<<"side colliding 1\n";
-           // character->setCantMoveForward();
-        sideCollision = true;
-    }
-
-    if (obj2->getX() + obj2Width - obj1->getX() < obj1->getX() + obj1Width - obj2->getX()
-        && obj2->getX() + obj2Width - obj1->getX() < obj1->getY() + obj1Height - obj2->getY()
-        && obj2->getX() + obj2Width - obj1->getX() < obj2->getY() + obj2Height - obj1->getY()) {
-        //cout<<"side colliding 2\n";
-      //character->setCantMoveBackward();
-        sideCollision = true;
-    }
-
-    return  sideCollision;
-}
-
-
-bool checkLeftSideCollision1(Coordinates *obj1,
-                         int obj1Height,
-                         int obj1Width,
-                         Coordinates *obj2,
-                         int obj2Height,
-                         int obj2Width) {
-
-  bool sideCollision = false;
-
-  if (obj1->getX() + obj1Width - obj2->getX() < obj2->getX() + obj2Width - obj1->getX()
-      && obj1->getX() + obj1Width - obj2->getX() < obj1->getY() + obj1Height - obj2->getY()
-      && obj1->getX() + obj1Width - obj2->getX() < obj2->getY() + obj2Height - obj1->getY()) {
-    //cout<<"side colliding 1\n";
-    character->setCantMoveForward();
-    sideCollision = true;
-  }
-
-  return sideCollision;
-
-}
-
-
-bool checkRightSideCollision1(Coordinates *obj1,
-                             int obj1Height,
-                             int obj1Width,
-                             Coordinates *obj2,
-                             int obj2Height,
-                             int obj2Width) {
-
-  bool sideCollision = false;
-
-  if (obj2->getX() + obj2Width - obj1->getX() < obj1->getX() + obj1Width - obj2->getX()
-      && obj2->getX() + obj2Width - obj1->getX() < obj1->getY() + obj1Height - obj2->getY()
-      && obj2->getX() + obj2Width - obj1->getX() < obj2->getY() + obj2Height - obj1->getY()) {
-    //cout<<"side colliding 2\n";
-    character->setCantMoveBackward();
-    sideCollision = true;
-  }
-
-  return sideCollision;
-
-}
+//void detectCollisionWithWallY1(Character *b, World* wall) {
+//
+//    Coordinates *coorBall = new Coordinates(b->getPosX(), b->getPosY());
+//
+////    vector < GroundTile* > test = wall->returnGround();
+//    std::vector<Coordinates *> coordinates = groundTile->getCoordinates();
+//
+//    bool didCollide = false;
+//    bool didSideCollide = false;
+//
+//    for (int i = 0; i < coordinates.size(); i++) {
+//
+//        if (checkCollision1(coorBall, 40, 22, coordinates[i], 40, 40)) {
+//
+//            didCollide = true;
+//
+//            if (checkLeftSideCollision1(coorBall, 40, 22, coordinates[i], 40, 40) || checkRightSideCollision1(coorBall, 40, 22, coordinates[i], 40, 40)) {
+//
+//                didSideCollide = true;
+//
+//            }
+//            break;
+//
+//        }
+//
+//
+//    }
+//
+//    if(didSideCollide){
+//      //  cout<<"hey there inside side collision\n";
+//      b->stopMovingInXDir();
+//    }else{
+//
+//      b->startMovingInXDir();
+//
+//
+//    }
+//
+//
+//    if(didCollide){
+//
+//        //b->stopFalling();
+//        b->canJump();
+//
+//    } else{
+//
+//      b->cantJump();
+//
+//        b->startFalling();
+//
+//    }
+//
+//
+//
+//
+//}
+//
+//void detectEnemyCollisionWithWallY1(Enemy *b, World* wall) {
+//
+//  Coordinates *coorBall = new Coordinates(b->getPosX(), b->getPosY());
+//
+////    vector < GroundTile* > test = wall->returnGround();
+//  std::vector<Coordinates *> coordinates = groundTile->getCoordinates();
+//
+//  bool didCollide = false;
+//  bool didSideCollide = false;
+//
+//  for (int i = 0; i < coordinates.size(); i++) {
+//
+//    if (checkCollision1(coorBall, 40, 40, coordinates[i], 40, 40)) {
+//
+//      didCollide = true;
+//
+//      if (checkSideCollision1(coorBall, 40, 40, coordinates[i], 40, 40)) {
+//
+//        didSideCollide = true;
+//
+//      }
+//      break;
+//
+//    }
+//
+//
+//  }
+//
+//  if(didSideCollide){
+//    //  cout<<"hey there inside side collision\n";
+////     b->stopMovingInXDir();
+//  }else{
+//
+//    //b->startMovingInXDir();
+//
+//
+//  }
+//
+//
+//  if(didCollide){
+//
+//    //b->stopFalling();
+//
+//  } else{
+//
+////    b->startFalling();
+//  }
+//
+//
+//
+//
+//}
+//
+//
+//
+//
+//
+//
+//
+//bool checkCollision1(Coordinates *obj1,
+//                     int obj1Height,
+//                     int obj1Width,
+//                     Coordinates *obj2,
+//                     int obj2Height,
+//                     int obj2Width) {
+//
+//if(obj1->getX()+obj1Width >= obj2->getX()&&
+//obj2->getX()+obj2Width >= obj1->getX()&&
+//obj1->getY()+obj1Height>=obj2->getY()&&
+//obj2->getY()+obj2Height>=obj1->getY()){
+//  return  true;
+//}
+//
+//
+//
+//
+//
+//    return false;
+//}
+//
+//bool checkSideCollision1(Coordinates *obj1,
+//                         int obj1Height,
+//                         int obj1Width,
+//                         Coordinates *obj2,
+//                         int obj2Height,
+//                         int obj2Width) {
+//
+//    bool sideCollision = false;
+//
+//
+//    if (obj1->getX() + obj1Width - obj2->getX() < obj2->getX() + obj2Width - obj1->getX()
+//        && obj1->getX() + obj1Width - obj2->getX() < obj1->getY() + obj1Height - obj2->getY()
+//        && obj1->getX() + obj1Width - obj2->getX() < obj2->getY() + obj2Height - obj1->getY()) {
+//            //cout<<"side colliding 1\n";
+//           // character->setCantMoveForward();
+//        sideCollision = true;
+//    }
+//
+//    if (obj2->getX() + obj2Width - obj1->getX() < obj1->getX() + obj1Width - obj2->getX()
+//        && obj2->getX() + obj2Width - obj1->getX() < obj1->getY() + obj1Height - obj2->getY()
+//        && obj2->getX() + obj2Width - obj1->getX() < obj2->getY() + obj2Height - obj1->getY()) {
+//        //cout<<"side colliding 2\n";
+//      //character->setCantMoveBackward();
+//        sideCollision = true;
+//    }
+//
+//    return  sideCollision;
+//}
+//
+//
+//bool checkLeftSideCollision1(Coordinates *obj1,
+//                         int obj1Height,
+//                         int obj1Width,
+//                         Coordinates *obj2,
+//                         int obj2Height,
+//                         int obj2Width) {
+//
+//  bool sideCollision = false;
+//
+//  if (obj1->getX() + obj1Width - obj2->getX() < obj2->getX() + obj2Width - obj1->getX()
+//      && obj1->getX() + obj1Width - obj2->getX() < obj1->getY() + obj1Height - obj2->getY()
+//      && obj1->getX() + obj1Width - obj2->getX() < obj2->getY() + obj2Height - obj1->getY()) {
+//    //cout<<"side colliding 1\n";
+//    character->setCantMoveForward();
+//    sideCollision = true;
+//  }
+//
+//  return sideCollision;
+//
+//}
+//
+//
+//bool checkRightSideCollision1(Coordinates *obj1,
+//                             int obj1Height,
+//                             int obj1Width,
+//                             Coordinates *obj2,
+//                             int obj2Height,
+//                             int obj2Width) {
+//
+//  bool sideCollision = false;
+//
+//  if (obj2->getX() + obj2Width - obj1->getX() < obj1->getX() + obj1Width - obj2->getX()
+//      && obj2->getX() + obj2Width - obj1->getX() < obj1->getY() + obj1Height - obj2->getY()
+//      && obj2->getX() + obj2Width - obj1->getX() < obj2->getY() + obj2Height - obj1->getY()) {
+//    //cout<<"side colliding 2\n";
+//    character->setCantMoveBackward();
+//    sideCollision = true;
+//  }
+//
+//  return sideCollision;
+//
+//}

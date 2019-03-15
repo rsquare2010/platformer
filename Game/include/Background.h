@@ -27,14 +27,12 @@ private:
     SDL_Surface *spriteSheet2;
     SDL_Surface *spriteSheet3;
     SDL_Surface *spriteSheet4;
-    SDL_Surface *spriteSheet5;
 
 
     SDL_Texture *texture;
     SDL_Texture *texture2;
     SDL_Texture *texture3;
     SDL_Texture *texture4;
-    SDL_Texture *texture5;
 
 //    SDL_Rect Src;
     SDL_Rect Dest;
