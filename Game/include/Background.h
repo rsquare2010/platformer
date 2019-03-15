@@ -4,15 +4,40 @@
 #include <SDL.h>
 #ifndef LAB5_PLATFORMER_BACKGROUND1_H
 #define LAB5_PLATFORMER_BACKGROUND1_H
-
+/**
+ * This Class is used to create the background for the game.
+ */
 class Background{
 public:
 
+  /**
+   * This is the contructor for the Background.
+   */
     Background();
+    /**
+     * This is the destructor for the game.
+     */
     ~Background();
 
+    /**
+     * This is used to initialize the background.
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     * @param ren the renderer.
+     */
     void init(int x, int y, SDL_Renderer* ren);
+
+    /**
+     * This method is used to update the frame.
+     */
     void update();
+
+    /**
+     * This is used to render the frame.
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     * @param ren the renderer.
+     */
     void render(int x, int y, SDL_Renderer* ren);
 
 

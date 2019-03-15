@@ -9,12 +9,25 @@
 #include "Draw.h"
 #include <iostream>
 #include <vector>
+
+
+/**
+ * This class represents every ground Tile.
+ */
 class GroundTile {
 
  public:
+
+  /**
+   * This is the constructor.
+   */
   GroundTile(){
   }
 
+  /**
+   * This is to initialize the Ground Tile.
+   * @param render
+   */
   void init(SDL_Renderer *render) {
       m_TileSpriteSheet = SDL_LoadBMP("./media/Tiles.bmp");
       if(m_TileSpriteSheet==NULL){
@@ -31,11 +44,23 @@ class GroundTile {
       Src.h = 40;
   }
 
+
+
+  /**
+   * This is used to add the Ground tile to the  Ground Array.
+   * @param x the x coordinate.
+   * @param y the y coordinate.
+   */
   void add(int x, int y) {
-//      Coordinates* coords = ;
+
     this->coordinates.push_back(new Coordinates( x, y));
   }
 
+  /**
+   * This is to render the Ground tile.
+   * @param camX the camera cx.
+   * @param ren the renderer.
+   */
   void render(int camX, SDL_Renderer* ren) {
 
       for (int i = 0; i < coordinates.size(); i++) {
@@ -47,6 +72,10 @@ class GroundTile {
       }
   }
 
+  /**
+   * This is used to retrieve the coordinate.
+   * @return
+   */
   std::vector<Coordinates *> getCoordinates() {
     return coordinates;
   }

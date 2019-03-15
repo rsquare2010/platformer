@@ -8,7 +8,7 @@
 
 #if defined(LINUX) || defined(MINGW)
 #include <SDL2/SDL.h>
-#else // This works for Mac
+#else
 #include <SDL.h>
 #endif
 
@@ -21,23 +21,54 @@
 #include "ResourceManager.h"
 #include "sprite.h"
 
-// This class sets up a full graphics program
+
+/**
+ * This class sets up a full graphics program.
+ */
 class SDLGraphicsProgram{
 public:
 
-    // Constructor
+
+    /**
+     * This is a constructor.
+     * @param w the width.
+     * @param h the height.
+     */
     SDLGraphicsProgram(int w, int h);
-    // Desctructor
+    /**
+     * This is the destructor.
+     */
     ~SDLGraphicsProgram();
     // Per frame update
+
+    /**
+     * This updates the frame.
+     */
     void update();
-    // Renders shapes to the screen
+
+    /**
+     *  Renders shapes to the screen.
+     */
     void render();
-    // loop that runs forever
+
+    /**
+     * loop that runs forever
+     */
     void loop();
-    // Get Pointer to Window
+
+
+    /**
+     * Get Pointer to Window
+     * @return Get Pointer to Window
+     */
     SDL_Window* getSDLWindow();
-    // Get Pointer to Renderer
+
+
+
+    /**
+     * Get Pointer to Renderer
+     * @return Get Pointer to Renderer
+     */
     SDL_Renderer* getSDLRenderer();
 
 private:

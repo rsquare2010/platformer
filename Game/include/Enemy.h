@@ -9,12 +9,22 @@
 #include "Physix.h"
 #include "GroundTile.h"
 #include "Coordinates.h"
+
+/**
+ * This is the Enemy class.
+ */
 class Enemy {
  public:
 
   static const int WIDTH = 43;
   static const int HEIGHT = 37;
 
+  /**
+   * This is the constructor.
+   * @param ren the renderer.
+   * @param startPosX the start of X position.
+   * @param startPosY the start of Y position.
+   */
   Enemy(SDL_Renderer* ren, int startPosX, int startPosY ) {
     this->mPosX = startPosX;
     this->mPosY = startPosY;
@@ -31,29 +41,23 @@ class Enemy {
   }
 
 
+  /**
+   * This is the destructor.
+   */
   ~Enemy() {
     SDL_FreeSurface(spriteSheet);
     spriteSheet=NULL;
     SDL_DestroyTexture(texture);
   }
 
-  void init() {
-
-  }
-
-//  void move(){
-//    if ( mPosX < 0) {
-//      mPosX +=XVELOCITY;
-//    }
-//    if ( mPosX + WIDTH > 2560 )
-//    {
-//      //Move back
-//      mPosX -= XVELOCITY;
-//    }
-//
-//  }
 
 
+
+
+/**
+ * This method is used to update the frame.
+ * @param frame the frame rate.
+ */
   void update(int frame){
     int currentFrame = frame%17;
     Src.x = currentFrame*43;
@@ -78,6 +82,13 @@ class Enemy {
   }
 
 
+  /**
+   * This method is used to render the Enemy.
+   * @param camX the camera X position.
+   * @param camY the camera Y position.
+   * @param ren the renderer.
+   * @param groundTile the ground Tile.
+   */
   void render(int camX, int camY, SDL_Renderer* ren, GroundTile* groundTile) {
     if (isDeadAnimationComplete) {
       return;
@@ -136,14 +147,25 @@ class Enemy {
     }
   }
 
+  /**
+   * This is used get the X position of the enemy.
+   * @return
+   */
   int getPosX() {
     return mPosX;
   }
 
+  /**
+   * This is to get the Y position of the Enemy.
+   * @return
+   */
   int getPosY() {
     return mPosY;
   }
 
+  /**
+   * This is to render the animation when the enemy is dead.
+   */
   void die() {
     if(!dead) {
       spriteSheet = SDL_LoadBMP("./media/death.bmp");
