@@ -10,37 +10,88 @@
 #define PLATFORMER_SUNDAYS_ARE_FUNDAYS_CHAR_H
 using namespace std;
 
+/**
+ * This is the character of the game.
+ */
 class Character {
-public:
-    static const int WIDTH = 21;
-    static const int HEIGHT = 33;
+
+ public:
+  static const int WIDTH = 21;
+  static const int HEIGHT = 33;
 
 
-    Character(int startPosX, int startPosY );
+  /**
+    * This is the constructor.
+    * @param startPosX the x position.
+    * @param startPosY the y position.
+    */
+  Character( int startPosX, int startPosY);
 
-    ~Character();
+  /**
+ * This is the destructor of the game.
+ */
+  ~Character();
 
-    void update(int frame);
+  /**
+* This method is used to update the frame.
+* @param frame the frame rate.
+*/
+  void update(int frame);
 
-    void render(int camX, int camY, SDL_Renderer* ren, GroundTile* groundTile, std::vector<Enemy *> enemyArray);
+  /**
+   * This method is used to render the character.
+   * @param camX the camera x.
+   * @param camY the camera y.
+   * @param ren the renderer.
+   * @param groundTile the ground tiles.
+   * @param enemyArray the enemy array.
+   */
+  void render(int camX, int camY, SDL_Renderer *ren, GroundTile *groundTile, std::vector<Enemy *> enemyArray);
 
-    int getPosX();
+  /**
+* This is used to get the character x position.
+* @return the x position.
+*/
+  int getPosX();
 
-    int getPosY();
+  /**
+ * This is used to get the character y position.
+ * @return the y position.
+ */
+  int getPosY();
 
-    void handleEvent(SDL_Event& e);
+/**
+ * This is used to handle the movements of the character.
+ * @param e the event.
+ */
+  void handleEvent(SDL_Event &e);
 
-    void moveLeft();
+  /**
+ * This is used to move left.
+ */
+  void moveLeft();
 
-    void moveRight();
+  /**
+ * This method is used to move right.
+ */
+  void moveRight();
 
-    void jump();
+  /**
+ * This method is used to jump.
+ */
+  void jump();
 
-    void jumpAndMoveToRight();
+  /**
+ * This method is used to jump right.
+ */
+  void jumpAndMoveToRight();
 
-    void jumpAndMoveToLeft();
+  /**
+ * This method is used to jump left.
+ */
+  void jumpAndMoveToLeft();
 
-private:
+ private:
     SDL_Texture *texture;
     SDL_Renderer *ren;
     SDL_Rect Dest;
@@ -63,5 +114,6 @@ private:
     Physix physix;
     bool isFacingLeft = false;
     ResourceManager *rmObj;
+
 };
 #endif //PLATFORMER_SUNDAYS_ARE_FUNDAYS_CHAR_H

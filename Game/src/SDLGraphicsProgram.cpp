@@ -12,10 +12,10 @@
 #include "../include/ResourceManager.h"
 
 Background background;
-World* world;
-Character* character;
+World *world;
+Character *character;
 vector<Enemy *> enemyArray;
-GroundTile* groundTile;
+GroundTile *groundTile;
 Rectangle *banner;
 Uint32 startTick;
 Mixer* m;
@@ -27,9 +27,13 @@ ResourceManager* rmObj;
 int cWidth = 1000;
 int cHeight = 600;
 
-// Initialization function
-// Returns a true or false value based on successful completion of setup.
-// Takes in dimensions of window.
+
+/**
+ * Initialization function Returns a true or false value based on successful completion of setup.
+ * Takes in dimensions of window.
+ * @param w the width.
+ * @param h the height.
+ */
 SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight(h){
   	// Initialize random number generation.
    	srand(time(NULL));
@@ -85,148 +89,156 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight
     	std::string errors=errorStream.str();
     	std::cout << errors << "\n";
   } else {
-    	std::cout << "No SDL errors Detected in during init\n\n";
+      std::cout << "No SDL errors Detected in during init\n\n";
   }
 }
 
-
-
-
-// Proper shutdown and destroy initialized objects
-SDLGraphicsProgram::~SDLGraphicsProgram(){
-    // Destroy Renderer
-    SDL_DestroyRenderer(gRenderer);
-    //Destroy window
-    SDL_DestroyWindow( gWindow );
-    // Point gWindow to NULL to ensure it points to nothing.
-    gRenderer = NULL;
-    gWindow = NULL;
-    delete groundTile;
+/**
+ * Proper shutdown and destroy initialized objects
+ */
+SDLGraphicsProgram::~SDLGraphicsProgram() {
+  // Destroy Renderer
+  SDL_DestroyRenderer(gRenderer);
+  //Destroy window
+  SDL_DestroyWindow(gWindow);
+  // Point gWindow to NULL to ensure it points to nothing.
+  gRenderer = NULL;
+  gWindow = NULL;
+  delete groundTile;
 //    ~Background;
-
     rmObj->shutDown();
     Mix_FreeMusic(m->bgm);
     //Quit SDL subsystems
     SDL_Quit();
 }
 
-// Return Input
-void SDLGraphicsProgram::input(bool *quit){
-    // Event handler that handles various events in SDL
-    // that are related to input and output
-    SDL_Event e;
-    // Enable text input
-    SDL_StartTextInput();
-      //Handle events on queue
-      while(SDL_PollEvent( &e ) != 0){
-        // User posts an event to quit
-        // An example is hitting the "x" in the corner of the window.
-        if(e.type == SDL_QUIT){
-          *quit = true;
-        }
-        character->handleEvent(e);
-      }
+/**
+ * This method is used to take feed the input.
+ * @param quit the quite boolean.
+ */
+void SDLGraphicsProgram::input(bool *quit) {
+  // Event handler that handles various events in SDL
+  // that are related to input and output
+  SDL_Event e;
+  // Enable text input
+  SDL_StartTextInput();
+  //Handle events on queue
+  while (SDL_PollEvent(&e)!=0) {
+    // User posts an event to quit
+    // An example is hitting the "x" in the corner of the window.
+    if (e.type==SDL_QUIT) {
+      *quit = true;
+    }
+    character->handleEvent(e);
+  }
 }
 
-// Update SDL
-void SDLGraphicsProgram::update()
-{
-    static int frame = 0;
-    if((SDL_GetTicks() - animationStartTick) > 1000/ANIMATIONRATE) {
-        animationStartTick = SDL_GetTicks();
-        frame++;
-    }
+/**
+ *  Update OpenGL.
+ */
+void SDLGraphicsProgram::update() {
+  static int frame = 0;
+  if ((SDL_GetTicks() - animationStartTick) > 1000/ANIMATIONRATE) {
+    animationStartTick = SDL_GetTicks();
+    frame++;
+  }
 
-    character->update(frame);
+  character->update(frame);
 
   for (int i = 0; i < enemyArray.size(); i++) {
     enemyArray[i]->update(frame);
   }
 
-    background.update();
+  background.update();
 }
 
+/**
+ * Render The render function gets called once per loop.
+ */
+void SDLGraphicsProgram::render(int x, int y) {
 
-// Render
-// The render function gets called once per loop
-void SDLGraphicsProgram::render(int x, int y){
+  SDL_RenderClear(gRenderer);
+  background.render(x, y, getSDLRenderer());
 
-    SDL_RenderClear(gRenderer);
-    background.render(x, y, getSDLRenderer());
+  character->render(x, y, getSDLRenderer(), groundTile, enemyArray);
 
-    character->render(x, y, getSDLRenderer(), groundTile, enemyArray);
+  for (int i = 0; i < enemyArray.size(); i++) {
+    enemyArray[i]->render(x, y, getSDLRenderer(), groundTile);
+  }
 
-    for (int i = 0; i < enemyArray.size(); i++) {
-      enemyArray[i]->render(x, y, getSDLRenderer(), groundTile);
-    }
-
-    groundTile->render(x, getSDLRenderer());
+  groundTile->render(x, getSDLRenderer());
   banner->draw(getSDLRenderer());
   banner->updateColor(29, 119, 116, 0);
   SDL_RenderPresent(gRenderer);
 }
 
+/**
+ * Loops forever!
+ */
+void SDLGraphicsProgram::loop() {
+  // Main loop flag
+  // If this is quit = 'true' then the program terminates.
+  bool quit = false;
+  Uint32 startTick;
 
+  world = new World(getSDLRenderer());
+  world->loadArtifacts(groundTile);
 
-//Loops forever!
-void SDLGraphicsProgram::loop(){
-    // Main loop flag
-    // If this is quit = 'true' then the program terminates.
-    bool quit = false;
-    Uint32 startTick;
+  enemyArray = world->returnEnemies();
 
-    world = new World(getSDLRenderer());
-    world->loadArtifacts(groundTile);
-
-    enemyArray = world->returnEnemies();
-
-    character = world->returnCharacter();
+  character = world->returnCharacter();
 //    character = new character(getSDLRenderer(), 100, 300);
-  banner = new Rectangle( 0, 0, cWidth, 90);
-    SDL_Rect camera = { 0, 0, cWidth, cHeight };
-    // While application is running
-    while(!quit){
-      // Get user input
-      input(&quit);
+  banner = new Rectangle(0, 0, cWidth, 90);
+  SDL_Rect camera = {0, 0, cWidth, cHeight};
+  // While application is running
+  while (!quit) {
+    // Get user input
+    input(&quit);
 
-      startTick = SDL_GetTicks();
-        camera.x = (character->getPosX() + 40 / 2) - cWidth / 2;
+    startTick = SDL_GetTicks();
+    camera.x = (character->getPosX() + 40/2) - cWidth/2;
 
-      if( camera.x < 0 ) {
-          camera.x = 0;
-      }
-
-      if( camera.x > 2560 - camera.w ) {
-          camera.x = 2560 - camera.w;
-      }
-      // If you have time, implement your frame capping code here
-      // Otherwise, this is a cheap hack for this lab.
-      if ((1000/FPS) > (SDL_GetTicks() - startTick)) {
-          SDL_Delay((1000/FPS - (SDL_GetTicks() - startTick)));
-
-      }
-      // Update our scene
-      update();
-      // Render using OpenGL
-      render(camera.x, camera.y);
-
-      //frame capping.
-      if ((1000/FPS) > (SDL_GetTicks() - startTick)) {
-       // cout<<"frame capping\n";
-        SDL_Delay((1000/FPS - (SDL_GetTicks() - startTick)));
-      }
-      //Update screen of our specified window
+    if (camera.x < 0) {
+      camera.x = 0;
     }
-    //Disable text input
-    SDL_StopTextInput();
+
+    if (camera.x > 2560 - camera.w) {
+      camera.x = 2560 - camera.w;
+    }
+    // If you have time, implement your frame capping code here
+    // Otherwise, this is a cheap hack for this lab.
+    if ((1000/FPS) > (SDL_GetTicks() - startTick)) {
+      SDL_Delay((1000/FPS - (SDL_GetTicks() - startTick)));
+
+    }
+    // Update our scene
+    update();
+    // Render using OpenGL
+    render(camera.x, camera.y);
+
+    //frame capping.
+    if ((1000/FPS) > (SDL_GetTicks() - startTick)) {
+      // cout<<"frame capping\n";
+      SDL_Delay((1000/FPS - (SDL_GetTicks() - startTick)));
+    }
+    //Update screen of our specified window
+  }
+  //Disable text input
+  SDL_StopTextInput();
 }
 
-// Get Pointer to Window
-SDL_Window* SDLGraphicsProgram::getSDLWindow(){
+/**
+ * Get Pointer to Window
+ * @return  the sdl window.
+ */
+SDL_Window *SDLGraphicsProgram::getSDLWindow() {
   return gWindow;
 }
 
-// Get Pointer to Renderer
-SDL_Renderer* SDLGraphicsProgram::getSDLRenderer(){
+/**
+ * Get Pointer to Renderer
+ * @return  the renderer.
+ */
+SDL_Renderer *SDLGraphicsProgram::getSDLRenderer() {
   return gRenderer;
 }

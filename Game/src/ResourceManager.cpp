@@ -39,9 +39,11 @@ int ResourceManager::startUp(SDL_Renderer *ren) {
   SDL_Surface *backgroundLayer3 = SDL_LoadBMP("./media/3.bmp");
   SDL_Surface *backgroundLayer4 = SDL_LoadBMP("./media/4.bmp");
 
+
   if(ren == NULL) {
     std::cout<<"The renderer itself is null";
   }
+
   if(characterRun==NULL || idleSprite == NULL) {
     SDL_Log("Failed to allocate player surfaces");
   }else {
@@ -71,7 +73,8 @@ int ResourceManager::startUp(SDL_Renderer *ren) {
     // Create a texture from our surface
     groundTexture = SDL_CreateTextureFromSurface(ren, ground);
   }
-  if(ground == NULL) {
+
+  if(groundTexture == NULL) {
     std::cout<<"Ground Texture is not even getting created";
   }
 
@@ -143,4 +146,5 @@ int ResourceManager::shutDown() {
   SDL_DestroyTexture(backgroundLayer3Texture);
   SDL_DestroyTexture(backgroundLayer4Texture);
   return 0;
+
 }

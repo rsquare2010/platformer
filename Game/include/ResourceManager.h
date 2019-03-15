@@ -18,57 +18,43 @@ using namespace std;
  */
 class ResourceManager {
 
-public:
-    /**
-     * This method is used to get the instance of the Resource manager class.
-     * @return The instance of teh resource manager class.
-     */
-    static ResourceManager *getInstance();
+ public:
+  /**
+   * This method is used to get the instance of the Resource manager class.
+   * @return The instance of teh resource manager class.
+   */
+  static ResourceManager *getInstance();
 
-    /**
-     * This method is used to get the value of the resource map.
-     * @param key the key to the map
-     * @return the value to the key of the map.
-     */
-    void *getValue(string key);
+  /**
+   * This method is used to get the value of the resource map.
+   * @param key the key to the map
+   * @return the value to the key of the map.
+   */
+  void *getValue(string key);
 
-    /**
-     * This basically acts as a substitute of the constructor.
-     * @return  0 if everything is executed perfectly.
-     */
-    int startUp(SDL_Renderer *ren);
+  /**
+   * This basically acts as a substitute of the constructor.
+   * @return  0 if everything is executed perfectly.
+   */
+  int startUp(SDL_Renderer *ren);
 
-    int musStartUp();
-    /**
-     * This is used to deallocate the Resource Manager.
-     * @return  0 if everything is executed perfectly.
-     */
-    int shutDown();
-    /**
-     * This method is used to get the game configuration.
-     * @return the game configuration.
-     */
-//  Json::Value getConfig();
-    /**
-     * This method is used to get the language configuration.
-     * @return the language configuration.
-     */
-//  Json::Value getLanguage();
+  int musStartUp();
+  /**
+   * This is used to deallocate the Resource Manager.
+   * @return  0 if everything is executed perfectly.
+   */
+  int shutDown();
 
-private:
-//  Json::Value gameConfig;
+ private:
 
-//  Json::Value language;
+  /**
+   * This is the private constructor.
+   */
+  ResourceManager() {};
 
-    /**
-     * This is the private constructor.
-     */
-    ResourceManager() {
-    };
+  ResourceManager(ResourceManager const &);
 
-    ResourceManager(ResourceManager const &);
-
-    void operator=(ResourceManager const &);
+  void operator=(ResourceManager const &);
 
     map<string, void *> m_Resources;
 

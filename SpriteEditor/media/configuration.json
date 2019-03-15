@@ -1,9 +1,8 @@
-
 {
-  "file_name" : "./media/enemy.bmp",
-  "frame_width" : 43,
-  "frame_height" : 37,
-  "first_frame_x" : 0,
+  "file_name": "./media/enemy.bmp",
+  "frame_width": 43,
+  "frame_height": 37,
+  "first_frame_x": 0,
   "first_frame_y": 0,
-  "no_of_subsequent_frames" : 16
+  "no_of_subsequent_frames": 16
 }

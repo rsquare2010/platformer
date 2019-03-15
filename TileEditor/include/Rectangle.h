@@ -55,8 +55,8 @@ class Rectangle {
     SDL_SetRenderDrawColor(ren, 49, 224, 145, 255);
   }
 
-  ~Rectangle(){
-    std::cout<<"hello there\n";
+  ~Rectangle() {
+    std::cout << "hello there\n";
     delete this;
   };
 
