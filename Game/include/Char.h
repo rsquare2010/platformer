@@ -6,12 +6,12 @@
 #ifndef PLATFORMER_SUNDAYS_ARE_FUNDAYS_CHAR_H
 #define PLATFORMER_SUNDAYS_ARE_FUNDAYS_CHAR_H
 
-class Char {
+class Character {
 public:
     static const int WIDTH = 21;
     static const int HEIGHT = 33;
 
-    Char(SDL_Renderer* ren, int startPosX, int startPosY ) {
+    Character(SDL_Renderer* ren, int startPosX, int startPosY ) {
         this->mPosX = startPosX;
         this->mPosY = startPosY;
         spriteSheet = SDL_LoadBMP("./media/Run.bmp");
@@ -26,7 +26,7 @@ public:
         idleSprite = SDL_LoadBMP("./media/idle.bmp");
         this->ren = ren;
     }
-    ~Char() {
+    ~Character() {
         SDL_FreeSurface(spriteSheet);
         spriteSheet=NULL;
         SDL_DestroyTexture(texture);
@@ -52,7 +52,7 @@ public:
     }
 
 
-    void render(int camX, int camY, SDL_Renderer* ren, GroundTile* groundTile, vector<Enemy *> enemyArray) {
+    void render(int camX, int camY, SDL_Renderer* ren, GroundTile* groundTile, std::vector<Enemy *> enemyArray) {
 
 
         std::vector<Coordinates *> coordinates = groundTile->getCoordinates();

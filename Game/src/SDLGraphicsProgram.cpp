@@ -1,6 +1,6 @@
 #include "SDLGraphicsProgram.h"
 #include "Background.h"
-#include "../include/Character.h"
+#include "../include/Charactersss.h"
 #include "../include/GroundTile.h"
 #include "../include/Rectangle.h"
 #include "../include/Mixer.h"
@@ -17,7 +17,7 @@
 Background background;
 World* world;
 Character* character;
-Char* charac;
+//Char* charac;
 vector<Enemy *> enemyArray;
 GroundTile* groundTile;
 Rectangle *banner;
@@ -156,6 +156,9 @@ SDLGraphicsProgram::~SDLGraphicsProgram(){
     // Point gWindow to NULL to ensure it points to nothing.
     gRenderer = NULL;
     gWindow = NULL;
+    delete groundTile;
+//    ~Background;
+
     Mix_FreeMusic(m->bgm);
     //Quit SDL subsystems
     SDL_Quit();
@@ -175,7 +178,7 @@ void SDLGraphicsProgram::input(bool *quit){
         if(e.type == SDL_QUIT){
           *quit = true;
         }
-        charac->handleEvent(e);
+        character->handleEvent(e);
       }
 }
 
@@ -188,7 +191,7 @@ void SDLGraphicsProgram::update()
         frame++;
     }
 
-    charac->update(frame);
+    character->update(frame);
 //    character->update(frame);
   for (int i = 0; i < enemyArray.size(); i++) {
 
@@ -217,7 +220,7 @@ void SDLGraphicsProgram::render(int x, int y){
     background.render(x, y, getSDLRenderer());
 
 //    character->render(x, y, getSDLRenderer());
-    charac->render(x, y, getSDLRenderer(), groundTile, enemyArray);
+    character->render(x, y, getSDLRenderer(), groundTile, enemyArray);
 
     for (int i = 0; i < enemyArray.size(); i++) {
       enemyArray[i]->render(x, y, getSDLRenderer(), groundTile);
@@ -242,8 +245,8 @@ void SDLGraphicsProgram::loop(){
     world->loadArtifacts(groundTile);
 
     enemyArray = world->returnEnemies();
-//    character = world->returnCharacter();
-    charac = new Char(getSDLRenderer(), 100, 300);
+    character = world->returnCharacter();
+//    character = new character(getSDLRenderer(), 100, 300);
   banner = new Rectangle( 0, 0, cWidth, 90);
     SDL_Rect camera = { 0, 0, cWidth, cHeight };
     // While application is running
@@ -255,7 +258,7 @@ void SDLGraphicsProgram::loop(){
 
 //      std::cout<<"posX"<<character->getCoordinates()->getX()<<"Width/2"<<40 / 2<<"xWidth/2"<< cWidth/2<<std::endl;
 //      camera.x = (character->getPosX() + 40 / 2) - cWidth / 2;
-        camera.x = (charac->getPosX() + 40 / 2) - cWidth / 2;
+        camera.x = (character->getPosX() + 40 / 2) - cWidth / 2;
 
       if( camera.x < 0 ) {
           camera.x = 0;

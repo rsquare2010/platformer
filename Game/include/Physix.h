@@ -20,7 +20,6 @@ public:
         }
 
     }
-private:
 };
 
 #endif //PLATFORMER_SUNDAYS_ARE_FUNDAYS_PHYSIX_H

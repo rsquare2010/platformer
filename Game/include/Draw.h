@@ -9,16 +9,7 @@
 class Draw {
 
  public:
-
-
-
-
   static void sketch(SDL_Renderer *renderer, SDL_Texture *tex, SDL_Rect dest);
-
- private:
-
-
-
 };
 
 #endif //PLATFORMER_SUNDAYS_ARE_FUNDAYS_DRAW_H
