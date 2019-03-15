@@ -58,8 +58,8 @@ void Sprite::update(int frame) {
 
   Dest.x = 0;
   Dest.y = 0;
-  Dest.w = width;
-  Dest.h = height;
+  Dest.w = 80;
+  Dest.h = 80;
 }
 
 /**

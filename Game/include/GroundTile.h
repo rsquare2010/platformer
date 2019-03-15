@@ -6,6 +6,7 @@
 #define PLATFORMER_SUNDAYS_ARE_FUNDAYS_GROUNDTILE_H
 #include "SDL.h"
 #include "Coordinates.h"
+#include "ResourceManager.h"
 #include <iostream>
 #include <vector>
 
@@ -26,10 +27,8 @@ class GroundTile {
 
   /**
    * This is to initialize the Ground Tile.
-   * @param render
    */
-
-  void init(SDL_Renderer *render);
+  void init();
 
 
 
@@ -59,11 +58,10 @@ class GroundTile {
 
 
  private:
-  SDL_Surface *m_TileSpriteSheet;
   SDL_Texture *m_Texture;
   SDL_Rect Dest, Src;
   std::vector<Coordinates *> coordinates;
-
+  ResourceManager* resourceManager;
 };
 
 #endif //PLATFORMER_SUNDAYS_ARE_FUNDAYS_GROUNDTILE_H

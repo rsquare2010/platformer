@@ -8,8 +8,6 @@
    * This is the destructor.
    */
 GroundTile::~GroundTile() {
-  SDL_FreeSurface(m_TileSpriteSheet);
-  m_TileSpriteSheet = NULL;
   SDL_DestroyTexture(m_Texture);
 }
 
@@ -18,16 +16,10 @@ GroundTile::~GroundTile() {
   * @param render
   */
 
-void GroundTile::init(SDL_Renderer *render) {
-  m_TileSpriteSheet = SDL_LoadBMP("./media/Tiles.bmp");
-  if (m_TileSpriteSheet==NULL) {
-    SDL_Log("Failed to allocate surface");
-  } else {
-    // Create a texture from our surface
-    // Textures run faster and take advantage of
-    //  hardware acceleration
-    m_Texture = SDL_CreateTextureFromSurface(render, m_TileSpriteSheet);
-  }
+void GroundTile::init() {
+
+  resourceManager = ResourceManager::getInstance();
+  m_Texture = (SDL_Texture *) resourceManager->getValue("Ground");
   Src.x = 0;
   Src.y = 0;
   Src.w = 40;

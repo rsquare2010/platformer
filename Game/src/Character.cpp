@@ -5,40 +5,28 @@
 
 
 
-Character::Character(SDL_Renderer* ren, int startPosX, int startPosY ) {
+Character::Character(int startPosX, int startPosY ) {
     this->mPosX = startPosX;
     this->mPosY = startPosY;
-
-    spriteSheet = SDL_LoadBMP("./media/Run.bmp");
-
-    if (spriteSheet == NULL) {
-        SDL_Log("Failed to allocate surface");
-    } else {
-        // Create a texture from our surface
-        // Textures run faster and take advantage of hardware acceleration
-        texture = SDL_CreateTextureFromSurface(ren, spriteSheet);
-    }
-    idleSprite = SDL_LoadBMP("./media/idle.bmp");
-    this->ren = ren;
+    rmObj = ResourceManager::getInstance();
 }
 
 Character::~Character() {
-    SDL_FreeSurface(spriteSheet);
-    spriteSheet=NULL;
     SDL_DestroyTexture(texture);
 }
 
 void Character::update(int frame){
 
     if(isIdle) {
-        texture = SDL_CreateTextureFromSurface(ren, idleSprite);
+        texture = (SDL_Texture *) rmObj->getValue("Idle");
+
         int currentFrame = frame%12;
         Src.x = currentFrame*19;
         Src.y = 0;
         Src.w = 19;
         Src.h = 31;
     } else {
-        texture = SDL_CreateTextureFromSurface(ren, spriteSheet);
+        texture = (SDL_Texture *) rmObj->getValue("Run");
         int currentFrame = frame%7;
         Src.x = currentFrame*21;
         Src.y = 0;

@@ -52,17 +52,15 @@ void World::loadArtifacts(GroundTile* groundTile) {
 
       if (worldArray[rectGrid] == 2) {
 
-        enemyArray.push_back(new Enemy(renderer, x, y));
+        enemyArray.push_back(new Enemy(x, y));
 
       }
       if(worldArray[rectGrid] == 1){
-        character = new Character(renderer,x,y);
+        character = new Character(x,y);
       }
       else if (worldArray[rectGrid] == 3) {
         groundTile->add(x, y);
-
       }
-
     }
   }
 

@@ -64,19 +64,6 @@ private:
      * This is the private constructor.
      */
     ResourceManager() {
-
-//    Json::Value config;
-//    std::ifstream config_file("Media/configuration.json", std::ifstream::binary);
-//    config_file >> config;
-//
-//    gameConfig = config;
-//
-//    Json::Value language;
-//    std::ifstream language_file("Media/language.json", std::ifstream::binary);
-//    language_file >> language;
-//
-//    this->language = language;
-
     };
 
     ResourceManager(ResourceManager const &);
@@ -84,6 +71,16 @@ private:
     void operator=(ResourceManager const &);
 
     map<string, void *> m_Resources;
+
+    SDL_Texture *charRunTexture;
+    SDL_Texture *charIdleTexture;
+    SDL_Texture *enemyTexture;
+    SDL_Texture *enemyDeathTexture;
+    SDL_Texture *groundTexture;
+    SDL_Texture *backgroundLayer1Texture;
+    SDL_Texture *backgroundLayer2Texture;
+    SDL_Texture *backgroundLayer3Texture;
+    SDL_Texture *backgroundLayer4Texture;
 };
 
 #endif //BREAKOUT_BREAKOUTSQUAD_RESOURCEMANAGER_H

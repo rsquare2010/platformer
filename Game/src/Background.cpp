@@ -7,42 +7,21 @@ Background::Background() {
 }
 
 Background::~Background() {
-    SDL_FreeSurface(spriteSheet);
-    SDL_FreeSurface(spriteSheet2);
-    SDL_FreeSurface(spriteSheet3);
-    SDL_FreeSurface(spriteSheet4);
-    spriteSheet=NULL;
-    spriteSheet2=NULL;
-    spriteSheet3=NULL;
-    spriteSheet4=NULL;
     SDL_DestroyTexture(texture);
     SDL_DestroyTexture(texture2);
     SDL_DestroyTexture(texture3);
     SDL_DestroyTexture(texture4);
 }
 
-void Background::init(int x, int y, SDL_Renderer* ren) {
+void Background::init(int x, int y) {
     xPos = x;
     yPos = y;
 
-    spriteSheet = SDL_LoadBMP("./media/1.bmp");
-    spriteSheet2 = SDL_LoadBMP("./media/2.bmp");
-    spriteSheet3 = SDL_LoadBMP("./media/3.bmp");
-    spriteSheet4 = SDL_LoadBMP("./media/4.bmp");
-    if(spriteSheet==NULL || spriteSheet3 == NULL){
-        SDL_Log("Failed to allocate surface");
-    }
-    if(spriteSheet2==NULL || spriteSheet4 == NULL){
-        SDL_Log("Failed to allocate surface");
-    }else{
-        SDL_Log("Allocated a bunch of memory to create identical game character");
-        // Create a texture from our surface
-        // Textures run faster and take advantage of hardware acceleration
-        texture = SDL_CreateTextureFromSurface(ren, spriteSheet);
-        texture2 = SDL_CreateTextureFromSurface(ren, spriteSheet2);
-        texture3 = SDL_CreateTextureFromSurface(ren, spriteSheet3);
-        texture4 = SDL_CreateTextureFromSurface(ren, spriteSheet4);
-    }
+    resourceManager = ResourceManager::getInstance();
+    texture = (SDL_Texture *) resourceManager->getValue("Background1");
+    texture2 = (SDL_Texture *) resourceManager->getValue("Background2");
+    texture3 = (SDL_Texture *) resourceManager->getValue("Background3");
+    texture4 = (SDL_Texture *) resourceManager->getValue("Background4");
 }
 
 void Background::update() {

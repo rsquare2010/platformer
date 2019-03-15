@@ -11,8 +11,6 @@
 #include "Character.h"
 #include "../include/ResourceManager.h"
 
-
-
 Background background;
 World* world;
 Character* character;
@@ -21,8 +19,7 @@ GroundTile* groundTile;
 Rectangle *banner;
 Uint32 startTick;
 Mixer* m;
-
-
+ResourceManager* rmObj;
 
 #define FPS 60
 #define ANIMATIONRATE 6
@@ -37,9 +34,7 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight
   	// Initialize random number generation.
    	srand(time(NULL));
 
-    ResourceManager *rmObj = ResourceManager::getInstance();
-
-
+    rmObj = ResourceManager::getInstance();
 
 	 // Initialization flag
 	 bool success = true;
@@ -76,20 +71,20 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight
 
 
     SDL_Texture* charTexture = (SDL_Texture *) rmObj->getValue("Character");
-	background.init(0,0, getSDLRenderer());
+	background.init(0,0);
     m = new Mixer();
     m->loadSounds();
     m->playMusic();
 
 	groundTile = new GroundTile();
-	groundTile->init(getSDLRenderer());
+	groundTile->init();
 
   // If initialization did not work, then print out a list of errors in the constructor.
-  if(!success){
+  if(!success) {
     	errorStream << "Failed to initialize!\n";
     	std::string errors=errorStream.str();
     	std::cout << errors << "\n";
-  }else{
+  } else {
     	std::cout << "No SDL errors Detected in during init\n\n";
   }
 }
@@ -109,6 +104,7 @@ SDLGraphicsProgram::~SDLGraphicsProgram(){
     delete groundTile;
 //    ~Background;
 
+    rmObj->shutDown();
     Mix_FreeMusic(m->bgm);
     //Quit SDL subsystems
     SDL_Quit();

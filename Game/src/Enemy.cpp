@@ -10,26 +10,17 @@
   * @param startPosX the start of X position.
   * @param startPosY the start of Y position.
   */
-Enemy::Enemy(SDL_Renderer *ren, int startPosX, int startPosY) {
+Enemy::Enemy( int startPosX, int startPosY) {
   this->mPosX = startPosX;
   this->mPosY = startPosY;
-  spriteSheet = SDL_LoadBMP("./media/enemy.bmp");
-  if (spriteSheet==NULL) {
-    SDL_Log("Failed to allocate surface");
-  } else {
-    // Create a texture from our surface
-    // Textures run faster and take advantage of hardware acceleration
-    texture = SDL_CreateTextureFromSurface(ren, spriteSheet);
-  }
-  this->ren = ren;
+  resourceManager = ResourceManager::getInstance();
+  texture = (SDL_Texture *) resourceManager->getValue("Enemy");
 }
 
 /**
  * This is the destructor.
  */
 Enemy::~Enemy() {
-  SDL_FreeSurface(spriteSheet);
-  spriteSheet = NULL;
   SDL_DestroyTexture(texture);
 }
 
@@ -144,14 +135,7 @@ int Enemy::getPosY() {
  */
 void Enemy::die() {
   if (!dead) {
-    spriteSheet = SDL_LoadBMP("./media/death.bmp");
-    if (spriteSheet==NULL) {
-      SDL_Log("Failed to allocate surface");
-    } else {
-      // Create a texture from our surface
-      // Textures run faster and take advantage of hardware acceleration
-      texture = SDL_CreateTextureFromSurface(ren, spriteSheet);
-    }
+    texture = (SDL_Texture *) resourceManager->getValue("Death");
     dead = true;
     XVELOCITY = 0;
   }

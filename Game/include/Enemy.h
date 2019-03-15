@@ -9,6 +9,7 @@
 #include "Physix.h"
 #include "GroundTile.h"
 #include "Coordinates.h"
+#include "ResourceManager.h"
 
 /**
  * This is the Enemy class.
@@ -25,7 +26,7 @@ class Enemy {
   * @param startPosX the start of X position.
   * @param startPosY the start of Y position.
   */
-  Enemy(SDL_Renderer *ren, int startPosX, int startPosY);
+  Enemy( int startPosX, int startPosY);
 
   /**
    * This is the destructor.
@@ -65,9 +66,7 @@ class Enemy {
   void die();
 
  private:
-  SDL_Surface *spriteSheet;
   SDL_Texture *texture;
-  SDL_Renderer *ren;
   SDL_Rect Dest;
   SDL_Rect Src;
   int mPosX;
@@ -81,6 +80,7 @@ class Enemy {
   bool isDeadAnimationComplete = false;
   int deathFrame = 0;
   bool isFacingLeft = false;
+  ResourceManager* resourceManager;
 
 };
 
