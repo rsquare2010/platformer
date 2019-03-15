@@ -18,31 +18,19 @@ class GroundTile {
 
  public:
 
+
   /**
-   * This is the constructor.
+   * This is the destructor.
    */
-  GroundTile(){
-  }
+
+  ~GroundTile();
 
   /**
    * This is to initialize the Ground Tile.
    * @param render
    */
-  void init(SDL_Renderer *render) {
-      m_TileSpriteSheet = SDL_LoadBMP("./media/Tiles.bmp");
-      if(m_TileSpriteSheet==NULL){
-          SDL_Log("Failed to allocate surface");
-      }else{
-          // Create a texture from our surface
-          // Textures run faster and take advantage of
-          //  hardware acceleration
-          m_Texture = SDL_CreateTextureFromSurface(render, m_TileSpriteSheet);
-      }
-      Src.x = 0;
-      Src.y = 0;
-      Src.w = 40;
-      Src.h = 40;
-  }
+
+  void init(SDL_Renderer *render);
 
 
 
@@ -51,34 +39,25 @@ class GroundTile {
    * @param x the x coordinate.
    * @param y the y coordinate.
    */
-  void add(int x, int y) {
-
-    this->coordinates.push_back(new Coordinates( x, y));
-  }
+  void add(int x, int y);
 
   /**
    * This is to render the Ground tile.
    * @param camX the camera cx.
    * @param ren the renderer.
    */
-  void render(int camX, SDL_Renderer* ren) {
-
-      for (int i = 0; i < coordinates.size(); i++) {
-          Dest.x = coordinates[i]->getX() - camX;
-          Dest.y = coordinates[i]->getY();
-          Dest.w = 40;
-          Dest.h = 40;
-          SDL_RenderCopy(ren, m_Texture, NULL, &Dest);
-      }
-  }
+  void render(int camX, SDL_Renderer* ren);
 
   /**
    * This is used to retrieve the coordinate.
    * @return
    */
-  std::vector<Coordinates *> getCoordinates() {
-    return coordinates;
-  }
+  std::vector<Coordinates *> getCoordinates();
+
+
+
+
+
 
  private:
   SDL_Surface *m_TileSpriteSheet;

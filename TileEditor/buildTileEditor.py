@@ -21,6 +21,7 @@ if platform.system()=="Linux":
 elif platform.system()=="Darwin":
     ARGUMENTS="-D MAC" # -D is a #define sent to the preprocessor.
     INCLUDE_DIR="-I ./include/ -I/Library/Frameworks/SDL2.framework/Headers -I./../common/thirdparty/old/glm -I/Library/Frameworks/SDL2_ttf.framework/Headers -I/Library/Frameworks/SDL2_mixer.framework/Headers"
+    EXECUTABLE="tileEditor"
     LIBRARIES="-F/Library/Frameworks -framework SDL2 -framework SDL2_ttf -framework SDL2_mixer"
 elif platform.system()=="Windows":
     COMPILER="g++ -std=c++14" # Note we use g++ here as it is more likely what you have
