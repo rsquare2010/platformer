@@ -21,9 +21,9 @@ if platform.system()=="Linux":
     LIBRARIES="-lSDL2 -ldl"
 elif platform.system()=="Darwin":
     ARGUMENTS="-D MAC" # -D is a #define sent to the preprocessor.
-    INCLUDE_DIR="-I ./include/ -I/Library/Frameworks/SDL2.framework/Headers -I/Library/Frameworks/SDL2_mixer.framework/Headers -I./../common/thirdparty/old/glm"
+    INCLUDE_DIR="-I ./include/ -I/Library/Frameworks/SDL2.framework/Headers -I/Library/Frameworks/SDL2_mixer.framework/Headers -I/Library/Frameworks/SDL2_ttf.framework/Headers -I./../common/thirdparty/old/glm"
     EXECUTABLE="game"
-    LIBRARIES="-F/Library/Frameworks -framework SDL2 -framework SDL2_mixer"
+    LIBRARIES="-F/Library/Frameworks -framework SDL2 -framework SDL2_mixer -framework SDL2_ttf"
 elif platform.system()=="Windows":
     COMPILER="g++ -std=c++14" # Note we use g++ here as it is more likely what you have
     ARGUMENTS="-D MINGW -std=c++14 -static-libgcc -static-libstdc++" 

@@ -254,7 +254,7 @@ private:
     int jumpVelocity = 0;
 
     int jumpStartTime;
-    int horizontalvelocity = 6;
+    int horizontalvelocity = 10;
     bool isOnGround = false;
     bool isJumping = false;
     bool isIdle = true;

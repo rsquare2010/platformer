@@ -12,6 +12,10 @@
  */
 void Mixer::loadSounds() {
   ResourceManager *rmMusic = ResourceManager::getInstance();
+
+  rmMusic->musStartUp();
+
+
   int flags = MIX_INIT_MP3;
   int initialized = Mix_Init(flags);
   if ((flags & initialized)!=flags) {
@@ -23,14 +27,14 @@ void Mixer::loadSounds() {
     printf("Error: %s\n", Mix_GetError());
   }
 
-  rmMusic->musStartUp();
+
 
   bgm = (Mix_Music *) rmMusic->getValue("Music");
   //sfxPaddle = (Mix_Chunk *) rmMusic->getValue("Paddle SFX");
   //sfxBrick = (Mix_Chunk *) rmMusic->getValue("Brick SFX");
   //sfxWall = (Mix_Chunk *) rmMusic->getValue("Wall SFX");
 
-  if (bgm==NULL || sfxPaddle==NULL || sfxBrick==NULL || sfxWall==NULL) {
+  if (bgm==NULL) {
     printf("Error: %s : noooooooooooo\n", Mix_GetError());
   }
 }
@@ -39,7 +43,7 @@ void Mixer::loadSounds() {
  * This method is used to play the music in the game.
  */
 void Mixer::playMusic() {
-  Mix_PlayMusic(bgm, -1);
+  Mix_PlayMusic(Mix_LoadMUS("media/Commando.mp3"), -1);
 }
 
 /**

@@ -4,6 +4,8 @@
 #include "../include/GroundTile.h"
 #include "../include/Rectangle.h"
 #include "../include/Mixer.h"
+#include "../include/Fonts.h"
+#include "../include/State.h"
 #include <map>
 #include <string>
 #include <memory>
@@ -23,6 +25,7 @@ GroundTile* groundTile;
 Rectangle *banner;
 Uint32 startTick;
 Mixer* m;
+Fonts f;
 
 
 
@@ -116,6 +119,8 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight
 
     SDL_Texture* charTexture = (SDL_Texture *) rmObj->getValue("Character");
 	background.init(0,0, getSDLRenderer());
+    f = Fonts::getInstance();
+    f.loadMedia();
     m = new Mixer();
     m->loadSounds();
     m->playMusic();
@@ -160,6 +165,7 @@ SDLGraphicsProgram::~SDLGraphicsProgram(){
 //    ~Background;
 
     Mix_FreeMusic(m->bgm);
+    TTF_CloseFont(f.gFont);
     //Quit SDL subsystems
     SDL_Quit();
 }
@@ -204,7 +210,7 @@ void SDLGraphicsProgram::update()
 
 // Render
 // The render function gets called once per loop
-void SDLGraphicsProgram::render(int x, int y){
+void SDLGraphicsProgram::render(int x, int y) {
 
 
 //    SDL_SetRenderDrawColor(gRenderer, 110, 130,170,0xFF);
@@ -223,13 +229,20 @@ void SDLGraphicsProgram::render(int x, int y){
     character->render(x, y, getSDLRenderer(), groundTile, enemyArray);
 
     for (int i = 0; i < enemyArray.size(); i++) {
-      enemyArray[i]->render(x, y, getSDLRenderer(), groundTile);
+        enemyArray[i]->render(x, y, getSDLRenderer(), groundTile);
     }
 
     groundTile->render(x, getSDLRenderer());
-  banner->draw(getSDLRenderer());
-  banner->updateColor(29, 119, 116, 0);
-  SDL_RenderPresent(gRenderer);
+    banner->draw(getSDLRenderer());
+    banner->updateColor(29, 119, 116, 0);
+
+    string statusText = State::getInstance().getStatusString();
+    f.renderText(gRenderer, statusText, 475, 20);
+
+    string livesText = State::getInstance().getLivesString();
+    f.renderText(gRenderer, livesText, 20, 20);
+
+    SDL_RenderPresent(gRenderer);
 }
 
 

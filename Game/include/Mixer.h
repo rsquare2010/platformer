@@ -2,8 +2,8 @@
 // Created by Daniel Nachum on 1/27/19.
 //
 
-#ifndef BREAKOUT_BREAKOUTSQUAD_MIXER_H
-#define BREAKOUT_BREAKOUTSQUAD_MIXER_H
+#ifndef PLATFORMER_SUNDAYS_ARE_FUNDAYS_MIXER_H
+#define PLATFORMER_SUNDAYS_ARE_FUNDAYS_MIXER_H
 
 #include <SDL_mixer.h>
 #include <stdio.h>
@@ -50,4 +50,4 @@ class Mixer {
   Mix_Chunk *sfxWall;
 };
 
-#endif //BREAKOUT_BREAKOUTSQUAD_MIXER_H
+#endif

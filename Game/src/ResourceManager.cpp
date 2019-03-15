@@ -54,13 +54,12 @@ int ResourceManager::startUp(SDL_Renderer *ren) {
 //  m_Resources.emplace(pair<string, void *>("Font", TTF_OpenFont("Media/BEBAS.ttf", 20)));
   m_Resources.emplace(pair<string, void *>("Ground", groundTexture ));
   m_Resources.emplace(pair<string, void *>("Character", charTexture ));
-
   return 0;
 }
 
 int ResourceManager::musStartUp() {
   m_Resources.emplace(pair<string, void *>("Music", Mix_LoadMUS("media/Commando.mp3")));
-
+  m_Resources.emplace(pair<string, void *>("Font", TTF_OpenFont("media/BEBAS.ttf", 20)));
   return 0;
 }
 

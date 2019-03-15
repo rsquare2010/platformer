@@ -8,7 +8,7 @@
 #include <iostream>
 #include <map>
 #include "Mixer.h"
-//#include "Fonts.h"
+#include "Fonts.h"
 //#include "json/json.h"
 #include <fstream>
 #include <SDL.h>
