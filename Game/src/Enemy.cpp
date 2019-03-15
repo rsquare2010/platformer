@@ -11,7 +11,6 @@ Enemy::Enemy(SDL_Renderer* ren, int startPosX, int startPosY ) {
     if(spriteSheet==NULL) {
         SDL_Log("Failed to allocate surface");
     } else {
-        SDL_Log("Allocated a bunch of memory to create identical game character");
         // Create a texture from our surface
         // Textures run faster and take advantage of hardware acceleration
         texture = SDL_CreateTextureFromSurface(ren, spriteSheet);

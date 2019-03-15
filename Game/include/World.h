@@ -10,7 +10,7 @@
 #include <fstream>
 #include "GroundTile.h"
 #include "Enemy.h"
-#include "Char.h"
+#include "Character.h"
 //#include "Charactersss.h"
 #include <vector>
 
