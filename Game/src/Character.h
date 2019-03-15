@@ -63,8 +63,7 @@ public:
         }
         else if( keystates[ SDL_SCANCODE_UP ] && keystates[ SDL_SCANCODE_LEFT ])
         {
-            jump();
-            moveLeft();
+          jumpAndMoveToLeft();
         }
 
         else if(keystates[ SDL_SCANCODE_RIGHT ]){
@@ -84,6 +83,11 @@ public:
 
     void moveRight() {
 
+      if(cantMoveForward ==false && XVELOCITY == 0 && cantMoveBackward ==true){
+        XVELOCITY = 40/2;
+        cantMoveBackward = false;
+      }
+
       if ( mPosX >= 0 && mPosX <2560 && mPosY < 640) {
 
 
@@ -96,19 +100,15 @@ public:
 
 
 
-  void moveRight(int velocity) {
 
-    if ( mPosX >= 0 && mPosX <2560 && mPosY < 640) {
-
-
-      mPosX +=velocity;
-    }
-
-
-  }
 
 
   void moveLeft() {
+
+      if(cantMoveForward ==true && XVELOCITY == 0 && cantMoveBackward ==false){
+        XVELOCITY = 40/2;
+        cantMoveForward = false;
+      }
 
     if ( mPosX >= 0 && mPosX <2560 && mPosY < 640)
     {
@@ -119,16 +119,7 @@ public:
 
   }
 
-  void moveLeft(int velocity) {
 
-    if ( mPosX >= 0 && mPosX <2560 && mPosY < 640) {
-
-
-      mPosX -=velocity;
-    }
-
-
-  }
 
   void move(){
       if ( mPosX < 0) {
@@ -152,7 +143,7 @@ public:
   }
 
   void startMovingInXDir(){
-      XVELOCITY = 15;
+      XVELOCITY = (40/2);
   }
 
 
@@ -173,24 +164,26 @@ public:
   void jumpAndMoveToRight(){
       //std::cout<<"jump and move right\n";
     jump();
-    int velocity = 40;
-
-    while(velocity>0){
-      moveRight(velocity);
-      velocity = velocity/2;
-    }
+    moveRight();
+//    int velocity = 40;
+//
+//    while(velocity>0){
+//      moveRight(velocity);
+//      velocity = velocity/2;
+//    }
 
   }
 
   void jumpAndMoveToLeft(){
     //std::cout<<"jump and move right\n";
     jump();
-    int velocity = 40;
-
-    while(velocity>0){
-      moveLeft(velocity);
-      velocity = velocity/2;
-    }
+    moveLeft();
+//    int velocity = 40;
+//
+//    while(velocity>0){
+//      moveLeft(velocity);
+//      velocity = velocity/2;
+//    }
 
   }
 
@@ -233,6 +226,18 @@ public:
     int getPosY() {
         return mPosY;
     }
+
+    void setCantMoveForward(){
+      cantMoveForward = true;
+    }
+
+  void setCantMoveBackward(){
+    cantMoveBackward = true;
+  }
+
+
+
+
 private:
     SDL_Surface *spriteSheet;
     SDL_Texture *texture;
@@ -240,10 +245,13 @@ private:
     SDL_Rect Src;
     int mPosX = 10;
     int mPosY = 100;
-    int XVELOCITY = 15;
+    int XVELOCITY = (40/2);
     int YVELOCITY = 40;
     bool canJumpFlag = true;
     bool currentlyJumping = false;
     int JUMP_VELOCITY = 80;
+    bool cantMoveForward = false;
+    bool cantMoveBackward = false;
+
 };
 #endif //LAB5_PLATFORMER_CHARACTER_H

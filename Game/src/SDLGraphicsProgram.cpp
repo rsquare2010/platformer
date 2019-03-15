@@ -56,6 +56,18 @@ bool checkSideCollision1(Coordinates *obj1,
                          Coordinates *obj2,
                          int obj2Height,
                          int obj2Width);
+bool checkLeftSideCollision1(Coordinates *obj1,
+                             int obj1Height,
+                             int obj1Width,
+                             Coordinates *obj2,
+                             int obj2Height,
+                             int obj2Width);
+bool checkRightSideCollision1(Coordinates *obj1,
+                             int obj1Height,
+                             int obj1Width,
+                             Coordinates *obj2,
+                             int obj2Height,
+                             int obj2Width);
 
 
 
@@ -306,7 +318,7 @@ void detectCollisionWithWallY1(Character *b, World* wall) {
 
             didCollide = true;
 
-            if (checkSideCollision1(coorBall, 40, 22, coordinates[i], 40, 40)) {
+            if (checkLeftSideCollision1(coorBall, 40, 22, coordinates[i], 40, 40) || checkRightSideCollision1(coorBall, 40, 22, coordinates[i], 40, 40)) {
 
                 didSideCollide = true;
 
@@ -440,16 +452,62 @@ bool checkSideCollision1(Coordinates *obj1,
     if (obj1->getX() + obj1Width - obj2->getX() < obj2->getX() + obj2Width - obj1->getX()
         && obj1->getX() + obj1Width - obj2->getX() < obj1->getY() + obj1Height - obj2->getY()
         && obj1->getX() + obj1Width - obj2->getX() < obj2->getY() + obj2Height - obj1->getY()) {
-            cout<<"side colliding 1\n";
+            //cout<<"side colliding 1\n";
+           // character->setCantMoveForward();
         sideCollision = true;
     }
 
     if (obj2->getX() + obj2Width - obj1->getX() < obj1->getX() + obj1Width - obj2->getX()
         && obj2->getX() + obj2Width - obj1->getX() < obj1->getY() + obj1Height - obj2->getY()
         && obj2->getX() + obj2Width - obj1->getX() < obj2->getY() + obj2Height - obj1->getY()) {
-        cout<<"side colliding 2\n";
+        //cout<<"side colliding 2\n";
+      //character->setCantMoveBackward();
         sideCollision = true;
     }
 
     return  sideCollision;
+}
+
+
+bool checkLeftSideCollision1(Coordinates *obj1,
+                         int obj1Height,
+                         int obj1Width,
+                         Coordinates *obj2,
+                         int obj2Height,
+                         int obj2Width) {
+
+  bool sideCollision = false;
+
+  if (obj1->getX() + obj1Width - obj2->getX() < obj2->getX() + obj2Width - obj1->getX()
+      && obj1->getX() + obj1Width - obj2->getX() < obj1->getY() + obj1Height - obj2->getY()
+      && obj1->getX() + obj1Width - obj2->getX() < obj2->getY() + obj2Height - obj1->getY()) {
+    //cout<<"side colliding 1\n";
+    character->setCantMoveForward();
+    sideCollision = true;
+  }
+
+  return sideCollision;
+
+}
+
+
+bool checkRightSideCollision1(Coordinates *obj1,
+                             int obj1Height,
+                             int obj1Width,
+                             Coordinates *obj2,
+                             int obj2Height,
+                             int obj2Width) {
+
+  bool sideCollision = false;
+
+  if (obj2->getX() + obj2Width - obj1->getX() < obj1->getX() + obj1Width - obj2->getX()
+      && obj2->getX() + obj2Width - obj1->getX() < obj1->getY() + obj1Height - obj2->getY()
+      && obj2->getX() + obj2Width - obj1->getX() < obj2->getY() + obj2Height - obj1->getY()) {
+    //cout<<"side colliding 2\n";
+    character->setCantMoveBackward();
+    sideCollision = true;
+  }
+
+  return sideCollision;
+
 }
