@@ -18,9 +18,6 @@ class Character {
   static const int WIDTH = 21;
   static const int HEIGHT = 33;
 
- public:
-  static const int WIDTH = 21;
-  static const int HEIGHT = 33;
 
   /**
     * This is the constructor.
