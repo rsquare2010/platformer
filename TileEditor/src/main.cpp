@@ -8,7 +8,6 @@
 #include <fstream>
 #include "../include/GridLayover.h"
 
-
 using namespace std;
 //using namespace Json;
 
@@ -21,13 +20,8 @@ const int SCR_CEN_Y = SCR_HGT/2;
 
 bool isColorCoded = true;
 
-
-
-
-SDL_Surface* loadSurface( std::string path );
+SDL_Surface *loadSurface(std::string path);
 void saveFile(int gridArray[][SCR_WDT/grid]);
-
-
 
 /**
  * This this the main function fo the game. This is function implements the game loop.
@@ -37,8 +31,7 @@ void saveFile(int gridArray[][SCR_WDT/grid]);
  */
 int main(int argc, char **argv) {
 
-
-  ResourceManager* rm = ResourceManager::getInstance();
+  ResourceManager *rm = ResourceManager::getInstance();
   rm->startUp();
   SDL_Window *window;
   SDL_Renderer *renderer;
@@ -90,18 +83,11 @@ int main(int argc, char **argv) {
 
   int mouseX, mouseY;
   int mouseGrid;
-  Rectangle* selection = new Rectangle(renderer,0, 0,grid,grid);
+  Rectangle *selection = new Rectangle(renderer, 0, 0, grid, grid);
   int gridArray[SCR_HGT/grid][SCR_WDT/grid] = {};
   bool ismousePressed = false;
 
-
-
-
-
-
-
-
-  GridLayover* gl = new GridLayover(renderer,SCR_WDT,SCR_HGT);
+  GridLayover *gl = new GridLayover(renderer, SCR_WDT, SCR_HGT);
 
   bool drag = false;
   int value = 0;
@@ -115,23 +101,15 @@ int main(int argc, char **argv) {
     SDL_RenderClear(renderer);
     gl->draw();
 
-
     SDL_GetMouseState(&mouseX, &mouseY);
 
-    mouseGrid = ((SCR_WDT/grid)*(mouseY/grid))+(mouseX/grid);
-
-
+    mouseGrid = ((SCR_WDT/grid)*(mouseY/grid)) + (mouseX/grid);
 
     SDL_Event e;
 
+    while (SDL_PollEvent(&e)) {
 
-
-
-
-    while(SDL_PollEvent(&e)){
-
-
-      switch(e.type){
+      switch (e.type) {
         case SDL_QUIT:
 
           run = false;
@@ -139,14 +117,14 @@ int main(int argc, char **argv) {
         case SDL_MOUSEBUTTONDOWN:
           //cout<<"hello \n";
 
-          if(gridArray[mouseY/grid][mouseX/grid] == 3){
+          if (gridArray[mouseY/grid][mouseX/grid]==3) {
             gridArray[mouseY/grid][mouseX/grid] = -1;
           }
-          gridArray[mouseY/grid][mouseX/grid] = gridArray[mouseY/grid][mouseX/grid]+1;
+          gridArray[mouseY/grid][mouseX/grid] = gridArray[mouseY/grid][mouseX/grid] + 1;
           value = gridArray[mouseY/grid][mouseX/grid];
           drag = true;
         case SDL_MOUSEMOTION:
-          if(drag){
+          if (drag) {
             //cout<<"mouse in motion";
             gridArray[mouseY/grid][mouseX/grid] = value;
           }
@@ -154,20 +132,15 @@ int main(int argc, char **argv) {
         case SDL_MOUSEBUTTONUP:
           //cout<<"mouse up\n";
           drag = false;
-          value =0;
+          value = 0;
           break;
         case SDL_KEYDOWN:
 
-          if(e.key.keysym.sym == SDLK_s){
+          if (e.key.keysym.sym==SDLK_s) {
             saveFile(gridArray);
           }
 
-
           break;
-
-
-
-
 
       }
     }
@@ -182,49 +155,48 @@ int main(int argc, char **argv) {
     //cout<<"mouseX: "<<mouseX/50<<"mouseY: "<<mouseY/50<<endl;
 
 
-    selection->updateColor(255,255,255,255);
-    selection->updateRectangle(gl->getCoordinate(mouseGrid)->getX(), gl->getCoordinate(mouseGrid)->getY(),grid,grid);
+    selection->updateColor(255, 255, 255, 255);
+    selection->updateRectangle(gl->getCoordinate(mouseGrid)->getX(), gl->getCoordinate(mouseGrid)->getY(), grid, grid);
     selection->draw();
 
-
-
-    for(int i=0;i<SCR_HGT/grid;i++) {
-
+    for (int i = 0; i < SCR_HGT/grid; i++) {
 
       for (int j = 0; j < SCR_WDT/grid; j++) {
 
         SDL_Rect dstrect;
-        SDL_Texture * texture;
-        SDL_Surface* image;
+        SDL_Texture *texture;
+        SDL_Surface *image;
 
         //cout<<gridArray[i][j]<<", ";
 
-        if(gridArray[i][j] != 0){
-          int rectGrid = ((SCR_WDT/grid)*(i))+(j);
-         // cout<<"the value "<<i<<"and j is "<<j<<"of grid is: "<<rectGrid<<endl;
-          Rectangle* a = new Rectangle(renderer,gl->getCoordinate(rectGrid)->getX(),gl->getCoordinate(rectGrid)->getY(),grid,grid);
+        if (gridArray[i][j]!=0) {
+          int rectGrid = ((SCR_WDT/grid)*(i)) + (j);
+          // cout<<"the value "<<i<<"and j is "<<j<<"of grid is: "<<rectGrid<<endl;
+          Rectangle *a = new Rectangle(renderer,
+                                       gl->getCoordinate(rectGrid)->getX(),
+                                       gl->getCoordinate(rectGrid)->getY(),
+                                       grid,
+                                       grid);
 
-          if(gridArray[i][j] == 1){
+          if (gridArray[i][j]==1) {
 
-            if(isColorCoded) {
-               a->updateColor(255,0,0,255);
-            }else {
+            if (isColorCoded) {
+              a->updateColor(255, 0, 0, 255);
+            } else {
               image = (SDL_Surface *) rm->getValue("Character");
               texture = SDL_CreateTextureFromSurface(renderer, image);
               dstrect = {gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(), grid, grid};
               SDL_RenderCopy(renderer, texture, NULL, &dstrect);
             }
-          }
-          else if(gridArray[i][j] == 2){
+          } else if (gridArray[i][j]==2) {
 
-            if(isColorCoded) {
-              a->updateColor(255,255,255,255);
-            }
-            else{
-              image = (SDL_Surface*) rm->getValue("Enemy");
+            if (isColorCoded) {
+              a->updateColor(255, 255, 255, 255);
+            } else {
+              image = (SDL_Surface *) rm->getValue("Enemy");
 
               texture = SDL_CreateTextureFromSurface(renderer, image);
-              dstrect = { gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(),grid,grid};
+              dstrect = {gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(), grid, grid};
               SDL_Rect Src;
               Src.x = 64;
               Src.y = 0;
@@ -234,17 +206,14 @@ int main(int argc, char **argv) {
 
             }
 
-
-
-          } else if(gridArray[i][j] == 3){
-            if(isColorCoded) {
+          } else if (gridArray[i][j]==3) {
+            if (isColorCoded) {
               a->updateColor(0, 255, 0, 255);
-            }
-            else{
-              image = (SDL_Surface*) rm->getValue("Ground");
+            } else {
+              image = (SDL_Surface *) rm->getValue("Ground");
 
               texture = SDL_CreateTextureFromSurface(renderer, image);
-              dstrect = { gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(),grid,grid};
+              dstrect = {gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(), grid, grid};
               SDL_Rect Src;
               Src.x = 0;
               Src.y = 0;
@@ -254,36 +223,30 @@ int main(int argc, char **argv) {
 
             }
 
-          }
-          else if(gridArray[i][j] == 4){
-            if(isColorCoded) {
+          } else if (gridArray[i][j]==4) {
+            if (isColorCoded) {
               a->updateColor(0, 255, 0, 255);
-            }
-            else{
-              image = (SDL_Surface*) rm->getValue("Ground");
+            } else {
+              image = (SDL_Surface *) rm->getValue("Ground");
 
               texture = SDL_CreateTextureFromSurface(renderer, image);
-              dstrect = { gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(),grid,grid};
+              dstrect = {gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(), grid, grid};
               SDL_Rect Src;
               Src.x = 0;
               Src.y = 0;
               Src.w = 64;
               Src.h = 64;
-              SDL_RenderCopy(renderer,NULL, &Src, &dstrect);
+              SDL_RenderCopy(renderer, NULL, &Src, &dstrect);
 
             }
 
           }
 
-
-
-          if(isColorCoded) {
+          if (isColorCoded) {
             a->draw();
-          }else{
+          } else {
             SDL_RenderCopy(renderer, texture, NULL, &dstrect);
           }
-
-
 
         }
 
@@ -307,8 +270,6 @@ int main(int argc, char **argv) {
       SDL_Delay((1000/FPS - (SDL_GetTicks() - startTick)));
     }
 
-
-
     SDL_RenderPresent(renderer);
 
 
@@ -326,7 +287,6 @@ int main(int argc, char **argv) {
   SDL_DestroyWindow(window);
   SDL_Quit();
 
-
   return 0;
 
 }
@@ -336,21 +296,19 @@ int main(int argc, char **argv) {
  * This method takes in the grid array and saves it in a file.
  * @param gridArray
  */
-void saveFile(int gridArray[SCR_HGT/grid][SCR_WDT/grid]){
+void saveFile(int gridArray[SCR_HGT/grid][SCR_WDT/grid]) {
 
-  ofstream myfile ("./media/example.txt");
-  if (myfile.is_open())
-  {
-    for(int i=0;i<SCR_HGT/grid;i++) {
+  ofstream myfile("./media/example.txt");
+  if (myfile.is_open()) {
+    for (int i = 0; i < SCR_HGT/grid; i++) {
 
       for (int j = 0; j < SCR_WDT/grid; j++) {
-        myfile << gridArray[i][j]<< ", ";
+        myfile << gridArray[i][j] << ", ";
       }
 
     }
     myfile.close();
-  }
-  else cout << "Unable to open file";
+  } else cout << "Unable to open file";
 
 }
 

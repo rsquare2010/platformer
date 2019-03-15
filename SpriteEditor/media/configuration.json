@@ -1,9 +1,8 @@
-
 {
-  "file_name" : "./media/sprite.bmp",
-  "frame_width" : 75,
-  "frame_height" : 87,
-  "first_frame_x" : 0,
+  "file_name": "./media/sprite.bmp",
+  "frame_width": 75,
+  "frame_height": 87,
+  "first_frame_x": 0,
   "first_frame_y": 0,
-  "no_of_subsequent_frames" : 6
+  "no_of_subsequent_frames": 6
 }

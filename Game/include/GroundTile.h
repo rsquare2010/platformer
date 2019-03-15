@@ -9,14 +9,12 @@
 #include <iostream>
 #include <vector>
 
-
 /**
  * This class represents every ground Tile.
  */
 class GroundTile {
 
  public:
-
 
   /**
    * This is the destructor.
@@ -31,8 +29,6 @@ class GroundTile {
 
   void init(SDL_Renderer *render);
 
-
-
   /**
    * This is used to add the Ground tile to the  Ground Array.
    * @param x the x coordinate.
@@ -45,18 +41,13 @@ class GroundTile {
    * @param camX the camera cx.
    * @param ren the renderer.
    */
-  void render(int camX, SDL_Renderer* ren);
+  void render(int camX, SDL_Renderer *ren);
 
   /**
    * This is used to retrieve the coordinate.
    * @return
    */
   std::vector<Coordinates *> getCoordinates();
-
-
-
-
-
 
  private:
   SDL_Surface *m_TileSpriteSheet;

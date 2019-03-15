@@ -38,15 +38,12 @@ class ResourceManager {
    */
   int shutDown();
 
-
  private:
 
   /**
    * This is the private constructor.
    */
   ResourceManager() {
-
-
 
   };
 

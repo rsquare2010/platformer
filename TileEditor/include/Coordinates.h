@@ -24,7 +24,7 @@ class Coordinates {
    * This method is used to return an object of the coordinate class.
    * @return the object of coordinate class.
    */
-  Coordinates* returnCoordinate();
+  Coordinates *returnCoordinate();
   /**
    * This is used to update the coordinates.
    * @param xNew the new x coordinate.

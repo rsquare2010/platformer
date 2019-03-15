@@ -34,22 +34,22 @@ int ResourceManager::startUp(SDL_Renderer *ren) {
 
   SDL_Texture *charTexture;
   SDL_Texture *groundTexture;
-  if(ren == NULL) {
-    std::cout<<"The renderer itself is null";
+  if (ren==NULL) {
+    std::cout << "The renderer itself is null";
   }
-  if(character==NULL || ground == NULL) {
+  if (character==NULL || ground==NULL) {
     SDL_Log("Failed to allocate surface11");
   } else {
     // Create a texture from our surface
     charTexture = SDL_CreateTextureFromSurface(ren, character);
     groundTexture = SDL_CreateTextureFromSurface(ren, ground);
   }
-  if(charTexture == NULL) {
-    std::cout<<"CharTexture is not even getting created";
+  if (charTexture==NULL) {
+    std::cout << "CharTexture is not even getting created";
   }
 
-  m_Resources.emplace(pair<string, void *>("Ground", groundTexture ));
-  m_Resources.emplace(pair<string, void *>("Character", charTexture ));
+  m_Resources.emplace(pair<string, void *>("Ground", groundTexture));
+  m_Resources.emplace(pair<string, void *>("Character", charTexture));
 
   return 0;
 }
