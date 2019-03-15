@@ -5,15 +5,18 @@
 #include "Physix.h"
 #ifndef PLATFORMER_SUNDAYS_ARE_FUNDAYS_CHAR_H
 #define PLATFORMER_SUNDAYS_ARE_FUNDAYS_CHAR_H
+using namespace std;
 
 class Char {
 public:
     static const int WIDTH = 21;
     static const int HEIGHT = 33;
 
-    Char(SDL_Renderer* ren, int startPosX, int startPosY ) {
+    Char(SDL_Renderer* ren, int startPosX, int startPosY) {
         this->mPosX = startPosX;
         this->mPosY = startPosY;
+
+
         spriteSheet = SDL_LoadBMP("./Run.bmp");
         if (spriteSheet == NULL) {
             SDL_Log("Failed to allocate surface");
@@ -39,7 +42,7 @@ public:
     }
 
 
-    void render(int camX, int camY, SDL_Renderer* ren, GroundTile* groundTile, vector<Enemy *> enemyArray) {
+    void render(int camX, int camY, SDL_Renderer* ren, GroundTile* groundTile, vector<Enemy* > enemyArray) {
 
 
         std::vector<Coordinates *> coordinates = groundTile->getCoordinates();
@@ -164,17 +167,23 @@ public:
     }
 
     void moveRight() {
+
         futureX = mPosX + horizontalvelocity;
+
     }
 
     void jump() {
         if(isOnGround) {
             isOnGround = false;
             isJumping = true;
+
+
+
+            //physix.didCollide();
             //update x;
             //update y;
             horizontalvelocity = 0;
-            jumpVelocity = 15;
+            jumpVelocity = 20;
             jumpStartTime = SDL_GetTicks();
         }
 
@@ -185,7 +194,7 @@ public:
             isOnGround = false;
             isJumping = true;
             horizontalvelocity = 7;
-            jumpVelocity = 15;
+            jumpVelocity = 20;
             jumpStartTime = SDL_GetTicks();
         }
     }
@@ -195,7 +204,7 @@ public:
             isOnGround = false;
             isJumping = true;
             horizontalvelocity = -7;
-            jumpVelocity = 15;
+            jumpVelocity = 20;
             jumpStartTime = SDL_GetTicks();
         }
     }
@@ -219,6 +228,8 @@ private:
     bool isOnGround = false;
     bool isJumping = false;
     Physix physix;
+
+
 
 };
 #endif //PLATFORMER_SUNDAYS_ARE_FUNDAYS_CHAR_H

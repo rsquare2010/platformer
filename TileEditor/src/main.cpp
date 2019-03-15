@@ -19,7 +19,7 @@ const int SCR_CEN_Y = SCR_HGT/2;
 #define FPS 30
 #define grid 20
 
-bool isColorCoded = true;
+bool isColorCoded = false;
 
 
 
@@ -108,18 +108,12 @@ int main(int argc, char **argv) {
 
   while (run) {
 
-
+    SDL_RenderClear(renderer);
 
     startTick = SDL_GetTicks();
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
     gl->draw();
-
-
-
-
-
-
 
 
     SDL_GetMouseState(&mouseX, &mouseY);
@@ -129,10 +123,17 @@ int main(int argc, char **argv) {
 
 
     SDL_Event e;
+
+
+
+
+
     while(SDL_PollEvent(&e)){
+
+
       switch(e.type){
         case SDL_QUIT:
-          saveFile(gridArray);
+
           run = false;
           break;
         case SDL_MOUSEBUTTONDOWN:
@@ -155,6 +156,15 @@ int main(int argc, char **argv) {
           drag = false;
           value =0;
           break;
+        case SDL_KEYDOWN:
+
+          if(e.key.keysym.sym == SDLK_s){
+            saveFile(gridArray);
+          }
+
+
+          break;
+
 
 
 
@@ -211,7 +221,7 @@ int main(int argc, char **argv) {
               a->updateColor(255,255,255,255);
             }
             else{
-              image = (SDL_Surface*) rm->getValue("Ground");
+              image = (SDL_Surface*) rm->getValue("Enemy");
 
               texture = SDL_CreateTextureFromSurface(renderer, image);
               dstrect = { gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(),grid,grid};
@@ -245,11 +255,32 @@ int main(int argc, char **argv) {
             }
 
           }
+          else if(gridArray[i][j] == 4){
+            if(isColorCoded) {
+              a->updateColor(0, 255, 0, 255);
+            }
+            else{
+              image = (SDL_Surface*) rm->getValue("Ground");
+
+              texture = SDL_CreateTextureFromSurface(renderer, image);
+              dstrect = { gl->getCoordinate(rectGrid)->getX(), gl->getCoordinate(rectGrid)->getY(),grid,grid};
+              SDL_Rect Src;
+              Src.x = 0;
+              Src.y = 0;
+              Src.w = 64;
+              Src.h = 64;
+              SDL_RenderCopy(renderer,NULL, &Src, &dstrect);
+
+            }
+
+          }
+
+
 
           if(isColorCoded) {
             a->draw();
           }else{
-//            SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+            SDL_RenderCopy(renderer, texture, NULL, &dstrect);
           }
 
 
@@ -275,6 +306,8 @@ int main(int argc, char **argv) {
 
       SDL_Delay((1000/FPS - (SDL_GetTicks() - startTick)));
     }
+
+
 
     SDL_RenderPresent(renderer);
 

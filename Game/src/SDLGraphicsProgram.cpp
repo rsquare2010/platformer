@@ -242,8 +242,10 @@ void SDLGraphicsProgram::loop(){
     world->loadArtifacts(groundTile);
 
     enemyArray = world->returnEnemies();
-//    character = world->returnCharacter();
-    charac = new Char(getSDLRenderer(), 100, 300);
+    charac= world->returnCharacter();
+    //charac = new Char(getSDLRenderer(), 100, 300,groundTile, enemyArray);
+
+
   banner = new Rectangle( 0, 0, cWidth, 90);
     SDL_Rect camera = { 0, 0, cWidth, cHeight };
     // While application is running

@@ -11,6 +11,7 @@
 #include "GroundTile.h"
 #include "Enemy.h"
 #include "Character.h"
+#include "Char.h"
 #include <vector>
 
 
@@ -80,7 +81,7 @@ class World {
 
               }
               if(worldArray[rectGrid] == 1){
-                character = new Character(renderer,x,y);
+                character = new Char(renderer,x,y);
               }
               else if (worldArray[rectGrid] == 3) {
                     groundTile->add(x, y);
@@ -90,8 +91,7 @@ class World {
           }
       }
 
-      enemyArray.push_back(new Enemy(renderer, 200, 300));
-      enemyArray.push_back(new Enemy(renderer, 400, 300));
+
   }
 
 
@@ -101,7 +101,7 @@ class World {
 
   }
 
-  Character*  returnCharacter(){
+  Char*  returnCharacter(){
     return  this->character;
   }
 
@@ -115,7 +115,7 @@ class World {
   int rectGrid;
 
   vector<Enemy *> enemyArray;
-  Character* character;
+  Char* character;
 
 
 };
