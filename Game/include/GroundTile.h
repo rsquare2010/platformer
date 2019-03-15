@@ -6,7 +6,6 @@
 #define PLATFORMER_SUNDAYS_ARE_FUNDAYS_GROUNDTILE_H
 #include "SDL.h"
 #include "Coordinates.h"
-#include "Draw.h"
 #include <iostream>
 #include <vector>
 
