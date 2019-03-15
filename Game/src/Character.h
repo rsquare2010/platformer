@@ -59,8 +59,7 @@ public:
         const Uint8 * keystates =  SDL_GetKeyboardState( NULL );
         if( keystates[ SDL_SCANCODE_UP ] && keystates[ SDL_SCANCODE_RIGHT ])
         {
-           jump();
-           moveRight();
+          jumpAndMoveToRight();
         }
         else if( keystates[ SDL_SCANCODE_UP ] && keystates[ SDL_SCANCODE_LEFT ])
         {
@@ -69,7 +68,9 @@ public:
         }
 
         else if(keystates[ SDL_SCANCODE_RIGHT ]){
+
             moveRight();
+
         } else if(keystates[ SDL_SCANCODE_LEFT ]) {
             moveLeft();
         } else if(keystates[ SDL_SCANCODE_UP ]){
@@ -93,12 +94,37 @@ public:
     }
 
 
+
+
+  void moveRight(int velocity) {
+
+    if ( mPosX >= 0 && mPosX <2560 && mPosY < 640) {
+
+
+      mPosX +=velocity;
+    }
+
+
+  }
+
+
   void moveLeft() {
 
     if ( mPosX >= 0 && mPosX <2560 && mPosY < 640)
     {
       //Move back
       mPosX -= XVELOCITY;
+    }
+
+
+  }
+
+  void moveLeft(int velocity) {
+
+    if ( mPosX >= 0 && mPosX <2560 && mPosY < 640) {
+
+
+      mPosX -=velocity;
     }
 
 
@@ -126,20 +152,47 @@ public:
   }
 
   void startMovingInXDir(){
-      XVELOCITY = 40;
+      XVELOCITY = 15;
   }
 
 
   void jump(){
+
+      //std::cout<<"jumping hit"<<std::endl;
       if(this->canJumpFlag){
 
-
+        //std::cout<<"jumping hit  canJumpFlag flag"<<std::endl;
 
         mPosY -= JUMP_VELOCITY;
+        //moveRight(30);
 
       }
 
     }
+
+  void jumpAndMoveToRight(){
+      //std::cout<<"jump and move right\n";
+    jump();
+    int velocity = 40;
+
+    while(velocity>0){
+      moveRight(velocity);
+      velocity = velocity/2;
+    }
+
+  }
+
+  void jumpAndMoveToLeft(){
+    //std::cout<<"jump and move right\n";
+    jump();
+    int velocity = 40;
+
+    while(velocity>0){
+      moveLeft(velocity);
+      velocity = velocity/2;
+    }
+
+  }
 
 
     void cantJump(){
@@ -187,10 +240,10 @@ private:
     SDL_Rect Src;
     int mPosX = 10;
     int mPosY = 100;
-    int XVELOCITY = 40;
+    int XVELOCITY = 15;
     int YVELOCITY = 40;
     bool canJumpFlag = true;
     bool currentlyJumping = false;
-    int JUMP_VELOCITY = 40*2;
+    int JUMP_VELOCITY = 80;
 };
 #endif //LAB5_PLATFORMER_CHARACTER_H

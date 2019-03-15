@@ -36,12 +36,13 @@ class World {
     else cout << "Unable to open file";
 
 
-    int worldIndex = 0;
+    //int worldIndex = 0;
     for(int i =0;i<line.length();i++){
 
       if(isdigit(line.at(i))){
-        this->worldArray[worldIndex] = line.at(i) - '0';
-        worldIndex++;
+        //this->worldArray[worldIndex] = line.at(i) - '0';
+        this->worldArray.push_back(line.at(i) - '0');
+        //worldIndex++;
       }
 
     }
@@ -56,11 +57,17 @@ class World {
 
       int scaleFactor = 2;
       SDL_Rect dstrect;
-      for (int i = 0; i < 10; i++) {
 
-          for (int j = 0; j < 40; j++) {
+      int numberOfGridHeight = 15;
+      int numberOfGridWidth = 64;
 
-              rectGrid = (40 * (i)) + (j);
+
+
+      for (int i = 0; i < numberOfGridHeight; i++) {
+
+          for (int j = 0; j < numberOfGridWidth; j++) {
+
+              rectGrid = (numberOfGridWidth * (i)) + (j);
 
               x = j * 40;
               y = i * 40;
@@ -98,7 +105,9 @@ class World {
 
  private:
   SDL_Renderer *renderer;
-  int worldArray[600] = {};
+  //int worldArray[600] = {};
+
+  vector<int> worldArray;
   int x, y;
   int rectGrid;
 
