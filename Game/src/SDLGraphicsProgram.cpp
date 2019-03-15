@@ -38,8 +38,8 @@ Mixer* m;
 //int cHeight = 720;
 #define FPS 15
 
-int cWidth = 1200;
-int cHeight = 400;
+int cWidth = 1000;
+int cHeight = 600;
 
 
 void detectEnemyCollisionWithWallY1(Enemy *b, World* wall);
