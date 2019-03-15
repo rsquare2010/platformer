@@ -27,7 +27,7 @@ Mixer* m;
 
 
 #define FPS 60
-#define ANIMATIONRATE 5
+#define ANIMATIONRATE 6
 
 int cWidth = 1000;
 int cHeight = 600;

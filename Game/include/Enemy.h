@@ -97,11 +97,13 @@ class Enemy {
     futureY = mPosY + YVELOCITY;
 
     if ( futureX < 0) {
+      isFacingLeft = false;
       XVELOCITY = -XVELOCITY;
       futureX += XVELOCITY;
     }
     if ( futureX + WIDTH > 2560 )
     {
+      isFacingLeft = true;
       XVELOCITY = -XVELOCITY;
       futureX += XVELOCITY;
     }
@@ -112,6 +114,7 @@ class Enemy {
       collision = physix.didCollide(enemy, tile);
 
       if(collision == 2) {
+        isFacingLeft = !isFacingLeft;
         XVELOCITY = -XVELOCITY;
       }
       if(collision == 1) {
@@ -126,7 +129,11 @@ class Enemy {
     Dest.w = WIDTH;
     Dest.h = HEIGHT;
 
-    SDL_RenderCopy(ren, texture, &Src, &Dest);
+    if(isFacingLeft) {
+      SDL_RenderCopyEx(ren, texture, &Src, &Dest, 0.0, NULL, SDL_FLIP_HORIZONTAL);
+    } else {
+      SDL_RenderCopy(ren, texture, &Src, &Dest);
+    }
   }
 
   int getPosX() {
@@ -169,6 +176,7 @@ class Enemy {
   bool dead = false;
   bool isDeadAnimationComplete = false;
   int deathFrame = 0;
+  bool isFacingLeft = false;
 
 };
 
