@@ -14,7 +14,7 @@ public:
     Char(SDL_Renderer* ren, int startPosX, int startPosY ) {
         this->mPosX = startPosX;
         this->mPosY = startPosY;
-        spriteSheet = SDL_LoadBMP("./Run.bmp");
+        spriteSheet = SDL_LoadBMP("./media/Run.bmp");
         if (spriteSheet == NULL) {
             SDL_Log("Failed to allocate surface");
         } else {
@@ -23,7 +23,7 @@ public:
             // Textures run faster and take advantage of hardware acceleration
             texture = SDL_CreateTextureFromSurface(ren, spriteSheet);
         }
-        idleSprite = SDL_LoadBMP("./idle.bmp");
+        idleSprite = SDL_LoadBMP("./media/idle.bmp");
         this->ren = ren;
     }
     ~Char() {
@@ -128,8 +128,6 @@ public:
         } else {
             SDL_RenderCopy(ren, texture, &Src, &Dest);
         }
-
-//        SDL_RenderCopy(ren, texture, &Src, &Dest);
     }
 
     int getPosX() {

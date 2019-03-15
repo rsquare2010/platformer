@@ -25,10 +25,10 @@ void Background::init(int x, int y, SDL_Renderer* ren) {
     xPos = x;
     yPos = y;
 
-    spriteSheet = SDL_LoadBMP("./1.bmp");
-    spriteSheet2 = SDL_LoadBMP("./2.bmp");
-    spriteSheet3 = SDL_LoadBMP("./3.bmp");
-    spriteSheet4 = SDL_LoadBMP("./4.bmp");
+    spriteSheet = SDL_LoadBMP("./media/1.bmp");
+    spriteSheet2 = SDL_LoadBMP("./media/2.bmp");
+    spriteSheet3 = SDL_LoadBMP("./media/3.bmp");
+    spriteSheet4 = SDL_LoadBMP("./media/4.bmp");
     if(spriteSheet==NULL || spriteSheet3 == NULL){
         SDL_Log("Failed to allocate surface");
     }
