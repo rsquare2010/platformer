@@ -2,7 +2,7 @@
 // Created by Soumyadeep Sinha on 2019-01-20.
 //
 
-#include "Coordinates.h"
+#include "../include/Coordinates.h"
 
 /**
  * This class is used to create teh coordinates. The constructor takes in the x coordinate and the Y coordinate.

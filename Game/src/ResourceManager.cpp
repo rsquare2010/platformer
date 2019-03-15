@@ -2,7 +2,7 @@
 // Created by Daniel Nachum on 2/7/19.
 //
 
-#include "ResourceManager.h"
+#include "../include/ResourceManager.h"
 
 /**
  * This method is used to get the instance of the Resource manager class.

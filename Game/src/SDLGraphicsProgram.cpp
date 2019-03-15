@@ -1,41 +1,32 @@
 #include "SDLGraphicsProgram.h"
-#include "Tile.h"
-#include "Background1.h"
-#include "Character.h"
-#include "GroundTile.h"
-#include "Rectangle.h"
-#include "Mixer.h"
+#include "Background.h"
+#include "../include/Character.h"
+#include "../include/GroundTile.h"
+#include "../include/Rectangle.h"
+#include "../include/Mixer.h"
 #include <map>
 #include <string>
 #include <memory>
 #include <iterator>
-#include "World.h"
+#include "../include/World.h"
 
-//#define FPS 5
-
-#include "ResourceManager.h"
+#include "../include/ResourceManager.h"
 
 
 
 
-// Global array to create our characters
-//Sprite characters[CHARACTERS];
 
-Background1 background;
-//Character character;
+Background background;
 World* world;
 Character* character;
 vector<Enemy *> enemyArray;
 GroundTile groundTile;
-// Create a TileMap
-TileMap* myTileMap;
 Rectangle *banner;
 Uint32 startTick;
 Mixer* m;
 
 
-//int cWidth = 1280;
-//int cHeight = 720;
+
 #define FPS 60
 #define ANIMATIONRATE 5
 
@@ -165,8 +156,6 @@ SDLGraphicsProgram::~SDLGraphicsProgram(){
     // Point gWindow to NULL to ensure it points to nothing.
     gRenderer = NULL;
     gWindow = NULL;
-    // Destroy our tilemap
-    delete myTileMap;
     Mix_FreeMusic(m->bgm);
     //Quit SDL subsystems
     SDL_Quit();

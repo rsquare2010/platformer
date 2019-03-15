@@ -4,8 +4,8 @@
 
 #include <stdio.h>
 #include <iostream>
-#include "Mixer.h"
-#include "ResourceManager.h"
+#include "../include/Mixer.h"
+#include "../include/ResourceManager.h"
 
 /**
  * This method is used to load the sounds of the game. This method also handles error if there is any.

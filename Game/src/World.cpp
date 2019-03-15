@@ -2,8 +2,8 @@
 // Created by Soumyadeep Sinha on 2019-03-11.
 //
 
-#include "World.h"
-#include "Draw.h"
+#include "../include/World.h"
+#include "../include/Draw.h"
 
 
 

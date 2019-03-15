@@ -2,7 +2,7 @@
 // Created by Soumyadeep Sinha on 2019-03-11.
 //
 
-#include "Draw.h"
+#include "../include/Draw.h"
 
 void Draw::sketch(SDL_Renderer *renderer, SDL_Texture *tex, SDL_Rect dest) {
 
