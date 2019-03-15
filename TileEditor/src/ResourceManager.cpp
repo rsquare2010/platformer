@@ -31,9 +31,11 @@ int ResourceManager::startUp() {
 
   SDL_Surface* character = SDL_LoadBMP("./media/char.bmp");
   SDL_Surface* ground = SDL_LoadBMP("./media/Tiles.bmp");
+  SDL_Surface* enemy = SDL_LoadBMP("./media/enemy.bmp");
 
   m_Resources.emplace(pair<string, void *>("Ground", ground ));
   m_Resources.emplace(pair<string, void *>("Character", character ));
+  m_Resources.emplace(pair<string, void *>("Enemy", enemy ));
 
   return 0;
 }

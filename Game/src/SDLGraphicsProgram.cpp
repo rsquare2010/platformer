@@ -245,6 +245,7 @@ void SDLGraphicsProgram::loop(){
     world->loadArtifacts(groundTile);
 
     enemyArray = world->returnEnemies();
+
     character = world->returnCharacter();
 //    character = new character(getSDLRenderer(), 100, 300);
   banner = new Rectangle( 0, 0, cWidth, 90);

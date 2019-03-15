@@ -5,16 +5,20 @@
 #include "Physix.h"
 #ifndef PLATFORMER_SUNDAYS_ARE_FUNDAYS_CHAR_H
 #define PLATFORMER_SUNDAYS_ARE_FUNDAYS_CHAR_H
+using namespace std;
 
 class Character {
 public:
     static const int WIDTH = 21;
     static const int HEIGHT = 33;
 
+
     Character(SDL_Renderer* ren, int startPosX, int startPosY ) {
         this->mPosX = startPosX;
         this->mPosY = startPosY;
+
         spriteSheet = SDL_LoadBMP("./media/Run.bmp");
+
         if (spriteSheet == NULL) {
             SDL_Log("Failed to allocate surface");
         } else {
@@ -51,9 +55,7 @@ public:
         }
     }
 
-
     void render(int camX, int camY, SDL_Renderer* ren, GroundTile* groundTile, std::vector<Enemy *> enemyArray) {
-
 
         std::vector<Coordinates *> coordinates = groundTile->getCoordinates();
 
@@ -188,8 +190,11 @@ public:
     }
 
     void moveRight() {
+
         isIdle = false;
+
         futureX = mPosX + horizontalvelocity;
+
     }
 
     void jump() {
@@ -197,10 +202,14 @@ public:
         if(isOnGround) {
             isOnGround = false;
             isJumping = true;
+
+
+
+            //physix.didCollide();
             //update x;
             //update y;
             horizontalvelocity = 0;
-            jumpVelocity = 15;
+            jumpVelocity = 20;
             jumpStartTime = SDL_GetTicks();
         }
 
@@ -212,7 +221,7 @@ public:
             isOnGround = false;
             isJumping = true;
             horizontalvelocity = 7;
-            jumpVelocity = 15;
+            jumpVelocity = 20;
             jumpStartTime = SDL_GetTicks();
         }
     }
@@ -223,7 +232,7 @@ public:
             isOnGround = false;
             isJumping = true;
             horizontalvelocity = -7;
-            jumpVelocity = 15;
+            jumpVelocity = 20;
             jumpStartTime = SDL_GetTicks();
         }
     }
@@ -251,6 +260,8 @@ private:
     bool isIdle = true;
     Physix physix;
     bool isFacingLeft = false;
+
+
 
 };
 #endif //PLATFORMER_SUNDAYS_ARE_FUNDAYS_CHAR_H
