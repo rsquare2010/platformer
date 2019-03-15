@@ -29,7 +29,7 @@ void saveFile(int gridArray[][SCR_WDT/grid]);
 
 
 
-/**tou
+/**
  * This this the main function fo the game. This is function implements the game loop.
  * @param argc int argument.
  * @param argv character argument.
@@ -331,7 +331,11 @@ int main(int argc, char **argv) {
 
 }
 
-
+/**
+ *
+ * This method takes in the grid array and saves it in a file.
+ * @param gridArray
+ */
 void saveFile(int gridArray[SCR_HGT/grid][SCR_WDT/grid]){
 
   ofstream myfile ("./media/example.txt");

@@ -3,7 +3,7 @@
 //
 
 #include "../include/World.h"
-#include "../include/Draw.h"
+
 
 
 World::World(SDL_Renderer *renderer){
@@ -66,8 +66,7 @@ void World::loadArtifacts(GroundTile* groundTile) {
     }
   }
 
-  enemyArray.push_back(new Enemy(renderer, 200, 300));
-  enemyArray.push_back(new Enemy(renderer, 400, 300));
+
 }
 
 void World::printWorld() {

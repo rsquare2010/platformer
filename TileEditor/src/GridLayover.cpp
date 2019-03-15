@@ -4,6 +4,10 @@
 
 #include "../include/GridLayover.h"
 
+
+/**
+ * This method is used to draw the Tile Map.
+ */
 void GridLayover::draw(){
 
 
@@ -30,6 +34,11 @@ for(int i=0;i<scH;i = i+grid) {
 
 }
 
+/**
+ * This method returns a particular coordinate .
+ * @param a  the coordinate of a particular grid in the Tile Map.
+ * @return the coordinate of a particular grid in the Tile Map.
+ */
 Coordinates* GridLayover::getCoordinate(int a){
 
   return gridLayout[a];

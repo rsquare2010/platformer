@@ -3,6 +3,12 @@
 //
 #include "../include/SDLGraphicsProgram.h"
 
+/**
+ * This is the main method
+ * @param argc the arg c.
+ * @param argv  the arg v.
+ * @return if the program exits successfully.
+ */
 int main(int argc, char** argv){
     // Create an instance of an object for a SDLGraphicsProgram
     SDLGraphicsProgram mySDLGraphicsProgram(200,200);

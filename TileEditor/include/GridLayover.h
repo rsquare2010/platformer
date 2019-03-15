@@ -11,10 +11,18 @@ using namespace std;
 #include "Coordinates.h"
 #define grid 20
 
+/**
+ * This class is used to track all the coordinates the entire Tile Map.
+ */
 class GridLayover {
 
  public:
-
+/**
+ * This is th econstructor
+ * @param render the renderer is passed.
+ * @param screenW the screen width .
+ * @param screenH the screen height.
+ */
   GridLayover(SDL_Renderer *render, int screenW, int screenH){
     this->ren = render;
     this->scW = screenW;
@@ -30,6 +38,10 @@ class GridLayover {
 
 
   }
+
+  /**
+   * This method is used to draw the Grids.
+   */
   void draw();
   Coordinates* getCoordinate(int a);
 

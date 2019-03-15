@@ -7,9 +7,13 @@
 #define FPS 60
 #define ANIMATIONRATE 5
 
-// Initialization function
-// Returns a true or false value based on successful completion of setup.
-// Takes in dimensions of window.
+
+/**
+ * Initialization function Returns a true or false value based on successful completion of setup.
+ * Takes in dimensions of window.
+ * @param w
+ * @param h
+ */
 SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight(h){
     // Initialize random number generation.
     srand(time(NULL));
@@ -60,9 +64,9 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight
 }
 
 
-
-
-// Proper shutdown and destroy initialized objects
+/**
+ * Proper shutdown and destroy initialized objects
+ */
 SDLGraphicsProgram::~SDLGraphicsProgram(){
 //    ResourceManager::getInstance().shutDown();
     ResourceManager::getInstance()->shutDown();
@@ -79,7 +83,10 @@ SDLGraphicsProgram::~SDLGraphicsProgram(){
 
 
 
-// Update OpenGL
+
+/**
+ *  Update OpenGL.
+ */
 void SDLGraphicsProgram::update()
 {
     static int frame = 0;
@@ -91,8 +98,11 @@ void SDLGraphicsProgram::update()
 }
 
 
-// Render
-// The render function gets called once per loop
+
+
+/**
+ * Render The render function gets called once per loop.
+ */
 void SDLGraphicsProgram::render(){
 
     SDL_SetRenderDrawColor(gRenderer, 0x22,0x22,0x22,0xFF);
@@ -104,7 +114,10 @@ void SDLGraphicsProgram::render(){
 
 
 
-//Loops forever!
+
+/**
+ * Loops forever!
+ */
 void SDLGraphicsProgram::loop(){
     // Main loop flag
     // If this is quit = 'true' then the program terminates.
@@ -159,12 +172,20 @@ void SDLGraphicsProgram::loop(){
     SDL_StopTextInput();
 }
 
-// Get Pointer to Window
+
+/**
+ * Get Pointer to Window
+ * @return  the sdl window.
+ */
 SDL_Window* SDLGraphicsProgram::getSDLWindow(){
     return gWindow;
 }
 
-// Get Pointer to Renderer
+
+/**
+ * Get Pointer to Renderer
+ * @return  the renderer.
+ */
 SDL_Renderer* SDLGraphicsProgram::getSDLRenderer(){
     return gRenderer;
 }
