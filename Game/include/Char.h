@@ -16,8 +16,8 @@ public:
         this->mPosX = startPosX;
         this->mPosY = startPosY;
 
+        spriteSheet = SDL_LoadBMP("./media/Run.bmp");
 
-        spriteSheet = SDL_LoadBMP("./Run.bmp");
         if (spriteSheet == NULL) {
             SDL_Log("Failed to allocate surface");
         } else {
@@ -26,6 +26,8 @@ public:
             // Textures run faster and take advantage of hardware acceleration
             texture = SDL_CreateTextureFromSurface(ren, spriteSheet);
         }
+        idleSprite = SDL_LoadBMP("./media/idle.bmp");
+        this->ren = ren;
     }
     ~Char() {
         SDL_FreeSurface(spriteSheet);
@@ -34,11 +36,22 @@ public:
     }
 
     void update(int frame){
-        int currentFrame = frame%7;
-        Src.x = currentFrame*21;
-        Src.y = 0;
-        Src.w = 22;
-        Src.h = 40;
+
+        if(isIdle) {
+            texture = SDL_CreateTextureFromSurface(ren, idleSprite);
+            int currentFrame = frame%12;
+            Src.x = currentFrame*19;
+            Src.y = 0;
+            Src.w = 19;
+            Src.h = 31;
+        } else {
+            texture = SDL_CreateTextureFromSurface(ren, spriteSheet);
+            int currentFrame = frame%7;
+            Src.x = currentFrame*21;
+            Src.y = 0;
+            Src.w = 22;
+            Src.h = 40;
+        }
     }
 
 
@@ -46,6 +59,7 @@ public:
 
 
         std::vector<Coordinates *> coordinates = groundTile->getCoordinates();
+
 
         if(isJumping) {
             int currentTime = SDL_GetTicks();
@@ -112,7 +126,11 @@ public:
         Dest.y = mPosY;
         Dest.w = WIDTH;
         Dest.h = HEIGHT;
-        SDL_RenderCopy(ren, texture, &Src, &Dest);
+        if(isFacingLeft) {
+            SDL_RenderCopyEx(ren, texture, &Src, &Dest, 0.0, NULL, SDL_FLIP_HORIZONTAL);
+        } else {
+            SDL_RenderCopy(ren, texture, &Src, &Dest);
+        }
     }
 
     int getPosX() {
@@ -144,35 +162,46 @@ public:
         const Uint8 * keystates =  SDL_GetKeyboardState( NULL );
         if( keystates[ SDL_SCANCODE_UP ] && keystates[ SDL_SCANCODE_RIGHT ])
         {
+            isFacingLeft = false;
             jumpAndMoveToRight();
         }
         else if( keystates[ SDL_SCANCODE_UP ] && keystates[ SDL_SCANCODE_LEFT ])
         {
+            isFacingLeft = true;
             jumpAndMoveToLeft();
         }
 
         else if(keystates[ SDL_SCANCODE_RIGHT ]){
-
+            isFacingLeft = false;
             moveRight();
 
         } else if(keystates[ SDL_SCANCODE_LEFT ]) {
+            isFacingLeft = true;
             moveLeft();
         } else if(keystates[ SDL_SCANCODE_UP ]){
             jump();
+        } else {
+            isIdle = true;
         }
     }
 
     void moveLeft() {
+        isIdle = false;
         futureX = mPosX - horizontalvelocity;
     }
 
     void moveRight() {
+<<<<<<< HEAD
 
+=======
+        isIdle = false;
+>>>>>>> b3ad13c5ee876501b032c7a935b8e605c437f97e
         futureX = mPosX + horizontalvelocity;
 
     }
 
     void jump() {
+        isIdle = false;
         if(isOnGround) {
             isOnGround = false;
             isJumping = true;
@@ -190,6 +219,7 @@ public:
     }
 
     void jumpAndMoveToRight() {
+        isIdle = false;
         if(isOnGround) {
             isOnGround = false;
             isJumping = true;
@@ -200,6 +230,7 @@ public:
     }
 
     void jumpAndMoveToLeft() {
+        isIdle = false;
         if(isOnGround) {
             isOnGround = false;
             isJumping = true;
@@ -211,7 +242,9 @@ public:
 
 private:
     SDL_Surface *spriteSheet;
+    SDL_Surface *idleSprite;
     SDL_Texture *texture;
+    SDL_Renderer *ren;
     SDL_Rect Dest;
     SDL_Rect Src;
     int mPosX = 10;
@@ -227,7 +260,9 @@ private:
     int horizontalvelocity = 6;
     bool isOnGround = false;
     bool isJumping = false;
+    bool isIdle = true;
     Physix physix;
+    bool isFacingLeft = false;
 
 
 

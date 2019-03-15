@@ -16,7 +16,7 @@ class GroundTile {
   }
 
   void init(SDL_Renderer *render) {
-      m_TileSpriteSheet = SDL_LoadBMP("./Tiles.bmp");
+      m_TileSpriteSheet = SDL_LoadBMP("./media/Tiles.bmp");
       if(m_TileSpriteSheet==NULL){
           SDL_Log("Failed to allocate surface");
       }else{
