@@ -19,7 +19,7 @@ const int SCR_CEN_Y = SCR_HGT/2;
 #define FPS 30
 #define grid 20
 
-bool isColorCoded = false;
+bool isColorCoded = true;
 
 
 

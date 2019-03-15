@@ -191,11 +191,9 @@ public:
     }
 
     void moveRight() {
-<<<<<<< HEAD
 
-=======
         isIdle = false;
->>>>>>> b3ad13c5ee876501b032c7a935b8e605c437f97e
+
         futureX = mPosX + horizontalvelocity;
 
     }
