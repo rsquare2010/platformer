@@ -2,7 +2,7 @@
 // Created by Rahul Ravindran on 2019-03-14.
 //
 
-#include "SDLGraphicsProgram.h"
+#include "../include/SDLGraphicsProgram.h"
 
 
 

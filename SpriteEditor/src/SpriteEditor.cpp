@@ -1,7 +1,7 @@
 //
 // Created by Rahul Ravindran on 2019-03-14.
 //
-#include "SDLGraphicsProgram.h"
+#include "../include/SDLGraphicsProgram.h"
 
 int main(int argc, char** argv){
     // Create an instance of an object for a SDLGraphicsProgram
