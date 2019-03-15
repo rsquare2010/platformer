@@ -4,13 +4,14 @@
 #include "Character.h"
 #include "GroundTile.h"
 #include "Rectangle.h"
+#include "Mixer.h"
 #include <map>
 #include <string>
 #include <memory>
 #include <iterator>
 #include "World.h"
 
-#define FPS 5
+//#define FPS 5
 
 #include "ResourceManager.h"
 
@@ -30,11 +31,12 @@ GroundTile groundTile;
 TileMap* myTileMap;
 Rectangle *banner;
 Uint32 startTick;
+Mixer* m;
 
 
 //int cWidth = 1280;
 //int cHeight = 720;
-#define FPS 5
+#define FPS 15
 
 int cWidth = 1200;
 int cHeight = 400;
@@ -111,6 +113,9 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight
 
     SDL_Texture* charTexture = (SDL_Texture *) rmObj->getValue("Character");
 	background.init(0,0, getSDLRenderer());
+    m = new Mixer();
+    m->loadSounds();
+    m->playMusic();
 
 //	if(charTexture == NULL) {
 //	    std::cout<<"char texture is null";
@@ -149,6 +154,7 @@ SDLGraphicsProgram::~SDLGraphicsProgram(){
     gWindow = NULL;
     // Destroy our tilemap
     delete myTileMap;
+    Mix_FreeMusic(m->bgm);
     //Quit SDL subsystems
     SDL_Quit();
 }
