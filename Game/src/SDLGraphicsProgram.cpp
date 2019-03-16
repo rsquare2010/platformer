@@ -21,7 +21,7 @@ GroundTile *groundTile;
 Rectangle *banner;
 Uint32 startTick;
 Mixer* m;
-Fonts f;
+Fonts* font;
 ResourceManager* rmObj;
 
 #define FPS 60
@@ -66,6 +66,9 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight
 			success = false;
 		}
 
+		SDL_Surface* icon = SDL_LoadBMP("./media/char.bmp");
+        SDL_SetWindowIcon(gWindow, icon);
+
 		//Create a Renderer to draw on
 		gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
 		// Check if Renderer did not create.
@@ -79,8 +82,10 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight
 
     SDL_Texture* charTexture = (SDL_Texture *) rmObj->getValue("Character");
 	background.init(0,0);
-    f = Fonts::getInstance();
-    f.loadMedia();
+//    f = Fonts::getInstance();
+//    f.loadMedia();
+    font = new Fonts();
+    font->loadMedia();
     m = new Mixer();
     m->loadSounds();
     m->playMusic();
@@ -113,7 +118,7 @@ SDLGraphicsProgram::~SDLGraphicsProgram() {
 //    ~Background;
     rmObj->shutDown();
     Mix_FreeMusic(m->bgm);
-    TTF_CloseFont(f.gFont);
+//    TTF_CloseFont(f.gFont);
     //Quit SDL subsystems
     SDL_Quit();
 }
@@ -180,10 +185,10 @@ void SDLGraphicsProgram::render(int x, int y) {
     banner->updateColor(29, 119, 116, 0);
 
     string statusText = State::getInstance().getStatusString(character->getRemainingLives(), character->getWinStatus());
-    f.renderText(gRenderer, statusText, 475, 20);
+    font->renderText(gRenderer, statusText, 475, 20);
 
     string livesText = State::getInstance().getLivesString(character->getRemainingLives());
-    f.renderText(gRenderer, livesText, 20, 20);
+    font->renderText(gRenderer, livesText, 20, 20);
 
     SDL_RenderPresent(gRenderer);
 }

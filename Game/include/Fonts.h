@@ -16,21 +16,6 @@ class Fonts {
  public:
 
   /**
-   * This methos is used to get the instance of the Fonts class.
-   * @return Fonts object.
-   */
-
-  Fonts(){
-    this->gFont = TTF_OpenFont("media/BEBAS.ttf", 20);
-  }
-
-  static Fonts &getInstance() {
-    static Fonts *instance = new Fonts();
-
-    return *instance;
-  }
-
-  /**
    * This method is used to load the media file and handle error if there is an exception.
    */
   void loadMedia();
@@ -42,6 +27,8 @@ class Fonts {
    * @param y the y coordinate of the text.
    */
   void renderText(SDL_Renderer *renderer, string text, int x, int y);
+
+
   /**
    * This method is used to create a texture from the surface.
    * @param renderer the renderer.

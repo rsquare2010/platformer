@@ -11,21 +11,14 @@
  */
 void Fonts::loadMedia() {
 
-
-  ResourceManager *rmFont = ResourceManager::getInstance();
-  //rmFont->musStartUp();
-
-
   if (TTF_Init()==-1) {
     printf("TTF_Init: %s\n", TTF_GetError());
     exit(2);
   }
 
 
+  gFont = TTF_OpenFont("media/BEBAS.ttf", 20);
 
-
-  //Open the font
-  gFont = (TTF_Font *) rmFont->getValue("Font");
   if (gFont==NULL) {
     printf("Failed to load font! SDL_ttf Error: %s\n", TTF_GetError());
   }
@@ -43,10 +36,13 @@ void Fonts::renderText(SDL_Renderer *renderer, string text, int x, int y) {
   SDL_Color textColor = {255, 255, 255};
 
 
+  try {
+      SDL_Surface *solid = TTF_RenderText_Solid(gFont,text.c_str() , textColor);
+      solidTexture = SurfaceToTexture(renderer, solid);
+  } catch (std::exception e) {
+      cout<<"Fonts failed!"<<endl;
+  }
 
-  SDL_Surface *solid = TTF_RenderText_Solid(TTF_OpenFont("media/BEBAS.ttf", 20),text.c_str() , textColor);
-
-  solidTexture = SurfaceToTexture(renderer, solid);
 
   SDL_Rect rect;
   rect.x = x;
