@@ -18,72 +18,55 @@ using namespace std;
  */
 class ResourceManager {
 
-public:
-    /**
-     * This method is used to get the instance of the Resource manager class.
-     * @return The instance of teh resource manager class.
-     */
-    static ResourceManager *getInstance();
+ public:
+  /**
+   * This method is used to get the instance of the Resource manager class.
+   * @return The instance of teh resource manager class.
+   */
+  static ResourceManager *getInstance();
 
-    /**
-     * This method is used to get the value of the resource map.
-     * @param key the key to the map
-     * @return the value to the key of the map.
-     */
-    void *getValue(string key);
+  /**
+   * This method is used to get the value of the resource map.
+   * @param key the key to the map
+   * @return the value to the key of the map.
+   */
+  void *getValue(string key);
 
-    /**
-     * This basically acts as a substitute of the constructor.
-     * @return  0 if everything is executed perfectly.
-     */
-    int startUp(SDL_Renderer *ren);
+  /**
+   * This basically acts as a substitute of the constructor.
+   * @return  0 if everything is executed perfectly.
+   */
+  int startUp(SDL_Renderer *ren);
 
-    int musStartUp();
-    /**
-     * This is used to deallocate the Resource Manager.
-     * @return  0 if everything is executed perfectly.
-     */
-    int shutDown();
-    /**
-     * This method is used to get the game configuration.
-     * @return the game configuration.
-     */
-//  Json::Value getConfig();
-    /**
-     * This method is used to get the language configuration.
-     * @return the language configuration.
-     */
-//  Json::Value getLanguage();
+  int musStartUp();
+  /**
+   * This is used to deallocate the Resource Manager.
+   * @return  0 if everything is executed perfectly.
+   */
+  int shutDown();
 
-private:
-//  Json::Value gameConfig;
+ private:
 
-//  Json::Value language;
+  /**
+   * This is the private constructor.
+   */
+  ResourceManager() {};
 
-    /**
-     * This is the private constructor.
-     */
-    ResourceManager() {
+  ResourceManager(ResourceManager const &);
 
-//    Json::Value config;
-//    std::ifstream config_file("Media/configuration.json", std::ifstream::binary);
-//    config_file >> config;
-//
-//    gameConfig = config;
-//
-//    Json::Value language;
-//    std::ifstream language_file("Media/language.json", std::ifstream::binary);
-//    language_file >> language;
-//
-//    this->language = language;
-
-    };
-
-    ResourceManager(ResourceManager const &);
-
-    void operator=(ResourceManager const &);
+  void operator=(ResourceManager const &);
 
     map<string, void *> m_Resources;
+
+    SDL_Texture *charRunTexture;
+    SDL_Texture *charIdleTexture;
+    SDL_Texture *enemyTexture;
+    SDL_Texture *enemyDeathTexture;
+    SDL_Texture *groundTexture;
+    SDL_Texture *backgroundLayer1Texture;
+    SDL_Texture *backgroundLayer2Texture;
+    SDL_Texture *backgroundLayer3Texture;
+    SDL_Texture *backgroundLayer4Texture;
 };
 
 #endif //BREAKOUT_BREAKOUTSQUAD_RESOURCEMANAGER_H

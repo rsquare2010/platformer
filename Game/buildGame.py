@@ -1,19 +1,18 @@
-
 import os
 import platform
 
 # (1)==================== COMMON CONFIGURATION OPTIONS ======================= #
-COMPILER="clang++ -std=c++14"   # The compiler we want to use 
-                                #(You may try g++ if you have trouble)
-SOURCE="./src/*.cpp"    # Where the source code lives
-EXECUTABLE="lab"        # Name of the final executable
+COMPILER = "clang++ -std=c++14"  # The compiler we want to use
+# (You may try g++ if you have trouble)
+SOURCE = "./src/*.cpp"  # Where the source code lives
+EXECUTABLE = "lab"  # Name of the final executable
 # ======================= COMMON CONFIGURATION OPTIONS ======================= #
 
 # (2)=================== Platform specific configuration ===================== #
 # For each platform we need to set the following items
-ARGUMENTS=""            # Arguments needed for our program (Add others as you see fit)
-INCLUDE_DIR=""          # Which directories do we want to include.
-LIBRARIES=""            # What libraries do we want to include
+ARGUMENTS = ""  # Arguments needed for our program (Add others as you see fit)
+INCLUDE_DIR = ""  # Which directories do we want to include.
+LIBRARIES = ""  # What libraries do we want to include
 
 if platform.system()=="Linux":
     ARGUMENTS="-D LINUX" # -D is a #define sent to preprocessor
@@ -34,11 +33,11 @@ elif platform.system()=="Windows":
 
 # (3)====================== Building the Executable ========================== #
 # Build a string of our compile commands that we run in the terminal
-compileString=COMPILER+" "+ARGUMENTS+" -o "+EXECUTABLE+" "+" "+INCLUDE_DIR+" "+SOURCE+" "+LIBRARIES
+compileString = COMPILER + " " + ARGUMENTS + " -o " + EXECUTABLE + " " + " " + INCLUDE_DIR + " " + SOURCE + " " + LIBRARIES
 # Print out the compile string
 # This is the command you can type
 print "============v (Command running on terminal) v==========================="
-print "Compilng on: "+platform.system()
+print "Compilng on: " + platform.system()
 print compileString
 print "========================================================================"
 # Run our command

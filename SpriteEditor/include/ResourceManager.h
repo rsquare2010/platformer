@@ -44,7 +44,6 @@ class ResourceManager {
    */
   Json::Value getConfig();
 
-
  private:
   Json::Value spriteConfig;
 
