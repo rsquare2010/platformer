@@ -1,7 +1,9 @@
 //
 // Created by Rahul Ravindran on 2019-03-15.
 //
-#include "Character.h"
+#include "../include/Character.h"
+#include <vector>
+#include "../include/SDLGraphicsProgram.h"
 
 
 
@@ -11,10 +13,11 @@
   * @param startPosX the x position.
   * @param startPosY the y position.
   */
-Character::Character(int startPosX, int startPosY ) {
-    this->mPosX = startPosX;
-    this->mPosY = startPosY;
-    rmObj = ResourceManager::getInstance();
+Character::Character(int startPosX, int startPosY) {
+  this->mPosX = startPosX;
+  this->mPosY = startPosY;
+  rmObj = ResourceManager::getInstance();
+  this->lives = 1;
 }
 
 /**
@@ -56,7 +59,7 @@ void Character::update(int frame){
   * @param groundTile the ground tiles.
   * @param enemyArray the enemy array.
   */
-void Character::render(int camX, int camY, SDL_Renderer *ren, GroundTile *groundTile, std::vector<Enemy *> enemyArray) {
+void Character::render(int camX, int camY, SDL_Renderer *ren) {
 
   std::vector < Coordinates* > coordinates = groundTile->getCoordinates();
   if (isJumping) {
@@ -79,6 +82,7 @@ void Character::render(int camX, int camY, SDL_Renderer *ren, GroundTile *ground
   }
 
   int collision;
+
   Rectangle *character = new Rectangle(futureX, futureY, WIDTH, HEIGHT);
 
   for (int i = 0; i < enemyArray.size(); i++) {
@@ -86,10 +90,14 @@ void Character::render(int camX, int camY, SDL_Renderer *ren, GroundTile *ground
     collision = physix.didCollide(character, enemy);
 
     if (collision==2) {
-      //loseLife
+      if (lives > 0 && !hasWon) {
+        lives--;
+      }
     }
-    if (collision==1) {
+    else if (collision==1) {
       enemyArray[i]->die();
+      enemyArray.erase(enemyArray.begin()+i);
+
     }
   }
 
@@ -118,6 +126,16 @@ void Character::render(int camX, int camY, SDL_Renderer *ren, GroundTile *ground
   Dest.y = mPosY;
   Dest.w = WIDTH;
   Dest.h = HEIGHT;
+  if (mPosX > 2450) {
+    hasWon = true;
+  }
+  setScreenHeight(600);
+  if (mPosY > screenHeight) {
+    if (lives > 0) {
+      lives--;
+    }
+    hasWon = false;
+  }
   if (isFacingLeft) {
     SDL_RenderCopyEx(ren, texture, &Src, &Dest, 0.0, NULL, SDL_FLIP_HORIZONTAL);
   } else {
@@ -149,23 +167,25 @@ int Character::getPosY() {
 void Character::handleEvent(SDL_Event &e) {
 
   const Uint8 *keystates = SDL_GetKeyboardState(NULL);
-  if (keystates[SDL_SCANCODE_UP] && keystates[SDL_SCANCODE_RIGHT]) {
-    isFacingLeft = false;
-    jumpAndMoveToRight();
-  } else if (keystates[SDL_SCANCODE_UP] && keystates[SDL_SCANCODE_LEFT]) {
-    isFacingLeft = true;
-    jumpAndMoveToLeft();
-  } else if (keystates[SDL_SCANCODE_RIGHT]) {
-    isFacingLeft = false;
-    moveRight();
+  if (lives != 0 && !hasWon) {
+    if (keystates[SDL_SCANCODE_UP] && keystates[SDL_SCANCODE_RIGHT]) {
+      isFacingLeft = false;
+      jumpAndMoveToRight();
+    } else if (keystates[SDL_SCANCODE_UP] && keystates[SDL_SCANCODE_LEFT]) {
+      isFacingLeft = true;
+      jumpAndMoveToLeft();
+    } else if (keystates[SDL_SCANCODE_RIGHT]) {
+      isFacingLeft = false;
+      moveRight();
 
-  } else if (keystates[SDL_SCANCODE_LEFT]) {
-    isFacingLeft = true;
-    moveLeft();
-  } else if (keystates[SDL_SCANCODE_UP]) {
-    jump();
-  } else {
-    isIdle = true;
+    } else if (keystates[SDL_SCANCODE_LEFT]) {
+      isFacingLeft = true;
+      moveLeft();
+    } else if (keystates[SDL_SCANCODE_UP]) {
+      jump();
+    } else {
+      isIdle = true;
+    }
   }
 }
 
@@ -230,4 +250,12 @@ void Character::jumpAndMoveToLeft() {
     jumpVelocity = 20;
     jumpStartTime = SDL_GetTicks();
   }
+}
+
+int Character::getRemainingLives() {
+  return lives;
+}
+
+bool Character::getWinStatus() {
+  return hasWon;
 }

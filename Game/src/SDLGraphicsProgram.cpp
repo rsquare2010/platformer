@@ -164,27 +164,12 @@ void SDLGraphicsProgram::update() {
 // Render
 // The render function gets called once per loop
 void SDLGraphicsProgram::render(int x, int y) {
-  SDL_RenderClear(gRenderer);
-  background.render(x, y, getSDLRenderer());
 
-  character->render(x, y, getSDLRenderer(), groundTile, enemyArray);
-
-  for (int i = 0; i < enemyArray.size(); i++) {
-    enemyArray[i]->render(x, y, getSDLRenderer(), groundTile);
-  }
-
-
-//  for (int i = 0; i < enemyArray.size(); i++) {
-//
-//    detectEnemyCollisionWithWallY1(enemyArray[i], world);
-//  }
-
-//    detectCollisionWithWallY1(character, world);
     SDL_RenderClear(gRenderer);
     background.render(x, y, getSDLRenderer());
 
 //    character->render(x, y, getSDLRenderer());
-    character->render(x, y, getSDLRenderer(), groundTile, enemyArray);
+    character->render(x, y, getSDLRenderer());
 
     for (int i = 0; i < enemyArray.size(); i++) {
         enemyArray[i]->render(x, y, getSDLRenderer(), groundTile);
@@ -194,10 +179,10 @@ void SDLGraphicsProgram::render(int x, int y) {
     banner->draw(getSDLRenderer());
     banner->updateColor(29, 119, 116, 0);
 
-    string statusText = State::getInstance().getStatusString();
+    string statusText = State::getInstance().getStatusString(character->getRemainingLives(), character->getWinStatus());
     f.renderText(gRenderer, statusText, 475, 20);
 
-    string livesText = State::getInstance().getLivesString();
+    string livesText = State::getInstance().getLivesString(character->getRemainingLives());
     f.renderText(gRenderer, livesText, 20, 20);
 
     SDL_RenderPresent(gRenderer);
@@ -218,6 +203,10 @@ void SDLGraphicsProgram::loop() {
   enemyArray = world->returnEnemies();
 
   character = world->returnCharacter();
+    character->setEnemyArray(enemyArray);
+    character->setGroundTile(groundTile);
+
+
 //    character = new character(getSDLRenderer(), 100, 300);
   banner = new Rectangle(0, 0, cWidth, 90);
   SDL_Rect camera = {0, 0, cWidth, cHeight};

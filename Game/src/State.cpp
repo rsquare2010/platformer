@@ -41,18 +41,10 @@ int State::getCurrentLevel() {
  * This method is used to get the "Lives" as string.
  * @return the "Lives".
  */
-string State::getLivesString() {
+string State::getLivesString(int lives) {
   string livesText;
-  switch (State::getInstance().livesLeft()) {
-    case 0 :
-      livesText = "Lives: 0";
-      break;
-    case 1 :
-      livesText = "Lives: 1";
-      break;
-    default:
-      livesText = "Lives: Error";
-  }
+  livesText = "Lives: ";
+  livesText += to_string(lives);
   return livesText;
 }
 
@@ -60,11 +52,11 @@ string State::getLivesString() {
  * This method is used to get the status of the game.
  * @return status of the game.
  */
-string State::getStatusString() {
+string State::getStatusString(int lives, bool won) {
   string statusText;
   if (lives==0) {
     statusText = "You Lose!";
-  } else if (level==3) {
+  } else if (won) {
     statusText = "You Win!";
   } else {
     if (level == 1) {

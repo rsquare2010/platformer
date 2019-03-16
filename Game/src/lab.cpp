@@ -14,6 +14,8 @@
  * @return if the code terminates properly.
  */
 
+
+
 int main(int argc, char **argv) {
   // Create an instance of an object for a SDLGraphicsProgram
   SDLGraphicsProgram mySDLGraphicsProgram(1280, 720);

@@ -47,12 +47,12 @@ class State {
    * This method is used to get the "Lives" as string.
    * @return the "Lives".
    */
-  string getLivesString();
+  string getLivesString(int lives);
   /**
    * This method is used to get the status of the game.
    * @return status of the game.
    */
-  string getStatusString();
+  string getStatusString(int lives, bool won);
   /**
    * This method is used to check if the game is lost.
    * @return true if game is lost else false.
